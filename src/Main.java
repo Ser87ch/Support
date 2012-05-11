@@ -9,7 +9,7 @@ public class Main {
 		
 		try {
 			db.connect();
-			//132
+			//new comment
 			ResultSet rs = db.st.executeQuery("select top 5 NEWNUM, NAMEN from dbo.BNKSEEK");
 
 			int x = rs.getMetaData().getColumnCount();
