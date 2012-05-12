@@ -45,12 +45,15 @@ public class DB implements AutoCloseable{
 	@Override
 	public void close() throws SQLException
 	{
-		if(con != null)if(con.isValid(10))
+		if(con != null)
 		{
-			st.close();
-			con.close();
-		}
+			if(con.isValid(10))
 
+			{
+				st.close();
+				con.close();
+			}
+		}
 	}
 
 }
