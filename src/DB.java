@@ -29,7 +29,7 @@ public class DB implements AutoCloseable{
 		con = DriverManager.getConnection(URL, user, pwd);
 
 		if(con!=null) System.out.println("Connection Successful !\n");
-		if (con==null) System.exit(0);
+//		if (con==null) System.exit(0);
 
 		st = con.createStatement();
 
