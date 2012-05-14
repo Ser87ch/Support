@@ -1,7 +1,7 @@
-import java.lang.AutoCloseable;
+import java.io.Closeable;
 import java.sql.*;
 
-public class DB implements AutoCloseable{
+public class DB implements Closeable{
 	private String server;
 	private String db;
 	private String user;
@@ -21,9 +21,9 @@ public class DB implements AutoCloseable{
 	{
 
 		if(con != null)	if (con.isValid(10)) throw new SQLException("Connection have been already opened.");
-		
+
 		Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
-		
+
 		String URL = "jdbc:sqlserver://" + server + ";databaseName=" + db;
 
 		con = DriverManager.getConnection(URL, user, pwd);
@@ -43,16 +43,20 @@ public class DB implements AutoCloseable{
 	}
 
 	@Override
-	public void close() throws SQLException
+	public void close()
 	{
-		if(con != null)
-		{
-			if(con.isValid(10))
-
+		try {
+			if(con != null)
 			{
-				st.close();
-				con.close();
+				if(con.isValid(10))
+
+				{
+					st.close();
+					con.close();
+				}
 			}
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 	}
 

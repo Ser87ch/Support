@@ -32,7 +32,7 @@ public class PayDocList {
 
 			PayDoc.Client plat = new PayDoc.Client(Settings.bik, Settings.ks, ls);
 
-			pdl = new ArrayList<>();
+			pdl = new ArrayList<PayDoc>();
 
 			ResultSet rsbik = db.st.executeQuery("select top " + Settings.GenDoc.numBIK + " NEWNUM, KSNP ksnp from dbo.BNKSEEK where substring(NEWNUM,1,4) = '" + Settings.bik.substring(0, 4) + "' and UER in ('2','3','4','5') and NEWNUM <> '" + Settings.bik + "'");
 
