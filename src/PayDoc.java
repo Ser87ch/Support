@@ -1,5 +1,6 @@
 import java.sql.Date;
 import java.lang.Character;
+import java.text.SimpleDateFormat;
 
 enum VidPlat { POCHT, TEL, EL, NO }
 
@@ -23,6 +24,21 @@ public class PayDoc {
 	public String naznach;
 	public Date datesp;
 	public Date datepost;
+	
+	@Override
+	public String toString()
+	{
+		String str = "";
+		String razd = " ";
+		str = Integer.toString(num) + razd + new SimpleDateFormat("ddMMyy").format(date) + razd + vidop + razd + Float.toString(sum) + razd + vidpl.toString() + razd + 
+				plat.bik + razd + plat.ks + razd + plat.ls + razd + plat.inn + razd + plat.kpp + razd + plat.name + razd + pol.bik + razd + pol.ks + razd + pol.ls + razd + pol.inn + razd + pol.kpp + razd + pol.name + razd +
+				Integer.toString(ocher) + razd + status;
+		if(status == "" || status == null)
+			str = str + razd + kbk + razd + okato + razd + osn + razd + nalper + razd + numdoc + razd + datedoc + razd + typepl;
+		
+		str = str + razd + new SimpleDateFormat("ddMMyy").format(datesp) + razd + new SimpleDateFormat("ddMMyy").format(datepost);
+		return str;		
+	}
 
 	static class Client {
 		public String bik;
@@ -36,6 +52,11 @@ public class PayDoc {
 			this.bik = bik;			
 			this.ls = ls;
 			
+		}
+		Client(String bik, String ks , String ls) {
+			this.bik = bik;
+			this.ks = ks;
+			this.ls = ls;			
 		}
 		Client(String bik, String ks , String ls, String inn, String kpp, String name) {
 			this.bik = bik;

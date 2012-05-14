@@ -1,3 +1,4 @@
+import java.sql.*;
 
 public class Settings {
 
@@ -6,6 +7,9 @@ public class Settings {
 	public static String user = "robot";
 	public static String pwd = "1";
 	public static String path;
+	public static String bik;
+	public static String ks;
+	public static Date operdate;
 
 	public static class GenDoc {
 		public static int numBIK = 2;
