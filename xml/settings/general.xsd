@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:annotation>
+		<xs:documentation>Общие настройки для тестов
+		</xs:documentation>
+	</xs:annotation>
+	<xs:element name="general">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="server" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Сервер</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="db" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>База данных</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="user" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Пользователь</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="pwd" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Пароль</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="path" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Путь к САБС</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="bik" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>БИК</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="operdate" type="xs:date">
+					<xs:annotation>
+						<xs:documentation>Опер день</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

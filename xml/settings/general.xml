@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<general xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="general.xsd">
+	<server>CHERNOBRIVENKO\\ATLANT:1259</server>
+	<db>sabs_zapd</db>
+	<user>robot</user>
+	<pwd>1</pwd>
+	<path>D:\aspu\sabs_zapd2000</path>
+	<bik>044582002</bik>
+	<operdate>2011-09-07</operdate>
+</general>

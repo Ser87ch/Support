@@ -13,7 +13,7 @@ public class Settings {
 
 	public static class GenDoc {
 		public static int numBIK = 2;
-		public static int numberDoc = 5;
+		public static int numDoc = 5;
 		public static int firstDoc = 1;
 	}
 }

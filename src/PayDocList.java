@@ -34,7 +34,7 @@ public class PayDocList {
 
 			pdl = new ArrayList<>();
 
-			ResultSet rsbik = db.st.executeQuery("select top " + Settings.GenDoc.numBIK + " NEWNUM, isnull(KSNP,'') ksnp from dbo.BNKSEEK where substring(NEWNUM,1,4) = '" + Settings.bik.substring(0, 4) + "' and UER in ('2','3','4','5') and NEWNUM <> '" + Settings.bik + "'");
+			ResultSet rsbik = db.st.executeQuery("select top " + Settings.GenDoc.numBIK + " NEWNUM, KSNP ksnp from dbo.BNKSEEK where substring(NEWNUM,1,4) = '" + Settings.bik.substring(0, 4) + "' and UER in ('2','3','4','5') and NEWNUM <> '" + Settings.bik + "'");
 
 			while(rsbik.next()) {
 				String bikpol = rsbik.getString("NEWNUM");
@@ -44,7 +44,7 @@ public class PayDocList {
 				PayDoc.Client pol = new PayDoc.Client(bikpol, kspol, lspol, "111111111111", "222222222", "ÇÀÎ Òåñò");
 				pol.contrrazr();
 
-				for(int j = 0; j < Settings.GenDoc.numberDoc; j++)
+				for(int j = 0; j < Settings.GenDoc.numDoc; j++)
 				{
 					PayDoc pd = new PayDoc();
 					pd.num = Settings.GenDoc.firstDoc + j;

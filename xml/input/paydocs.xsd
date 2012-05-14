@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:annotation>
+		<xs:documentation>Входящие документы для первичного ввода
+		</xs:documentation>
+	</xs:annotation>
+	<xs:element name="paydocs">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="doc" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="num">
+								<xs:annotation>
+									<xs:documentation>Номер документа</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:integer">
+										<xs:minInclusive value="1" />
+										<xs:maxInclusive value="999" />
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="date" type="xs:date">
+								<xs:annotation>
+									<xs:documentation>Дата документа</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="vidop">
+								<xs:annotation>
+									<xs:documentation>Вид операции</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:pattern value="[0-1][0-9]" />
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="sum">
+								<xs:annotation>
+									<xs:documentation>Сумма</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:decimal">
+										<xs:minExclusive value="0" />
+										<xs:fractionDigits value="2" />
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="vidpl">
+								<xs:annotation>
+									<xs:documentation>Вид платежа</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:enumeration value="POCHT" />
+										<xs:enumeration value="TEL" />
+										<xs:enumeration value="EL" />
+										<xs:enumeration value="NO" />
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="plat" type="client">
+								<xs:annotation>
+									<xs:documentation>Плательщик</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="pol" type="client">
+								<xs:annotation>
+									<xs:documentation>Получатель</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="ocher">
+								<xs:annotation>
+									<xs:documentation>Очередность платежа</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:integer">
+										<xs:minInclusive value="1" />
+										<xs:maxInclusive value="6" />
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="status" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Статус</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="kbk" type="xs:string" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>КБК</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="okato" type="xs:string" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>ОКАТО</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="osn" type="xs:string" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Основание</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="nalper" type="xs:string" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Нал. период</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="numdoc" type="xs:string" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Номер документа</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="datedoc" type="xs:string" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Дата документа</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="typepl" type="xs:string" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Тип платежа</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="naznach" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Назначение</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="datesp" type="xs:date">
+								<xs:annotation>
+									<xs:documentation>Дата списания</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="datepost" type="xs:date">
+								<xs:annotation>
+									<xs:documentation>Дата поступления</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="id" type="xs:integer" use="required" />
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="client">
+		<xs:annotation>
+			<xs:documentation>Получатель-отправитель</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="bik">
+				<xs:annotation>
+					<xs:documentation>БИК</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="9" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ks">
+				<xs:annotation>
+					<xs:documentation>Корр. счет</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="20" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ls">
+				<xs:annotation>
+					<xs:documentation>Лицевой счет</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="20" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="inn">
+				<xs:annotation>
+					<xs:documentation>ИНН</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="12" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="kpp">
+				<xs:annotation>
+					<xs:documentation>КПП</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="9" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Наименование</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

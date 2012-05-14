@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<paydocs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="paydocs.xsd">
+	<doc id="1">
+		<num>55</num>
+		<date>2011-09-07</date>
+		<vidop>01</vidop>
+		<sum>45.25</sum>
+		<vidpl>EL</vidpl>
+		<plat>
+			<bik>044582002</bik>
+			<ks></ks>
+			<ls>40404810700000030009</ls>
+			<inn></inn>
+			<kpp></kpp>
+			<name></name>
+		</plat>
+		<pol>
+			<bik>044501002</bik>
+			<ks>30127810500000000051</ks>
+			<ls>40702810500000000005</ls>
+			<inn>111111111111</inn>
+			<kpp>222222222</kpp>
+			<name>ЗАО Тест</name>
+		</pol>
+		<ocher>6</ocher>
+		<status>1</status>
+		<kbk>11111111111111111111</kbk>
+		<okato>11111111111</okato>
+		<osn>11</osn>
+		<nalper>12</nalper>
+		<numdoc>10</numdoc>
+		<datedoc>11092012</datedoc>
+		<typepl>6</typepl>
+		<naznach>Оплата теста</naznach>
+		<datesp>2011-09-07</datesp>
+		<datepost>2011-09-07</datepost>
+	</doc>
+	<doc id="2">
+		<num>56</num>
+		<date>2011-09-07</date>
+		<vidop>01</vidop>
+		<sum>17.89</sum>
+		<vidpl>EL</vidpl>
+		<plat>
+			<bik>044582002</bik>
+			<ks></ks>
+			<ls>40404810700000030009</ls>
+			<inn></inn>
+			<kpp></kpp>
+			<name></name></plat>
+		<pol>
+			<bik>044501002</bik>
+			<ks></ks>
+			<ls>40702810000000000005</ls>
+			<inn>111111111111</inn>
+			<kpp>222222222</kpp>
+			<name>ЗАО Тест</name></pol>
+		<ocher>6</ocher>
+		<status></status>
+		<naznach>Оплата теста</naznach>
+		<datesp>2011-09-07</datesp>
+		<datepost>2011-09-07</datepost>
+	</doc>
+</paydocs>
