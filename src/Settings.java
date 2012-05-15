@@ -24,7 +24,7 @@ public class Settings{
 	public static String ks = "";
 	public static Date operDate = new Date(0);
 	public static String testProj = "G:\\sabstest\\";
-	public static String folder = "a0001";
+	public static String folder = "a00001";
 
 	public static void Load()
 	{
@@ -110,7 +110,7 @@ public class Settings{
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
-			StreamResult result = new StreamResult(new File(Settings.testProj + Settings.folder + "\\settings\\general.xml"));
+			StreamResult result = new StreamResult(new File(Settings.testProj + "\\tests\\" +  Settings.folder + "\\settings\\general.xml"));
 
 			//StreamResult result = new StreamResult(System.out);
 
@@ -118,7 +118,7 @@ public class Settings{
 
 			System.out.println("File saved!");
 
-			XML.validate(Settings.testProj + "XMLSchema\\settings\\general.xsd",Settings.testProj + Settings.folder + "\\settings\\general.xml");
+			XML.validate(Settings.testProj + "XMLSchema\\settings\\general.xsd",Settings.testProj + "\\tests\\" +  Settings.folder + "\\settings\\general.xml");
 
 		} catch (ParserConfigurationException pce) {
 			pce.printStackTrace();
@@ -161,7 +161,7 @@ public class Settings{
 				TransformerFactory transformerFactory = TransformerFactory.newInstance();
 				Transformer transformer = transformerFactory.newTransformer();
 				DOMSource source = new DOMSource(doc);
-				StreamResult result = new StreamResult(new File(Settings.testProj + Settings.folder + "\\settings\\gendoc.xml"));
+				StreamResult result = new StreamResult(new File(Settings.testProj + "\\tests\\" +  Settings.folder + "\\settings\\gendoc.xml"));
 
 				//StreamResult result = new StreamResult(System.out);
 
@@ -169,7 +169,7 @@ public class Settings{
 
 				System.out.println("File saved!");
 
-				XML.validate(Settings.testProj + "XMLSchema\\settings\\gendoc.xsd",Settings.testProj + Settings.folder + "\\settings\\gendoc.xml");
+				XML.validate(Settings.testProj + "XMLSchema\\settings\\gendoc.xsd",Settings.testProj + "\\tests\\" + Settings.folder + "\\settings\\gendoc.xml");
 
 			} catch (ParserConfigurationException pce) {
 				pce.printStackTrace();

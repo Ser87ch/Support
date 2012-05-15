@@ -245,13 +245,13 @@ public class PayDocList {
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
-			StreamResult result = new StreamResult(new File(Settings.testProj + Settings.folder + "\\input\\paydocs.xml"));
+			StreamResult result = new StreamResult(new File(Settings.testProj + "\\tests\\" + Settings.folder + "\\input\\paydocs.xml"));
 
 			transformer.transform(source, result);
 
 			System.out.println("File saved!");
 
-			XML.validate(Settings.testProj + "XMLSchema\\input\\paydocs.xsd",Settings.testProj + Settings.folder + "\\input\\paydocs.xml");
+			XML.validate(Settings.testProj + "XMLSchema\\input\\paydocs.xsd",Settings.testProj + "\\tests\\" +  Settings.folder + "\\input\\paydocs.xml");
 			
 		} catch (ParserConfigurationException pce) {
 			pce.printStackTrace();
