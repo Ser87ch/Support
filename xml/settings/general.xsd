@@ -32,14 +32,34 @@
 						<xs:documentation>Путь к САБС</xs:documentation>
 					</xs:annotation>
 				</xs:element>
-				<xs:element name="bik" type="xs:string">
+				<xs:element name="bik">
 					<xs:annotation>
 						<xs:documentation>БИК</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:length value="9" />
+					</xs:restriction>
+				</xs:simpleType>
+				</xs:element>
+				<xs:element name="ks" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Кор. счет</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 				<xs:element name="operdate" type="xs:date">
 					<xs:annotation>
 						<xs:documentation>Опер день</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="testproj" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Путь к проекту</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="folder" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Папка текущего теста</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 			</xs:sequence>

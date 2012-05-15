@@ -2,6 +2,7 @@ import java.sql.Date;
 import java.lang.Character;
 import java.text.SimpleDateFormat;
 
+
 enum VidPlat { POCHT, TEL, EL, NO }
 
 public class PayDoc {
@@ -24,6 +25,27 @@ public class PayDoc {
 	public String naznach;
 	public Date datesp;
 	public Date datepost;
+	
+	PayDoc()
+	{	
+		this.num = 0;
+		this.date = new Date(0);
+		this.vidop = "";
+		this.sum = 0;				
+		this.vidpl = VidPlat.EL;
+		this.ocher = 6;
+		this.status = "";
+		this.kbk = "";
+		this.okato = "";
+		this.osn = "";
+		this.nalper = "";
+		this.numdoc = "";
+		this.datedoc = "";
+		this.typepl = "";		
+		this.naznach = "Тест";
+		this.datesp = new Date(0);
+		this.datepost = new Date(0);		
+	}
 	
 	@Override
 	public String toString()
@@ -49,14 +71,21 @@ public class PayDoc {
 		public String name;
 
 		Client(String bik, String ls) {
-			this.bik = bik;			
+			this.bik = bik;	
+			this.ks = "";
 			this.ls = ls;
+			this.inn = "";
+			this.kpp = "";
+			this.name = "";
 			
 		}
 		Client(String bik, String ks , String ls) {
 			this.bik = bik;
 			this.ks = ks;
-			this.ls = ls;			
+			this.ls = ls;	
+			this.inn = "";
+			this.kpp = "";
+			this.name = "";
 		}
 		Client(String bik, String ks , String ls, String inn, String kpp, String name) {
 			this.bik = bik;
