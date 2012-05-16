@@ -19,20 +19,23 @@ public class DB implements Closeable{
 
 	public void connect() throws Exception 
 	{
+		try {
+			if(con != null)	if (con.isValid(10)) throw new SQLException("Connection have been already opened.");
 
-		if(con != null)	if (con.isValid(10)) throw new SQLException("Connection have been already opened.");
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
 
-		Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+			String URL = "jdbc:sqlserver://" + server + ";databaseName=" + db;
 
-		String URL = "jdbc:sqlserver://" + server + ";databaseName=" + db;
+			con = DriverManager.getConnection(URL, user, pwd);
 
-		con = DriverManager.getConnection(URL, user, pwd);
 
-		if(con!=null) System.out.println("Connection Successful !\n");
-		if (con==null) System.exit(0);
-
-		st = con.createStatement();
-
+			if (con==null) System.exit(0);
+			Log.msg("Подключение к " + server + " БД " + db + " выполнено.");
+			st = con.createStatement();
+		} catch(Exception e) {
+			e.printStackTrace();
+			Log.msg(e);
+		}
 	}
 
 	public boolean isConnected() throws SQLException
@@ -53,10 +56,12 @@ public class DB implements Closeable{
 				{
 					st.close();
 					con.close();
+					Log.msg("Подключение к " + server + " БД " + db + " закрыто.");
 				}
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
+			Log.msg(e);
 		}
 	}
 

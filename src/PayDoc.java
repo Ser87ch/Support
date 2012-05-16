@@ -58,7 +58,7 @@ public class PayDoc {
 		if(status == "" || status == null)
 			str = str + razd + kbk + razd + okato + razd + osn + razd + nalper + razd + numdoc + razd + datedoc + razd + typepl;
 		
-		str = str + razd + new SimpleDateFormat("ddMMyy").format(datesp) + razd + new SimpleDateFormat("ddMMyy").format(datepost);
+		str = str + razd + naznach + razd + new SimpleDateFormat("ddMMyy").format(datesp) + razd + new SimpleDateFormat("ddMMyy").format(datepost);
 		return str;		
 	}
 

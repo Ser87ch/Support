@@ -42,11 +42,6 @@
 					</xs:restriction>
 				</xs:simpleType>
 				</xs:element>
-				<xs:element name="ks" type="xs:string">
-					<xs:annotation>
-						<xs:documentation>Кор. счет</xs:documentation>
-					</xs:annotation>
-				</xs:element>
 				<xs:element name="operdate" type="xs:date">
 					<xs:annotation>
 						<xs:documentation>Опер день</xs:documentation>
@@ -60,6 +55,11 @@
 				<xs:element name="folder" type="xs:string">
 					<xs:annotation>
 						<xs:documentation>Папка текущего теста</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="fullfolder" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Полный путь к папке текущего теста</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 			</xs:sequence>
