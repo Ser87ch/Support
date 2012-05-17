@@ -1,10 +1,11 @@
 
-import java.lang.System;
 
+import java.lang.System;
 import ru.sabstest.Init;
 import ru.sabstest.Log;
 import ru.sabstest.PayDocList;
 import ru.sabstest.Settings;
+
 
 
 
@@ -16,7 +17,7 @@ public class Main {
 		Settings.testProj = "G:\\sabstest\\";
 
 
-		Test t = Test.PERVVOD;
+		Test t = Test.GEN;
 		switch(t)
 		{
 
