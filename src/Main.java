@@ -8,7 +8,7 @@ public class Main {
 		Settings.testProj = "G:\\sabstest\\";
 
 
-		Test t = Test.PERVVOD;
+		Test t = Test.GEN;
 		switch(t)
 		{
 
@@ -28,6 +28,7 @@ public class Main {
 			pl.generate();
 			//System.out.println(pl.toString());
 			pl.createXML();
+			break;
 		}
 
 		case PERVVOD:
@@ -37,6 +38,7 @@ public class Main {
 			PayDocList pl = new PayDocList();
 			pl.readXML(Settings.fullfolder + "input\\paydocs.xml");
 			System.out.println(pl.toString());
+			break;
 		}
 		}
 

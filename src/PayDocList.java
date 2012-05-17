@@ -1,5 +1,4 @@
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -127,131 +126,51 @@ public class PayDocList {
 
 				PayDoc pd = iter.next();
 
-				Element num = doc.createElement("num");
-				num.appendChild(doc.createTextNode(Integer.toString(pd.num)));
-				paydoc.appendChild(num);
-
-				Element date = doc.createElement("date");
-				date.appendChild(doc.createTextNode(new SimpleDateFormat("yyyy-MM-dd").format(pd.date)));
-				paydoc.appendChild(date);
-
-				Element vidop = doc.createElement("vidop");
-				vidop.appendChild(doc.createTextNode(pd.vidop));
-				paydoc.appendChild(vidop);
-
-				Element sum = doc.createElement("sum");
-				sum.appendChild(doc.createTextNode(Float.toString(pd.sum)));
-				paydoc.appendChild(sum);
-
-				Element vidpl = doc.createElement("vidpl");
-				vidpl.appendChild(doc.createTextNode(pd.vidpl.toString()));
-				paydoc.appendChild(vidpl);
+				XML.createNode(doc, paydoc, "num", pd.num);
+				XML.createNode(doc, paydoc, "date", pd.date);
+				XML.createNode(doc, paydoc, "vidop", pd.vidop);
+				XML.createNode(doc, paydoc, "sum", pd.sum);
+				XML.createNode(doc, paydoc, "vidpl", pd.vidpl);
 
 				//плательщик
 				Element plat = doc.createElement("plat");
 				paydoc.appendChild(plat);
 
-				Element platbik = doc.createElement("bik");
-				platbik.appendChild(doc.createTextNode(pd.plat.bik));
-				plat.appendChild(platbik);
-
-				Element platks = doc.createElement("ks");
-				platks.appendChild(doc.createTextNode(pd.plat.ks));
-				plat.appendChild(platks);
-
-				Element platls = doc.createElement("ls");
-				platls.appendChild(doc.createTextNode(pd.plat.ls));
-				plat.appendChild(platls);
-
-				Element platinn = doc.createElement("inn");
-				platinn.appendChild(doc.createTextNode(pd.plat.inn));
-				plat.appendChild(platinn);
-
-				Element platkpp = doc.createElement("kpp");
-				platkpp.appendChild(doc.createTextNode(pd.plat.kpp));
-				plat.appendChild(platkpp);
-
-				Element platname = doc.createElement("name");
-				platname.appendChild(doc.createTextNode(pd.plat.name));
-				plat.appendChild(platname);
+				XML.createNode(doc, plat, "bik", pd.plat.bik);
+				XML.createNode(doc, plat, "ks", pd.plat.ks);
+				XML.createNode(doc, plat, "ls", pd.plat.ls);
+				XML.createNode(doc, plat, "inn", pd.plat.inn);
+				XML.createNode(doc, plat, "kpp", pd.plat.kpp);
+				XML.createNode(doc, plat, "name", pd.plat.name);
 
 				//получатель
 				Element pol = doc.createElement("pol");
-				paydoc.appendChild(pol);
+				paydoc.appendChild(pol);				
 
-				Element polbik = doc.createElement("bik");
-				polbik.appendChild(doc.createTextNode(pd.pol.bik));
-				pol.appendChild(polbik);
+				XML.createNode(doc, pol, "bik", pd.pol.bik);
+				XML.createNode(doc, pol, "ks", pd.pol.ks);
+				XML.createNode(doc, pol, "ls", pd.pol.ls);
+				XML.createNode(doc, pol, "inn", pd.pol.inn);
+				XML.createNode(doc, pol, "kpp", pd.pol.kpp);
+				XML.createNode(doc, pol, "name", pd.pol.name);
 
-				Element polks = doc.createElement("ks");
-				polks.appendChild(doc.createTextNode(pd.pol.ks));
-				pol.appendChild(polks);
-
-				Element polls = doc.createElement("ls");
-				polls.appendChild(doc.createTextNode(pd.pol.ls));
-				pol.appendChild(polls);
-
-				Element polinn = doc.createElement("inn");
-				polinn.appendChild(doc.createTextNode(pd.pol.inn));
-				pol.appendChild(polinn);
-
-				Element polkpp = doc.createElement("kpp");
-				polkpp.appendChild(doc.createTextNode(pd.pol.kpp));
-				pol.appendChild(polkpp);
-
-				Element polname = doc.createElement("name");
-				polname.appendChild(doc.createTextNode(pd.pol.name));
-				pol.appendChild(polname);
-
-				Element ocher = doc.createElement("ocher");
-				ocher.appendChild(doc.createTextNode(Integer.toString(pd.ocher)));
-				paydoc.appendChild(ocher);
-
-				Element status = doc.createElement("status");
-				status.appendChild(doc.createTextNode(pd.status));
-				paydoc.appendChild(status);
+				XML.createNode(doc, paydoc, "ocher", pd.ocher);
+				XML.createNode(doc, paydoc, "status", pd.status);
 
 				if(pd.status != "")
 				{
-					Element kbk = doc.createElement("kbk");
-					kbk.appendChild(doc.createTextNode(pd.kbk));
-					paydoc.appendChild(kbk);
-
-					Element okato = doc.createElement("okato");
-					okato.appendChild(doc.createTextNode(pd.okato));
-					paydoc.appendChild(okato);
-
-					Element osn = doc.createElement("osn");
-					osn.appendChild(doc.createTextNode(pd.osn));
-					paydoc.appendChild(osn);
-
-					Element nalper = doc.createElement("nalper");
-					nalper.appendChild(doc.createTextNode(pd.nalper));
-					paydoc.appendChild(nalper);
-
-					Element numdoc = doc.createElement("numdoc");
-					numdoc.appendChild(doc.createTextNode(pd.numdoc));
-					paydoc.appendChild(status);
-
-					Element datedoc = doc.createElement("datedoc");
-					datedoc.appendChild(doc.createTextNode(pd.datedoc));
-					paydoc.appendChild(datedoc);
-
-					Element typepl = doc.createElement("typepl");
-					typepl.appendChild(doc.createTextNode(pd.typepl));
-					paydoc.appendChild(typepl);								
+					XML.createNode(doc, paydoc, "kbk", pd.kbk);
+					XML.createNode(doc, paydoc, "okato", pd.okato);
+					XML.createNode(doc, paydoc, "osn", pd.osn);
+					XML.createNode(doc, paydoc, "nalper", pd.nalper);
+					XML.createNode(doc, paydoc, "numdoc", pd.numdoc);
+					XML.createNode(doc, paydoc, "datedoc", pd.datedoc);
+					XML.createNode(doc, paydoc, "typepl", pd.typepl);
 				}
-				Element naznach = doc.createElement("naznach");
-				naznach.appendChild(doc.createTextNode(pd.naznach));
-				paydoc.appendChild(naznach);		
-
-				Element datesp = doc.createElement("datesp");
-				datesp.appendChild(doc.createTextNode(new SimpleDateFormat("yyyy-MM-dd").format(pd.datesp)));
-				paydoc.appendChild(datesp);
-
-				Element datepost = doc.createElement("datepost");
-				datepost.appendChild(doc.createTextNode(new SimpleDateFormat("yyyy-MM-dd").format(pd.datepost)));
-				paydoc.appendChild(datepost);
+				
+				XML.createNode(doc, paydoc, "naznach", pd.naznach);
+				XML.createNode(doc, paydoc, "datesp", pd.datesp);
+				XML.createNode(doc, paydoc, "datepost", pd.datepost);
 
 				Log.msg("Документ №" + i + " записан в XML.");
 				i++;

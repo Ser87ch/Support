@@ -73,49 +73,17 @@ public class Settings{
 			rootElement.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
 			rootElement.setAttribute("xsi:noNamespaceSchemaLocation", Settings.testProj + "XMLSchema\\settings\\general.xsd");
 
-			Element server = doc.createElement("server");
-			server.appendChild(doc.createTextNode(Settings.server));
-			rootElement.appendChild(server);
-
-			Element db = doc.createElement("db");
-			db.appendChild(doc.createTextNode(Settings.db));
-			rootElement.appendChild(db);
-
-			Element user = doc.createElement("user");
-			user.appendChild(doc.createTextNode(Settings.user));
-			rootElement.appendChild(user);
-
-			Element pwd = doc.createElement("pwd");
-			pwd.appendChild(doc.createTextNode(Settings.pwd));
-			rootElement.appendChild(pwd);
-
-			Element path = doc.createElement("path");
-			path.appendChild(doc.createTextNode(Settings.path));
-			rootElement.appendChild(path);
-
-			Element bik = doc.createElement("bik");
-			bik.appendChild(doc.createTextNode(Settings.bik));
-			rootElement.appendChild(bik);
-
-			//			Element ks = doc.createElement("ks");
-			//			ks.appendChild(doc.createTextNode((Settings.ks)));
-			//			rootElement.appendChild(ks);
-
-			Element operdate = doc.createElement("operdate");
-			operdate.appendChild(doc.createTextNode(new SimpleDateFormat("yyyy-MM-dd").format(Settings.operDate)));
-			rootElement.appendChild(operdate);
-
-			Element testproj = doc.createElement("testproj");
-			testproj.appendChild(doc.createTextNode(Settings.testProj));
-			rootElement.appendChild(testproj);
-
-			Element folder = doc.createElement("folder");
-			folder.appendChild(doc.createTextNode(Settings.folder));
-			rootElement.appendChild(folder);
-
-			Element fullfolder = doc.createElement("fullfolder");
-			fullfolder.appendChild(doc.createTextNode(Settings.fullfolder));
-			rootElement.appendChild(fullfolder);
+			XML.createNode(doc, rootElement, "server", Settings.server);			
+			XML.createNode(doc, rootElement, "db", Settings.db);
+			XML.createNode(doc, rootElement, "user", Settings.user);
+			XML.createNode(doc, rootElement, "pwd", Settings.pwd);
+			XML.createNode(doc, rootElement, "path", Settings.path);
+			XML.createNode(doc, rootElement, "bik", Settings.bik);			
+			//	XML.createNode(doc, rootElement, "ks", Settings.ks);
+			XML.createNode(doc, rootElement, "operdate", Settings.operDate);
+			XML.createNode(doc, rootElement, "testproj", Settings.testProj);
+			XML.createNode(doc, rootElement, "folder", Settings.folder);
+			XML.createNode(doc, rootElement, "fullfolder", Settings.fullfolder);
 
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
@@ -123,7 +91,7 @@ public class Settings{
 			File xml = new File(Settings.fullfolder + "settings\\general.xml");
 			StreamResult result = new StreamResult(xml);
 			Log.msg("XML c общими настройками " + Settings.fullfolder + "settings\\general.xml создан.");
-			
+
 			//StreamResult result = new StreamResult(System.out);
 
 			transformer.transform(source, result);
@@ -179,10 +147,10 @@ public class Settings{
 						Settings.path = XML.getTagString("path", eElement);	
 						Settings.bik = XML.getTagString("bik", eElement);	
 						Settings.operDate = XML.getTagDate("operdate", eElement);	
-						
+
 						Settings.folder = XML.getTagString("folder", eElement);	
 						Settings.fullfolder = XML.getTagString("fullfolder", eElement);
-						
+
 					}
 				}
 			}
@@ -214,17 +182,9 @@ public class Settings{
 				rootElement.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
 				rootElement.setAttribute("xsi:noNamespaceSchemaLocation", Settings.testProj + "XMLSchema\\settings\\gendoc.xsd");
 
-				Element numbik = doc.createElement("numbik");
-				numbik.appendChild(doc.createTextNode(Integer.toString(GenDoc.numBIK)));
-				rootElement.appendChild(numbik);
-
-				Element numdoc = doc.createElement("numdoc");
-				numdoc.appendChild(doc.createTextNode(Integer.toString(GenDoc.numDoc)));
-				rootElement.appendChild(numdoc);
-
-				Element firstdoc = doc.createElement("firstdoc");
-				firstdoc.appendChild(doc.createTextNode(Integer.toString(GenDoc.firstDoc)));
-				rootElement.appendChild(firstdoc);
+				XML.createNode(doc, rootElement, "numbik", GenDoc.numBIK);	
+				XML.createNode(doc, rootElement, "numdoc", GenDoc.numDoc);	
+				XML.createNode(doc, rootElement, "firstdoc", GenDoc.firstDoc);	
 
 				TransformerFactory transformerFactory = TransformerFactory.newInstance();
 				Transformer transformer = transformerFactory.newTransformer();

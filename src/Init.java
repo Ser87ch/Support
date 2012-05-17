@@ -26,7 +26,7 @@ public class Init {
 					char s = (char)(filename.charAt(0) +  1);
 					Settings.folder = Character.toString(s) + "000001";
 				} else {
-					int i = Integer.parseInt(filename.substring(1, 6)) + 1;
+					int i = Integer.parseInt(filename.substring(1, 7)) + 1;
 					DecimalFormat myFormat = new java.text.DecimalFormat("000000");
 					Settings.folder = filename.substring(0, 1) + myFormat.format(new Integer(i));
 				}

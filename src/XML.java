@@ -1,14 +1,17 @@
 import java.io.File;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 import javax.xml.XMLConstants;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.*;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
 
 
 public class XML {
@@ -104,5 +107,40 @@ public class XML {
 			//	e.printStackTrace();
 			return 0;
 		}
+	}
+	
+	public static void createNode(Document doc, Element rootElement, String tag, String value)
+	{
+		Element el = doc.createElement(tag);
+		el.appendChild(doc.createTextNode(value));
+		rootElement.appendChild(el);
+	}
+	
+	public static void createNode(Document doc, Element rootElement, String tag, Date value)
+	{
+		Element el = doc.createElement(tag);
+		el.appendChild(doc.createTextNode(new SimpleDateFormat("yyyy-MM-dd").format(value)));
+		rootElement.appendChild(el);
+	}
+	
+	public static void createNode(Document doc, Element rootElement, String tag, int value)
+	{
+		Element el = doc.createElement(tag);
+		el.appendChild(doc.createTextNode(Integer.toString(value)));
+		rootElement.appendChild(el);
+	}
+	
+	public static void createNode(Document doc, Element rootElement, String tag, float value)
+	{
+		Element el = doc.createElement(tag);
+		el.appendChild(doc.createTextNode(Float.toString(value)));
+		rootElement.appendChild(el);
+	}
+	
+	public static void createNode(Document doc, Element rootElement, String tag, VidPlat value)
+	{
+		Element el = doc.createElement(tag);
+		el.appendChild(doc.createTextNode(value.toString()));
+		rootElement.appendChild(el);
 	}
 }
