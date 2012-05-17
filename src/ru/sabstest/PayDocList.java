@@ -1,3 +1,5 @@
+package ru.sabstest;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,7 @@ import org.w3c.dom.NodeList;
 public class PayDocList {
 	private List<PayDoc> pdl;
 
-	PayDocList() 
+	public PayDocList() 
 	{
 
 	}

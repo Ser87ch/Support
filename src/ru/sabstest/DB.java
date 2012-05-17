@@ -1,3 +1,5 @@
+package ru.sabstest;
+
 import java.io.Closeable;
 import java.sql.*;
 

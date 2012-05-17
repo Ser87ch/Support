@@ -1,3 +1,5 @@
+package ru.sabstest;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.text.SimpleDateFormat;

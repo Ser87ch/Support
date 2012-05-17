@@ -1,3 +1,5 @@
+package ru.sabstest;
+
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.io.File;
