@@ -64,7 +64,7 @@ public class PayDoc {
 		return str;		
 	}
 
-	static class Client {
+	public static class Client {
 		public String bik;
 		public String ks;
 		public String ls;
