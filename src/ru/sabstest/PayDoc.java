@@ -58,13 +58,13 @@ public class PayDoc {
 	public String toStr(String razd){
 		String str = "";
 		
-		str = Integer.toString(num) + razd + new SimpleDateFormat("ddMMyy").format(date) + razd + vidop + razd + Float.toString(sum) + razd + vidpl.toString() + razd + 
+		str = Integer.toString(num) + razd + new SimpleDateFormat("ddMMyyyy").format(date) + razd + vidop + razd + Float.toString(sum) + razd + vidpl.toString() + razd + 
 				plat.bik + razd + plat.ks + razd + plat.ls + razd + plat.inn + razd + plat.kpp + razd + plat.name + razd + pol.bik + razd + pol.ks + razd + pol.ls + razd + pol.inn + razd + pol.kpp + razd + pol.name + razd +
 				Integer.toString(ocher) + razd + status;
-		if(status == "" || status == null)
+		if(status != "" && status != null)
 			str = str + razd + kbk + razd + okato + razd + osn + razd + nalper + razd + numdoc + razd + datedoc + razd + typepl;
 		
-		str = str + razd + naznach + razd + new SimpleDateFormat("ddMMyy").format(datesp) + razd + new SimpleDateFormat("ddMMyy").format(datepost);
+		str = str + razd + naznach + razd + new SimpleDateFormat("ddMMyyyy").format(datesp) + razd + new SimpleDateFormat("ddMMyyyy").format(datepost);
 		return str;	
 	}
 	
