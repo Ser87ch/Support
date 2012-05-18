@@ -5,7 +5,7 @@ import java.lang.Character;
 import java.text.SimpleDateFormat;
 
 
-enum VidPlat { POCHT, TEL, EL, NO }
+
 
 public class PayDoc {
 	public int num;
@@ -52,8 +52,12 @@ public class PayDoc {
 	@Override
 	public String toString()
 	{
+		return toStr(" ");
+	}
+
+	public String toStr(String razd){
 		String str = "";
-		String razd = " ";
+		
 		str = Integer.toString(num) + razd + new SimpleDateFormat("ddMMyy").format(date) + razd + vidop + razd + Float.toString(sum) + razd + vidpl.toString() + razd + 
 				plat.bik + razd + plat.ks + razd + plat.ls + razd + plat.inn + razd + plat.kpp + razd + plat.name + razd + pol.bik + razd + pol.ks + razd + pol.ls + razd + pol.inn + razd + pol.kpp + razd + pol.name + razd +
 				Integer.toString(ocher) + razd + status;
@@ -61,10 +65,10 @@ public class PayDoc {
 			str = str + razd + kbk + razd + okato + razd + osn + razd + nalper + razd + numdoc + razd + datedoc + razd + typepl;
 		
 		str = str + razd + naznach + razd + new SimpleDateFormat("ddMMyy").format(datesp) + razd + new SimpleDateFormat("ddMMyy").format(datepost);
-		return str;		
+		return str;	
 	}
-
-	static class Client {
+	
+	public static class Client {
 		public String bik;
 		public String ks;
 		public String ls;
