@@ -16,7 +16,7 @@ public class Main {
 		Settings.testProj = "C:\\sabstest\\";
 
 
-		Test t = Test.GEN;
+		Test t = Test.PERVVOD;
 		switch(t)
 		{
 
@@ -45,7 +45,8 @@ public class Main {
 			Settings.readXML(Settings.fullfolder + "settings\\general.xml");
 			PayDocList pl = new PayDocList();
 			pl.readXML(Settings.fullfolder + "input\\paydocs.xml");
-			System.out.println(pl.toString());
+			//System.out.println(pl.toString());
+			System.out.println(pl.get(0).toStr("{ENTER}"));
 			break;
 		}
 		}
