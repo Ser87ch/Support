@@ -13,10 +13,10 @@ public class Main {
 
 	public static void main(String[] args)
 	{
-		Settings.testProj = "G:\\sabstest\\";
+		Settings.testProj = "C:\\sabstest\\";
 
 
-		Test t = Test.PERVVOD;
+		Test t = Test.GEN;
 		switch(t)
 		{
 

@@ -83,7 +83,12 @@ public class PayDocList {
 			Log.msg(e);
 		}
 	}
-
+	
+	public int length()
+	{
+		return pdl.size();
+	}
+	
 	public PayDoc get(int i)
 	{
 		return (PayDoc) pdl.get(i);
