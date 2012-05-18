@@ -5,7 +5,7 @@ import java.lang.Character;
 import java.text.SimpleDateFormat;
 
 
-enum VidPlat { POCHT, TEL, EL, NO }
+
 
 public class PayDoc {
 	public int num;
