@@ -52,14 +52,15 @@ public class PayDoc {
 	@Override
 	public String toString()
 	{
-		return toStr(" ");
+		return toStr(" ", false);
 	}
 
-	public String toStr(String razd){
+	public String toStr(String razd, boolean addShift){
 		String str = "";
 		
 		str = Integer.toString(num) + razd + new SimpleDateFormat("ddMMyyyy").format(date) + razd + vidop + razd + Float.toString(sum) + razd + vidpl.toString() + razd + 
-				plat.bik + razd + plat.ks + razd + plat.ls + razd + plat.inn + razd + plat.kpp + razd + plat.name + razd + pol.bik + razd + pol.ks + razd + pol.ls + razd + pol.inn + razd + pol.kpp + razd + pol.name + razd +
+				plat.bik + razd + plat.ks + razd + plat.ls + razd + plat.inn + razd + plat.kpp + razd + plat.name + razd + pol.bik + razd + pol.ks + razd + pol.ls + razd + pol.inn + razd + pol.kpp + razd 
+				+ (addShift ? "+{ExtEnd}" : "") + pol.name + razd +
 				Integer.toString(ocher) + razd + status;
 		if(status != "" && status != null)
 			str = str + razd + kbk + razd + okato + razd + osn + razd + nalper + razd + numdoc + razd + datedoc + razd + typepl;
