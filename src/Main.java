@@ -43,6 +43,7 @@ public class Main {
 		{			
 			Init.load();
 			Settings.readXML(Settings.fullfolder + "settings\\general.xml");
+			Settings.GenDoc.readXML(Settings.fullfolder + "settings\\pervvod.xml");
 			PayDocList pl = new PayDocList();
 			pl.readXML(Settings.fullfolder + "input\\paydocs.xml");
 			//System.out.println(pl.toString());

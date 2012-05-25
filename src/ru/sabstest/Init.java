@@ -49,14 +49,21 @@ public class Init {
 			{
 				Settings.readXML(Settings.testProj + "default\\general.xml",true);
 				Settings.GenDoc.readXML(Settings.testProj + "default\\gendoc.xml");
+				Settings.PerVvod.readXML(Settings.testProj + "default\\pervvod.xml");
+				Settings.ContrVvod.readXML(Settings.testProj + "default\\contrvvod.xml");
 
 			} else {			
 				Settings.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\gendoc.xml",true);							
-				Settings.GenDoc.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\gendoc.xml");			
+				Settings.GenDoc.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\gendoc.xml");	
+				Settings.PerVvod.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\pervvod.xml");
+				Settings.ContrVvod.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\contrvvod.xml");
 			}
+			
 			Settings.loadFromDB();
 			Settings.createXML();
 			Settings.GenDoc.createXML();
+			Settings.PerVvod.createXML();
+			Settings.ContrVvod.createXML();
 
 		} catch(Exception e) {
 			e.printStackTrace();
