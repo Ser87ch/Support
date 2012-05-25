@@ -139,19 +139,19 @@ public class Settings{
 
 					Element eElement = (Element) nNode;
 
-					Settings.server = XML.getTagString("server", eElement);	
-					Settings.db = XML.getTagString("db", eElement);	
-					Settings.user = XML.getTagString("user", eElement);	
-					Settings.pwd = XML.getTagString("pwd", eElement);
-					Settings.testProj = XML.getTagString("testproj", eElement);	
+					server = XML.getTagString("server", eElement);	
+					db = XML.getTagString("db", eElement);	
+					user = XML.getTagString("user", eElement);	
+					pwd = XML.getTagString("pwd", eElement);
+					testProj = XML.getTagString("testproj", eElement);	
 					if(!init)
 					{						
-						Settings.path = XML.getTagString("path", eElement);	
-						Settings.bik = XML.getTagString("bik", eElement);	
-						Settings.operDate = XML.getTagDate("operdate", eElement);	
+						path = XML.getTagString("path", eElement);	
+						bik = XML.getTagString("bik", eElement);	
+						operDate = XML.getTagDate("operdate", eElement);	
 
-						Settings.folder = XML.getTagString("folder", eElement);	
-						Settings.fullfolder = XML.getTagString("fullfolder", eElement);
+						folder = XML.getTagString("folder", eElement);	
+						fullfolder = XML.getTagString("fullfolder", eElement);
 
 					}
 				}
@@ -194,7 +194,7 @@ public class Settings{
 
 				File xml = new File(Settings.fullfolder + "settings\\gendoc.xml");
 				StreamResult result = new StreamResult(xml);
-				Log.msg("XML с настройками для генерации входящих документов " + Settings.fullfolder + "settings\\general.xml создан.");
+				Log.msg("XML с настройками для генерации входящих документов " + Settings.fullfolder + "settings\\gendoc.xml создан.");
 				//StreamResult result = new StreamResult(System.out);
 
 				transformer.transform(source, result);
@@ -236,9 +236,9 @@ public class Settings{
 
 						Element eElement = (Element) nNode;
 
-						Settings.GenDoc.numBIK = XML.getTagInt("numbik", eElement);	
-						Settings.GenDoc.numDoc = XML.getTagInt("numdoc", eElement);	
-						Settings.GenDoc.firstDoc = XML.getTagInt("firstdoc", eElement);		
+						numBIK = XML.getTagInt("numbik", eElement);	
+						numDoc = XML.getTagInt("numdoc", eElement);	
+						firstDoc = XML.getTagInt("firstdoc", eElement);		
 
 					}
 				}
@@ -249,6 +249,184 @@ public class Settings{
 			}
 		}
 	}
+	
+	public static class PerVvod{
+		public static String user = "";
+		public static String pwd = "";
+		public static String sign = "";
+		public static String key = "";
+		
+		public static void createXML()
+		{
+			try {
 
+				DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+
+				Document doc = docBuilder.newDocument();
+				Element rootElement = doc.createElement("pervvod");
+				doc.appendChild(rootElement);
+
+				rootElement.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+				rootElement.setAttribute("xsi:noNamespaceSchemaLocation", Settings.testProj + "XMLSchema\\settings\\pervvod.xsd");
+
+				XML.createNode(doc, rootElement, "user", user);	
+				XML.createNode(doc, rootElement, "pwd", pwd);	
+				XML.createNode(doc, rootElement, "sign", sign);	
+				XML.createNode(doc, rootElement, "key", key);	
+
+				TransformerFactory transformerFactory = TransformerFactory.newInstance();
+				Transformer transformer = transformerFactory.newTransformer();
+				DOMSource source = new DOMSource(doc);
+
+				File xml = new File(Settings.fullfolder + "settings\\pervvod.xml");
+				StreamResult result = new StreamResult(xml);
+				Log.msg("XML с настройками для первичного ввода докуметов " + Settings.fullfolder + "settings\\pervvod.xml создан.");
+				//StreamResult result = new StreamResult(System.out);
+
+				transformer.transform(source, result);
+
+				XML.validate(Settings.testProj + "XMLSchema\\settings\\pervvod.xsd",Settings.fullfolder + "settings\\pervvod.xml");
+
+			} catch (ParserConfigurationException pce) {
+				pce.printStackTrace();
+				Log.msg(pce);
+			} catch (TransformerException tfe) {
+				tfe.printStackTrace();
+				Log.msg(tfe);
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.msg(e);
+			}
+
+		}
+
+		public static void readXML(String src)
+		{
+			try {
+
+				File fXmlFile = new File(src);
+				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+				Document doc = dBuilder.parse(fXmlFile);
+				doc.getDocumentElement().normalize();
+				XML.validate(Settings.testProj + "XMLSchema\\settings\\pervvod.xsd",src);
+
+				//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+				NodeList nList = doc.getElementsByTagName("pervvod");
+
+
+				for (int temp = 0; temp < nList.getLength(); temp++) {
+
+					Node nNode = nList.item(temp);
+					if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+
+						Element eElement = (Element) nNode;
+
+						user = XML.getTagString("user", eElement);	
+						pwd = XML.getTagString("pwd", eElement);	
+						sign = XML.getTagString("sign", eElement);		
+						key = XML.getTagString("key", eElement);		
+
+					}
+				}
+				Log.msg("XML с настройками для первичного ввода документов " + src + " загружен в программу.");
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.msg(e);
+			}
+		}
+	}
+
+	
+	public static class ContrVvod{
+		public static String user = "";
+		public static String pwd = "";
+		public static String sign = "";
+		public static String key = "";
+
+		public static void createXML()
+		{
+			try {
+
+				DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+
+				Document doc = docBuilder.newDocument();
+				Element rootElement = doc.createElement("contrvvod");
+				doc.appendChild(rootElement);
+
+				rootElement.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+				rootElement.setAttribute("xsi:noNamespaceSchemaLocation", Settings.testProj + "XMLSchema\\settings\\pervvod.xsd");
+
+				XML.createNode(doc, rootElement, "user", user);	
+				XML.createNode(doc, rootElement, "pwd", pwd);	
+				XML.createNode(doc, rootElement, "sign", sign);	
+				XML.createNode(doc, rootElement, "key", key);	
+
+				TransformerFactory transformerFactory = TransformerFactory.newInstance();
+				Transformer transformer = transformerFactory.newTransformer();
+				DOMSource source = new DOMSource(doc);
+
+				File xml = new File(Settings.fullfolder + "settings\\contrvvod.xml");
+				StreamResult result = new StreamResult(xml);
+				Log.msg("XML с настройками для контрольго ввода докуметов " + Settings.fullfolder + "settings\\pervvod.xml создан.");
+				//StreamResult result = new StreamResult(System.out);
+
+				transformer.transform(source, result);
+
+				XML.validate(Settings.testProj + "XMLSchema\\settings\\contrvvod.xsd",Settings.fullfolder + "settings\\contrvvod.xml");
+
+			} catch (ParserConfigurationException pce) {
+				pce.printStackTrace();
+				Log.msg(pce);
+			} catch (TransformerException tfe) {
+				tfe.printStackTrace();
+				Log.msg(tfe);
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.msg(e);
+			}
+
+		}
+
+		public static void readXML(String src)
+		{
+			try {
+
+				File fXmlFile = new File(src);
+				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+				Document doc = dBuilder.parse(fXmlFile);
+				doc.getDocumentElement().normalize();
+				XML.validate(Settings.testProj + "XMLSchema\\settings\\contrvvod.xsd",src);
+
+				//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+				NodeList nList = doc.getElementsByTagName("contrvvod");
+
+
+				for (int temp = 0; temp < nList.getLength(); temp++) {
+
+					Node nNode = nList.item(temp);
+					if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+
+						Element eElement = (Element) nNode;
+
+						user = XML.getTagString("user", eElement);	
+						pwd = XML.getTagString("pwd", eElement);	
+						sign = XML.getTagString("sign", eElement);	
+						key = XML.getTagString("key", eElement);	
+
+					}
+				}
+				Log.msg("XML с настройками для контрольного ввода документов " + src + " загружен в программу.");
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.msg(e);
+			}
+		}
+	}
 
 }
+
+

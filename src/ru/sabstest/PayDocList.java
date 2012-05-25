@@ -66,7 +66,7 @@ public class PayDocList {
 					pd.pol = pol;
 					pd.ocher = 6;
 					pd.status = "";
-					pd.naznach = "Тест";
+					pd.naznach = "Оплата теста";
 					pd.datesp = Settings.operDate;
 					pd.datepost = Settings.operDate;
 
