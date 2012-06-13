@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:annotation>
+		<xs:documentation>Настройки для подсчета изменений в бд
+		</xs:documentation>
+	</xs:annotation>
+	<xs:element name="deltadb">
+		<xs:complexType>
+			<xs:sequence>				
+				<xs:element name="table" type="xs:string" maxOccurs="999">
+					<xs:annotation>
+						<xs:documentation>Таблица БД</xs:documentation>
+					</xs:annotation>
+				</xs:element>					
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

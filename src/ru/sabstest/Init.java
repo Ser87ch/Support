@@ -51,12 +51,14 @@ public class Init {
 				Settings.GenDoc.readXML(Settings.testProj + "default\\gendoc.xml");
 				Settings.PerVvod.readXML(Settings.testProj + "default\\pervvod.xml");
 				Settings.ContrVvod.readXML(Settings.testProj + "default\\contrvvod.xml");
+				DeltaDB.readXMLSettings(Settings.testProj + "default\\deltadb.xml");
 
 			} else {			
 				Settings.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\gendoc.xml",true);							
 				Settings.GenDoc.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\gendoc.xml");	
 				Settings.PerVvod.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\pervvod.xml");
 				Settings.ContrVvod.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\contrvvod.xml");
+				DeltaDB.readXMLSettings(Settings.testProj + "tests\\" + copyfolder + "\\settings\\deltadb.xml");
 			}
 			
 			Settings.loadFromDB();
@@ -64,7 +66,8 @@ public class Init {
 			Settings.GenDoc.createXML();
 			Settings.PerVvod.createXML();
 			Settings.ContrVvod.createXML();
-
+			DeltaDB.createXMLSettings();
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 			Log.msg(e);

@@ -1,10 +1,7 @@
 
 import java.lang.System;
 
-import ru.sabstest.Init;
-import ru.sabstest.Log;
-import ru.sabstest.PayDocList;
-import ru.sabstest.Settings;
+import ru.sabstest.*;
 
 
 
@@ -16,14 +13,17 @@ public class Main {
 		Settings.testProj = "C:\\sabstest\\";
 
 
-		Test t = Test.GEN;
+		Test t = Test.INIT;
 		switch(t)
 		{
 
 
 		case INIT:
 		{
-			Init.mkfolder();			
+			Init.mkfolder();	
+			System.out.println(DeltaDB.toStr());
+			DeltaDB.createDBLog();
+			DeltaDB.deleteDBLog();
 			break;
 		}
 		case GEN:
