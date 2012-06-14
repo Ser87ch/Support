@@ -57,7 +57,7 @@ public class Main {
 			Init.load();
 			Settings.readXML(Settings.fullfolder + "settings\\general.xml");
 			DeltaDB.readXMLSettings(Settings.fullfolder + "settings\\deltadb.xml");
-			DeltaDB.createXML("vvod.xml");
+			DeltaDB.createXML("vvod.xml");			
 			break;
 		}
 		}

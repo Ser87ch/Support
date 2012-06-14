@@ -90,7 +90,7 @@ public class DeltaDB {
 			transformer.transform(source, result);
 			Log.msg("XML с изменениями в БД " + Settings.testProj + "\\tests\\" + Settings.folder + "\\output\\" + filename + " создан.");			
 
-		//	XML.validate(Settings.testProj + "XMLSchema\\output\\deltadb.xsd",Settings.testProj + "\\tests\\" +  Settings.folder + "\\output\\" + filename);			
+			XML.validate(Settings.testProj + "XMLSchema\\output\\deltadb.xsd",Settings.testProj + "\\tests\\" +  Settings.folder + "\\output\\" + filename);			
 
 
 
