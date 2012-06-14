@@ -6,14 +6,14 @@ import ru.sabstest.*;
 
 
 public class Main {
-	enum Test {INIT, GEN, PERVVOD}
+	enum Test {INIT, GEN, PERVVOD,DDB}
 
 	public static void main(String[] args)
 	{
 		Settings.testProj = "C:\\sabstest\\";
 
 
-		Test t = Test.INIT;
+		Test t = Test.DDB;
 		switch(t)
 		{
 
@@ -48,6 +48,14 @@ public class Main {
 			pl.readXML(Settings.fullfolder + "input\\paydocs.xml");
 			//System.out.println(pl.toString());
 			System.out.println(pl.get(0).toStr("{ENTER}",true));
+			break;
+		}
+		case DDB:
+		{
+			Init.load();
+			Settings.readXML(Settings.fullfolder + "settings\\general.xml");
+			DeltaDB.readXMLSettings(Settings.fullfolder + "settings\\deltadb.xml");
+			DeltaDB.createXML("vvod.xml");
 			break;
 		}
 		}

@@ -41,9 +41,11 @@ public class Init {
 
 			(new File(Settings.fullfolder + "settings")).mkdir();
 			(new File(Settings.fullfolder + "input")).mkdir();
+			(new File(Settings.fullfolder + "output")).mkdir();
 
 			Log.msg("Папка настроек теста " +Settings.fullfolder + "settings создана.");
 			Log.msg("Папка входящих данных для теста " + Settings.fullfolder + "input создана.");
+			Log.msg("Папка исходящих данных для теста " + Settings.fullfolder + "output создана.");
 
 			if(isDefault)
 			{
