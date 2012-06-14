@@ -3,4 +3,5 @@
 	<table>DOCUMENT_BON</table>
 	<table>document_bon_pack</table>
 	<table>document_bon_pack_content</table>	
+	<table>epay_Document</table>
 </deltadb>
