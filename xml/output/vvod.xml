@@ -1,0 +1,902 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<deltadb xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="deltadb.xsd">
+	<table name="document_bon_pack_log">
+		<row action="i" changedate="2012-06-14 12:25:24.193" id="1">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">0.0000</column>
+			<column name="DocCount">0</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.193</column>
+			<column name="action">i</column>
+		</row>
+		<row action="ud" changedate="2012-06-14 12:25:24.257" id="2">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">0.0000</column>
+			<column name="DocCount">0</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.257</column>
+			<column name="action">ud</column>
+		</row>
+		<row action="ui" changedate="2012-06-14 12:25:24.257" id="3">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">58.5900</column>
+			<column name="DocCount">1</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.257</column>
+			<column name="action">ui</column>
+		</row>
+		<row action="ud" changedate="2012-06-14 12:25:24.303" id="4">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">58.5900</column>
+			<column name="DocCount">1</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.303</column>
+			<column name="action">ud</column>
+		</row>
+		<row action="ui" changedate="2012-06-14 12:25:24.303" id="5">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">59.2800</column>
+			<column name="DocCount">2</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.303</column>
+			<column name="action">ui</column>
+		</row>
+		<row action="ud" changedate="2012-06-14 12:25:24.333" id="6">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">59.2800</column>
+			<column name="DocCount">2</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.333</column>
+			<column name="action">ud</column>
+		</row>
+		<row action="ui" changedate="2012-06-14 12:25:24.333" id="7">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">77.7100</column>
+			<column name="DocCount">3</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.333</column>
+			<column name="action">ui</column>
+		</row>
+		<row action="ud" changedate="2012-06-14 12:25:24.363" id="8">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">77.7100</column>
+			<column name="DocCount">3</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.363</column>
+			<column name="action">ud</column>
+		</row>
+		<row action="ui" changedate="2012-06-14 12:25:24.363" id="9">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">94.4900</column>
+			<column name="DocCount">4</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.363</column>
+			<column name="action">ui</column>
+		</row>
+		<row action="ud" changedate="2012-06-14 12:25:24.397" id="10">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">94.4900</column>
+			<column name="DocCount">4</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.397</column>
+			<column name="action">ud</column>
+		</row>
+		<row action="ui" changedate="2012-06-14 12:25:24.397" id="11">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">129.0200</column>
+			<column name="DocCount">5</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.397</column>
+			<column name="action">ui</column>
+		</row>
+		<row action="ud" changedate="2012-06-14 12:25:24.427" id="12">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">129.0200</column>
+			<column name="DocCount">5</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.427</column>
+			<column name="action">ud</column>
+		</row>
+		<row action="ui" changedate="2012-06-14 12:25:24.427" id="13">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">203.1300</column>
+			<column name="DocCount">6</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.427</column>
+			<column name="action">ui</column>
+		</row>
+		<row action="ud" changedate="2012-06-14 12:25:24.46" id="14">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">203.1300</column>
+			<column name="DocCount">6</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.46</column>
+			<column name="action">ud</column>
+		</row>
+		<row action="ui" changedate="2012-06-14 12:25:24.46" id="15">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">256.5500</column>
+			<column name="DocCount">7</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.46</column>
+			<column name="action">ui</column>
+		</row>
+		<row action="ud" changedate="2012-06-14 12:25:24.49" id="16">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">256.5500</column>
+			<column name="DocCount">7</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.49</column>
+			<column name="action">ud</column>
+		</row>
+		<row action="ui" changedate="2012-06-14 12:25:24.49" id="17">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">354.8300</column>
+			<column name="DocCount">8</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.49</column>
+			<column name="action">ui</column>
+		</row>
+		<row action="ud" changedate="2012-06-14 12:25:24.52" id="18">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">354.8300</column>
+			<column name="DocCount">8</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.52</column>
+			<column name="action">ud</column>
+		</row>
+		<row action="ui" changedate="2012-06-14 12:25:24.52" id="19">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">449.0500</column>
+			<column name="DocCount">9</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.52</column>
+			<column name="action">ui</column>
+		</row>
+		<row action="ud" changedate="2012-06-14 12:25:24.553" id="20">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">449.0500</column>
+			<column name="DocCount">9</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.553</column>
+			<column name="action">ud</column>
+		</row>
+		<row action="ui" changedate="2012-06-14 12:25:24.553" id="21">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">489.5300</column>
+			<column name="DocCount">10</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.553</column>
+			<column name="action">ui</column>
+		</row>
+		<row action="ud" changedate="2012-06-14 12:25:24.583" id="22">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">489.5300</column>
+			<column name="DocCount">10</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.583</column>
+			<column name="action">ud</column>
+		</row>
+		<row action="ui" changedate="2012-06-14 12:25:24.583" id="23">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">562.1200</column>
+			<column name="DocCount">11</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.583</column>
+			<column name="action">ui</column>
+		</row>
+		<row action="ud" changedate="2012-06-14 12:25:24.613" id="24">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">562.1200</column>
+			<column name="DocCount">11</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.613</column>
+			<column name="action">ud</column>
+		</row>
+		<row action="ui" changedate="2012-06-14 12:25:24.613" id="25">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">608.1400</column>
+			<column name="DocCount">12</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.613</column>
+			<column name="action">ui</column>
+		</row>
+		<row action="ud" changedate="2012-06-14 12:25:24.647" id="26">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">608.1400</column>
+			<column name="DocCount">12</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.647</column>
+			<column name="action">ud</column>
+		</row>
+		<row action="ui" changedate="2012-06-14 12:25:24.647" id="27">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">633.4700</column>
+			<column name="DocCount">13</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.647</column>
+			<column name="action">ui</column>
+		</row>
+		<row action="ud" changedate="2012-06-14 12:25:24.677" id="28">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">633.4700</column>
+			<column name="DocCount">13</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.677</column>
+			<column name="action">ud</column>
+		</row>
+		<row action="ui" changedate="2012-06-14 12:25:24.677" id="29">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">709.1000</column>
+			<column name="DocCount">14</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.677</column>
+			<column name="action">ui</column>
+		</row>
+		<row action="ud" changedate="2012-06-14 12:25:24.693" id="30">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">709.1000</column>
+			<column name="DocCount">14</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.693</column>
+			<column name="action">ud</column>
+		</row>
+		<row action="ui" changedate="2012-06-14 12:25:24.693" id="31">
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DEPART">1</column>
+			<column name="N_PACK">105</column>
+			<column name="TYPE_PACK">2111</column>
+			<column name="SUBTYPE">Расчетный документ</column>
+			<column name="STATUS">0</column>
+			<column name="INOUTMODE">0</column>
+			<column name="FLAG_EXPORT">1</column>
+			<column name="FLAG_CLOSE" />
+			<column name="USER_INSERT">3</column>
+			<column name="DATE_INSERT">2012-06-14 12:25:24.193</column>
+			<column name="DATE_OPER">2012-02-03 00:00:00.0</column>
+			<column name="DocSumma">764.0300</column>
+			<column name="DocCount">15</column>
+			<column name="ErrCount">0</column>
+			<column name="FatalCount">0</column>
+			<column name="Name_pack">105</column>
+			<column name="PackFile" />
+			<column name="Status2">1</column>
+			<column name="User_Check">4</column>
+			<column name="changedate">2012-06-14 12:25:24.693</column>
+			<column name="action">ui</column>
+		</row>
+	</table>
+	<table name="document_bon_pack_content_log">
+		<row action="i" changedate="2012-06-14 12:25:24.257" id="1">
+			<column name="ID_content">63466</column>
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DOC">108770</column>
+			<column name="Info" />
+			<column name="ERROR_INFO" />
+			<column name="summa">58.5900</column>
+			<column name="changedate">2012-06-14 12:25:24.257</column>
+			<column name="action">i</column>
+		</row>
+		<row action="i" changedate="2012-06-14 12:25:24.303" id="2">
+			<column name="ID_content">63467</column>
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DOC">108771</column>
+			<column name="Info" />
+			<column name="ERROR_INFO" />
+			<column name="summa">0.6900</column>
+			<column name="changedate">2012-06-14 12:25:24.303</column>
+			<column name="action">i</column>
+		</row>
+		<row action="i" changedate="2012-06-14 12:25:24.333" id="3">
+			<column name="ID_content">63468</column>
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DOC">108772</column>
+			<column name="Info" />
+			<column name="ERROR_INFO" />
+			<column name="summa">18.4300</column>
+			<column name="changedate">2012-06-14 12:25:24.333</column>
+			<column name="action">i</column>
+		</row>
+		<row action="i" changedate="2012-06-14 12:25:24.363" id="4">
+			<column name="ID_content">63469</column>
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DOC">108773</column>
+			<column name="Info" />
+			<column name="ERROR_INFO" />
+			<column name="summa">16.7800</column>
+			<column name="changedate">2012-06-14 12:25:24.363</column>
+			<column name="action">i</column>
+		</row>
+		<row action="i" changedate="2012-06-14 12:25:24.397" id="5">
+			<column name="ID_content">63470</column>
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DOC">108774</column>
+			<column name="Info" />
+			<column name="ERROR_INFO" />
+			<column name="summa">34.5300</column>
+			<column name="changedate">2012-06-14 12:25:24.397</column>
+			<column name="action">i</column>
+		</row>
+		<row action="i" changedate="2012-06-14 12:25:24.427" id="6">
+			<column name="ID_content">63471</column>
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DOC">108775</column>
+			<column name="Info" />
+			<column name="ERROR_INFO" />
+			<column name="summa">74.1100</column>
+			<column name="changedate">2012-06-14 12:25:24.427</column>
+			<column name="action">i</column>
+		</row>
+		<row action="i" changedate="2012-06-14 12:25:24.46" id="7">
+			<column name="ID_content">63472</column>
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DOC">108776</column>
+			<column name="Info" />
+			<column name="ERROR_INFO" />
+			<column name="summa">53.4200</column>
+			<column name="changedate">2012-06-14 12:25:24.46</column>
+			<column name="action">i</column>
+		</row>
+		<row action="i" changedate="2012-06-14 12:25:24.49" id="8">
+			<column name="ID_content">63473</column>
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DOC">108777</column>
+			<column name="Info" />
+			<column name="ERROR_INFO" />
+			<column name="summa">98.2800</column>
+			<column name="changedate">2012-06-14 12:25:24.49</column>
+			<column name="action">i</column>
+		</row>
+		<row action="i" changedate="2012-06-14 12:25:24.52" id="9">
+			<column name="ID_content">63474</column>
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DOC">108778</column>
+			<column name="Info" />
+			<column name="ERROR_INFO" />
+			<column name="summa">94.2200</column>
+			<column name="changedate">2012-06-14 12:25:24.52</column>
+			<column name="action">i</column>
+		</row>
+		<row action="i" changedate="2012-06-14 12:25:24.553" id="10">
+			<column name="ID_content">63475</column>
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DOC">108779</column>
+			<column name="Info" />
+			<column name="ERROR_INFO" />
+			<column name="summa">40.4800</column>
+			<column name="changedate">2012-06-14 12:25:24.553</column>
+			<column name="action">i</column>
+		</row>
+		<row action="i" changedate="2012-06-14 12:25:24.583" id="11">
+			<column name="ID_content">63476</column>
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DOC">108780</column>
+			<column name="Info" />
+			<column name="ERROR_INFO" />
+			<column name="summa">72.5900</column>
+			<column name="changedate">2012-06-14 12:25:24.583</column>
+			<column name="action">i</column>
+		</row>
+		<row action="i" changedate="2012-06-14 12:25:24.613" id="12">
+			<column name="ID_content">63477</column>
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DOC">108781</column>
+			<column name="Info" />
+			<column name="ERROR_INFO" />
+			<column name="summa">46.0200</column>
+			<column name="changedate">2012-06-14 12:25:24.613</column>
+			<column name="action">i</column>
+		</row>
+		<row action="i" changedate="2012-06-14 12:25:24.647" id="13">
+			<column name="ID_content">63478</column>
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DOC">108782</column>
+			<column name="Info" />
+			<column name="ERROR_INFO" />
+			<column name="summa">25.3300</column>
+			<column name="changedate">2012-06-14 12:25:24.647</column>
+			<column name="action">i</column>
+		</row>
+		<row action="i" changedate="2012-06-14 12:25:24.677" id="14">
+			<column name="ID_content">63479</column>
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DOC">108783</column>
+			<column name="Info" />
+			<column name="ERROR_INFO" />
+			<column name="summa">75.6300</column>
+			<column name="changedate">2012-06-14 12:25:24.677</column>
+			<column name="action">i</column>
+		</row>
+		<row action="i" changedate="2012-06-14 12:25:24.693" id="15">
+			<column name="ID_content">63480</column>
+			<column name="ID_PACK">15691</column>
+			<column name="ID_DOC">108784</column>
+			<column name="Info" />
+			<column name="ERROR_INFO" />
+			<column name="summa">54.9300</column>
+			<column name="changedate">2012-06-14 12:25:24.693</column>
+			<column name="action">i</column>
+		</row>
+	</table>
+</deltadb>

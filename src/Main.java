@@ -1,30 +1,31 @@
 
 
+
 import java.lang.System;
-import ru.sabstest.Init;
-import ru.sabstest.Log;
-import ru.sabstest.PayDocList;
-import ru.sabstest.Settings;
+import ru.sabstest.*;
 
 
 
 
 public class Main {
-	enum Test {INIT, GEN, PERVVOD}
+	enum Test {INIT, GEN, PERVVOD,DDB}
 
 	public static void main(String[] args)
 	{
 		Settings.testProj = "C:\\sabstest\\";
 
 
-		Test t = Test.GEN;
+		Test t = Test.DDB;
 		switch(t)
 		{
 
 
 		case INIT:
 		{
-			Init.mkfolder();			
+			Init.mkfolder();	
+			System.out.println(DeltaDB.toStr());
+			DeltaDB.createDBLog();
+			DeltaDB.deleteDBLog();
 			break;
 		}
 		case GEN:
@@ -49,6 +50,14 @@ public class Main {
 			pl.readXML(Settings.fullfolder + "input\\paydocs.xml");
 			//System.out.println(pl.toString());
 			System.out.println(pl.get(0).toStr("{ENTER}",true));
+			break;
+		}
+		case DDB:
+		{
+			Init.load();
+			Settings.readXML(Settings.fullfolder + "settings\\general.xml");
+			DeltaDB.readXMLSettings(Settings.fullfolder + "settings\\deltadb.xml");
+			DeltaDB.createXML("vvod.xml");
 			break;
 		}
 		}

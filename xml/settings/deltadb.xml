@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deltadb xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="deltadb.xsd">
+	<table>DOCUMENT_BON</table>
+	<table>document_bon_pack</table>
+	<table>document_bon_pack_content</table>	
+</deltadb>
