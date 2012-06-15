@@ -427,6 +427,182 @@ public class Settings{
 		}
 	}
 
+	
+	public static class FormES{
+		public static String user = "";
+		public static String pwd = "";
+		public static String sign = "";
+		public static String key = "";
+		
+		public static void createXML()
+		{
+			try {
+
+				DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+
+				Document doc = docBuilder.newDocument();
+				Element rootElement = doc.createElement("formes");
+				doc.appendChild(rootElement);
+
+				rootElement.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+				rootElement.setAttribute("xsi:noNamespaceSchemaLocation", Settings.testProj + "XMLSchema\\settings\\formes.xsd");
+
+				XML.createNode(doc, rootElement, "user", user);	
+				XML.createNode(doc, rootElement, "pwd", pwd);	
+				XML.createNode(doc, rootElement, "sign", sign);	
+				XML.createNode(doc, rootElement, "key", key);	
+
+				TransformerFactory transformerFactory = TransformerFactory.newInstance();
+				Transformer transformer = transformerFactory.newTransformer();
+				DOMSource source = new DOMSource(doc);
+
+				File xml = new File(Settings.fullfolder + "settings\\formes.xml");
+				StreamResult result = new StreamResult(xml);
+				Log.msg("XML с настройками для формирования ЭС " + Settings.fullfolder + "settings\\formes.xml создан.");
+				//StreamResult result = new StreamResult(System.out);
+
+				transformer.transform(source, result);
+
+				XML.validate(Settings.testProj + "XMLSchema\\settings\\formes.xsd",Settings.fullfolder + "settings\\formes.xml");
+
+			} catch (ParserConfigurationException pce) {
+				pce.printStackTrace();
+				Log.msg(pce);
+			} catch (TransformerException tfe) {
+				tfe.printStackTrace();
+				Log.msg(tfe);
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.msg(e);
+			}
+
+		}
+
+		public static void readXML(String src)
+		{
+			try {
+
+				File fXmlFile = new File(src);
+				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+				Document doc = dBuilder.parse(fXmlFile);
+				doc.getDocumentElement().normalize();
+				XML.validate(Settings.testProj + "XMLSchema\\settings\\formes.xsd",src);
+
+				//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+				NodeList nList = doc.getElementsByTagName("formes");
+
+
+				for (int temp = 0; temp < nList.getLength(); temp++) {
+
+					Node nNode = nList.item(temp);
+					if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+
+						Element eElement = (Element) nNode;
+
+						user = XML.getTagString("user", eElement);	
+						pwd = XML.getTagString("pwd", eElement);	
+						sign = XML.getTagString("sign", eElement);		
+						key = XML.getTagString("key", eElement);		
+
+					}
+				}
+				Log.msg("XML с настройками для формирования ЭС " + src + " загружен в программу.");
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.msg(e);
+			}
+		}
+	}
+	
+	public static class ContrES{
+		public static String user = "";
+		public static String pwd = "";
+		public static String sign = "";
+		public static String key = "";
+		
+		public static void createXML()
+		{
+			try {
+
+				DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+
+				Document doc = docBuilder.newDocument();
+				Element rootElement = doc.createElement("contres");
+				doc.appendChild(rootElement);
+
+				rootElement.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+				rootElement.setAttribute("xsi:noNamespaceSchemaLocation", Settings.testProj + "XMLSchema\\settings\\contres.xsd");
+
+				XML.createNode(doc, rootElement, "user", user);	
+				XML.createNode(doc, rootElement, "pwd", pwd);	
+				XML.createNode(doc, rootElement, "sign", sign);	
+				XML.createNode(doc, rootElement, "key", key);	
+
+				TransformerFactory transformerFactory = TransformerFactory.newInstance();
+				Transformer transformer = transformerFactory.newTransformer();
+				DOMSource source = new DOMSource(doc);
+
+				File xml = new File(Settings.fullfolder + "settings\\contres.xml");
+				StreamResult result = new StreamResult(xml);
+				Log.msg("XML с настройками для контроля ЭС " + Settings.fullfolder + "settings\\contres.xml создан.");
+				//StreamResult result = new StreamResult(System.out);
+
+				transformer.transform(source, result);
+
+				XML.validate(Settings.testProj + "XMLSchema\\settings\\contres.xsd",Settings.fullfolder + "settings\\contres.xml");
+
+			} catch (ParserConfigurationException pce) {
+				pce.printStackTrace();
+				Log.msg(pce);
+			} catch (TransformerException tfe) {
+				tfe.printStackTrace();
+				Log.msg(tfe);
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.msg(e);
+			}
+
+		}
+
+		public static void readXML(String src)
+		{
+			try {
+
+				File fXmlFile = new File(src);
+				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+				Document doc = dBuilder.parse(fXmlFile);
+				doc.getDocumentElement().normalize();
+				XML.validate(Settings.testProj + "XMLSchema\\settings\\contres.xsd",src);
+
+				//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+				NodeList nList = doc.getElementsByTagName("contres");
+
+
+				for (int temp = 0; temp < nList.getLength(); temp++) {
+
+					Node nNode = nList.item(temp);
+					if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+
+						Element eElement = (Element) nNode;
+
+						user = XML.getTagString("user", eElement);	
+						pwd = XML.getTagString("pwd", eElement);	
+						sign = XML.getTagString("sign", eElement);		
+						key = XML.getTagString("key", eElement);		
+
+					}
+				}
+				Log.msg("XML с настройками для контроля ЭС " + src + " загружен в программу.");
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.msg(e);
+			}
+		}
+	}
 }
 
 

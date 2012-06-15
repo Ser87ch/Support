@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:annotation>
+		<xs:documentation>Настройки для контроля ЭС
+		</xs:documentation>
+	</xs:annotation>
+	<xs:element name="contres">
+		<xs:complexType>
+			<xs:sequence>				
+				<xs:element name="user" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Пользователь</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="pwd" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Пароль</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="sign" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Профиль сигнатуры</xs:documentation>
+					</xs:annotation>
+				</xs:element>	
+				<xs:element name="key" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Ключ сигнатуры</xs:documentation>
+					</xs:annotation>
+				</xs:element>			
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
