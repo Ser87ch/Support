@@ -9,13 +9,20 @@ import java.io.IOException;
 import java.io.LineNumberReader;
 
 import java.nio.channels.FileChannel;
+import java.sql.ResultSet;
 
 public class Pack {
 	public static void createRpack()
 	{
 		try {
-			//copyFile("C:\\p$1s0302.82o", Settings.testProj + "tests\\" + Settings.folder + "\\output\\rpack.txt");
-			File sfile = new File("C:\\p$1s0302.82o");
+			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
+
+			db.connect();
+			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile from dbo.document_bon_pack order by DATE_INSERT desc");
+			rs.next();
+			String spack = rs.getString("packfile");
+			
+			File sfile = new File(spack);
 			File rfile = new File(Settings.testProj + "tests\\" + Settings.folder + "\\output\\rpack.txt");
 
 			FileInputStream s = new FileInputStream(sfile);
@@ -81,7 +88,7 @@ public class Pack {
 
 			s.close();
 			rd.close();
-
+			db.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 			Log.msg(e);
