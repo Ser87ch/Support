@@ -86,6 +86,7 @@ public class Pack {
 				rd.writeBytes("\r\n");
 			}
 
+			Log.msg("Пакет ЭСИС-потверждений " + Settings.testProj + "tests\\" + Settings.folder + "\\output\\rpack.txt" + " создан.");
 			s.close();
 			rd.close();
 			db.close();
