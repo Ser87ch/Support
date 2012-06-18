@@ -22,6 +22,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+
 public class PayDocList {
 	private List<PayDoc> pdl;
 
@@ -267,6 +268,8 @@ public class PayDocList {
 			Log.msg(e);
 		}
 	}
+	
+	
 }
 
 

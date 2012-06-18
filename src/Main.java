@@ -8,14 +8,14 @@ import ru.sabstest.*;
 
 
 public class Main {
-	enum Test {INIT, GEN, PERVVOD,DDB}
+	enum Test {INIT, GEN, PERVVOD,DDB,RPACK}
 
 	public static void main(String[] args)
 	{
 		Settings.testProj = "C:\\sabstest\\";
 
 
-		Test t = Test.DDB;
+		Test t = Test.RPACK;
 		switch(t)
 		{
 
@@ -23,9 +23,7 @@ public class Main {
 		case INIT:
 		{
 			Init.mkfolder();	
-			System.out.println(DeltaDB.toStr());
-			DeltaDB.createDBLog();
-			DeltaDB.deleteDBLog();
+			
 			break;
 		}
 		case GEN:
@@ -58,6 +56,13 @@ public class Main {
 			Settings.readXML(Settings.fullfolder + "settings\\general.xml");
 			DeltaDB.readXMLSettings(Settings.fullfolder + "settings\\deltadb.xml");
 			DeltaDB.createXML("vvod.xml");			
+			break;
+		}
+		case RPACK:
+		{
+			Init.load();
+			Settings.readXML(Settings.fullfolder + "settings\\general.xml");
+			Pack.createRpack();
 			break;
 		}
 		}

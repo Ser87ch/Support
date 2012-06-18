@@ -1,10 +1,6 @@
 package ru.sabstest;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.channels.FileChannel;
 import java.text.DecimalFormat;
 
 
@@ -96,29 +92,5 @@ public class Init {
 		
 	}
 	
-	public static void copyFile(String sourcestr, String deststr)throws IOException {
-		File sourceFile = new File(sourcestr);
-		File destFile = new File(deststr);
-		destFile.createNewFile();
-		FileChannel source = null;
-		FileChannel destination = null;
-
-		if(!destFile.exists()) {
-			destFile.createNewFile();
-		}	    
-
-		try {
-			source = new FileInputStream(sourceFile).getChannel();
-			destination = new FileOutputStream(destFile).getChannel();
-			destination.transferFrom(source, 0, source.size());
-		} 
-		finally {
-			if(source != null) {
-				source.close();
-			}
-			if(destination != null) {
-				destination.close();
-			}
-		}
-	}
+	
 }
