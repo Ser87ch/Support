@@ -62,7 +62,9 @@ public class Main {
 		{
 			Init.load();
 			Settings.readXML(Settings.fullfolder + "settings\\general.xml");
+			Settings.GenRpack.readXML(Settings.fullfolder + "settings\\genrpack.xml");
 			Pack.createRpack();
+		
 			break;
 		}
 		}

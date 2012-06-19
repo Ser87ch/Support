@@ -121,4 +121,21 @@ public class Pack {
 			}
 		}
 	}
+	
+	public static String getRPackName()
+	{
+		try {
+			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
+			db.connect();			
+			ResultSet rs = db.st.executeQuery("select top 1 isnull(SUBTYPE,'') packfile from dbo.document_bon_pack order by DATE_INSERT desc");
+			rs.next();
+			String spack = rs.getString("packfile"); //p$1s0302.82o
+			db.close();
+			return spack.substring(0,3) + "r" + spack.substring(4,11) + "i";
+		} catch(Exception e) {
+			e.printStackTrace();
+			Log.msg(e);
+			return "";
+		}
+	}
 }

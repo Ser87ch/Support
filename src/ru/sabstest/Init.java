@@ -51,6 +51,7 @@ public class Init {
 				Settings.ContrVvod.readXML(Settings.testProj + "default\\contrvvod.xml");
 				Settings.FormES.readXML(Settings.testProj + "default\\formes.xml");
 				Settings.ContrES.readXML(Settings.testProj + "default\\contres.xml");
+				Settings.GenRpack.readXML(Settings.testProj + "default\\genrpack.xml");
 				DeltaDB.readXMLSettings(Settings.testProj + "default\\deltadb.xml");
 
 			} else {			
@@ -60,6 +61,7 @@ public class Init {
 				Settings.ContrVvod.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\contrvvod.xml");
 				Settings.FormES.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\formes.xml");
 				Settings.ContrES.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\contres.xml");
+				Settings.GenRpack.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\genrpack.xml");
 				DeltaDB.readXMLSettings(Settings.testProj + "tests\\" + copyfolder + "\\settings\\deltadb.xml");
 			}
 			

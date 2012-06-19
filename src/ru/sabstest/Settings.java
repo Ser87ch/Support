@@ -603,6 +603,94 @@ public class Settings{
 			}
 		}
 	}
+	
+	public static class GenRpack{
+		public static String signobr = "";
+		public static String keyobr = "";
+		public static String signcontr = "";
+		public static String keycontr = "";
+		
+		public static void createXML()
+		{
+			try {
+
+				DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+
+				Document doc = docBuilder.newDocument();
+				Element rootElement = doc.createElement("genrpack");
+				doc.appendChild(rootElement);
+
+				rootElement.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+				rootElement.setAttribute("xsi:noNamespaceSchemaLocation", Settings.testProj + "XMLSchema\\settings\\genrpack.xsd");
+
+				XML.createNode(doc, rootElement, "signobr", signobr);	
+				XML.createNode(doc, rootElement, "keyobr", keyobr);	
+				XML.createNode(doc, rootElement, "signcontr", signcontr);	
+				XML.createNode(doc, rootElement, "keycont", keycontr);	
+
+				TransformerFactory transformerFactory = TransformerFactory.newInstance();
+				Transformer transformer = transformerFactory.newTransformer();
+				DOMSource source = new DOMSource(doc);
+
+				File xml = new File(Settings.fullfolder + "settings\\genrpack.xml");
+				StreamResult result = new StreamResult(xml);
+				Log.msg("XML с настройками для генерации R-пакета " + Settings.fullfolder + "settings\\genrpack.xml создан.");
+				//StreamResult result = new StreamResult(System.out);
+
+				transformer.transform(source, result);
+
+				XML.validate(Settings.testProj + "XMLSchema\\settings\\genrpack.xsd",Settings.fullfolder + "settings\\genrpack.xml");
+
+			} catch (ParserConfigurationException pce) {
+				pce.printStackTrace();
+				Log.msg(pce);
+			} catch (TransformerException tfe) {
+				tfe.printStackTrace();
+				Log.msg(tfe);
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.msg(e);
+			}
+
+		}
+
+		public static void readXML(String src)
+		{
+			try {
+
+				File fXmlFile = new File(src);
+				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+				Document doc = dBuilder.parse(fXmlFile);
+				doc.getDocumentElement().normalize();
+				XML.validate(Settings.testProj + "XMLSchema\\settings\\genrpack.xsd",src);
+
+				//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+				NodeList nList = doc.getElementsByTagName("genrpack");
+
+
+				for (int temp = 0; temp < nList.getLength(); temp++) {
+
+					Node nNode = nList.item(temp);
+					if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+
+						Element eElement = (Element) nNode;
+
+						signobr = XML.getTagString("signobr", eElement);		
+						keyobr = XML.getTagString("keyobr", eElement);	
+						signcontr = XML.getTagString("signcontr", eElement);		
+						keycontr = XML.getTagString("keycontr", eElement);		
+
+					}
+				}
+				Log.msg("XML с настройками для генерации R-пакета " + src + " загружен в программу.");
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.msg(e);
+			}
+		}
+	}
 }
 
 
