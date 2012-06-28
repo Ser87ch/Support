@@ -18,7 +18,7 @@ public class Pack {
 			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
 
 			db.connect();
-			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile from dbo.document_bon_pack order by DATE_INSERT desc");
+			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile from dbo.document_bon_pack where substring(subtype,12,1) = 'o' order by DATE_INSERT desc");
 			rs.next();
 			String spack = rs.getString("packfile");
 			
@@ -29,39 +29,53 @@ public class Pack {
 			FileOutputStream r = new FileOutputStream(rfile);
 			DataOutputStream rd = new DataOutputStream(r);
 
-			byte a;
+			
 			byte[] b = new byte[732];
-			byte[] c = new byte[9];
+			byte[] c = new byte[205];
 
 			s.read(b);	
-			for(int i=0; i < 9; i++)
+			for(int i = 0; i < 9; i++)
 			{
-				c[i] = b[i + 57];
+				c[i] = b[i];
 			}
-
-
+			
+			for(int i = 0; i < 29; i++)
+			{
+				c[i + 9] = b[i + 9];
+			}
+			
+			for(int i = 0; i < 9; i++)
+			{
+				c[i + 38] = b[i + 38];
+			}
+			
+			
+			for(int i = 0; i < 46; i++)
+			{
+				c[i + 47] = b[i + 47];
+			}
+			
+			char e;
+			e = " ".toCharArray()[0];
+			for(int j = 0; j < 87; j++)
+			{
+				c[j + 93] = (byte) e;
+			}			
+			byte[] f = new byte[25];
+			f = "ÝËÅÊÒÐÎÍÍÎÅ ÏÎÄÒÂÅÐÆÄÅÍÈÅ".getBytes("cp866"); //ÝËÅÊÒÐÎÍÍÎÅ ÏÎÄÒÂÅÐÆÄÅÍÈÅ
+			
+			for(int j = 0; j < 25; j++)
+			{
+				c[j + 180] = f[j];
+			}
+			
+			rd.write(c);
+			
+			rd.writeBytes("\r\n");
+			
 			LineNumberReader  lnr = new LineNumberReader(new FileReader(sfile));
 			lnr.skip(Long.MAX_VALUE);
-			int cn = lnr.getLineNumber() - 1;
-			
-			
-			for(int i=0; i < 9; i++)
-			{
-				a = b[i];
-				b[i] = b[i + 38];
-				b[i + 38] = a;
-			}
-
-			for(int i=0; i < 80; i++)
-			{
-				a = b[i + 311];
-				b[i + 311] = b[i + 391];
-				b[i + 391] = a;
-			}
-
-			rd.write(b);
-			
-		//	rd.writeBytes("\r\n");
+			int cn = lnr.getLineNumber() - 2;
 			
 			for(int i=0;i < cn;i++)
 			{

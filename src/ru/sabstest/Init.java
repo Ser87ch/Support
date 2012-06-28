@@ -36,23 +36,25 @@ public class Init {
 			Log.msg("Папка теста " + Settings.fullfolder + " создана.");
 
 			(new File(Settings.fullfolder + "settings")).mkdir();
+			(new File(Settings.fullfolder + "settings\\" + Settings.pervfolder)).mkdir();
 			(new File(Settings.fullfolder + "input")).mkdir();
 			(new File(Settings.fullfolder + "output")).mkdir();
 
 			Log.msg("Папка настроек теста " +Settings.fullfolder + "settings создана.");
+			Log.msg("Папка настроек теста " +Settings.fullfolder + "settings\\" + Settings.pervfolder + " создана.");
 			Log.msg("Папка входящих данных для теста " + Settings.fullfolder + "input создана.");
 			Log.msg("Папка исходящих данных для теста " + Settings.fullfolder + "output создана.");
 
 			if(isDefault)
 			{
 				Settings.readXML(Settings.testProj + "default\\general.xml",true);
-				Settings.GenDoc.readXML(Settings.testProj + "default\\gendoc.xml");
-				Settings.PerVvod.readXML(Settings.testProj + "default\\pervvod.xml");
-				Settings.ContrVvod.readXML(Settings.testProj + "default\\contrvvod.xml");
-				Settings.FormES.readXML(Settings.testProj + "default\\formes.xml");
-				Settings.ContrES.readXML(Settings.testProj + "default\\contres.xml");
-				Settings.GenRpack.readXML(Settings.testProj + "default\\genrpack.xml");
-				DeltaDB.readXMLSettings(Settings.testProj + "default\\deltadb.xml");
+				Settings.GenDoc.readXML(Settings.testProj + "default\\" + Settings.pervfolder + "\\gendoc.xml");
+				Settings.PerVvod.readXML(Settings.testProj + "default\\" + Settings.pervfolder + "\\pervvod.xml");
+				Settings.ContrVvod.readXML(Settings.testProj + "default\\" + Settings.pervfolder + "\\contrvvod.xml");
+				Settings.FormES.readXML(Settings.testProj + "default\\" + Settings.pervfolder + "\\formes.xml");
+				Settings.ContrES.readXML(Settings.testProj + "default\\" + Settings.pervfolder + "\\contres.xml");
+				Settings.GenRpack.readXML(Settings.testProj + "default\\" + Settings.pervfolder + "\\genrpack.xml");
+				DeltaDB.readXMLSettings(Settings.testProj + "default\\" + Settings.pervfolder + "\\deltadb.xml");
 
 			} else {			
 				Settings.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\gendoc.xml",true);							
@@ -72,6 +74,7 @@ public class Init {
 			Settings.ContrVvod.createXML();
 			Settings.FormES.createXML();
 			Settings.ContrES.createXML();
+			Settings.GenRpack.createXML();
 			DeltaDB.createXMLSettings();
 			
 		} catch(Exception e) {

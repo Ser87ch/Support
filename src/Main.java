@@ -43,9 +43,9 @@ public class Main {
 		{			
 			Init.load();
 			Settings.readXML(Settings.fullfolder + "settings\\general.xml");
-			Settings.GenDoc.readXML(Settings.fullfolder + "settings\\pervvod.xml");
+			Settings.GenDoc.readXML(Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\pervvod.xml");
 			PayDocList pl = new PayDocList();
-			pl.readXML(Settings.fullfolder + "input\\paydocs.xml");
+			pl.readXML(Settings.fullfolder + "input\\" + Settings.pervfolder + "\\paydocs.xml");
 			//System.out.println(pl.toString());
 			System.out.println(pl.get(0).toStr("{ENTER}",true));
 			break;
@@ -54,7 +54,7 @@ public class Main {
 		{
 			Init.load();
 			Settings.readXML(Settings.fullfolder + "settings\\general.xml");
-			DeltaDB.readXMLSettings(Settings.fullfolder + "settings\\deltadb.xml");
+			DeltaDB.readXMLSettings(Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\deltadb.xml");
 			DeltaDB.createXML("vvod.xml");			
 			break;
 		}
@@ -62,13 +62,14 @@ public class Main {
 		{
 			Init.load();
 			Settings.readXML(Settings.fullfolder + "settings\\general.xml");
-			Settings.GenRpack.readXML(Settings.fullfolder + "settings\\genrpack.xml");
+			XML.validate("C:\\sabstest\\XMLschema\\output\\deltadb.xsd", "C:\\sabstest\\tests\\a000001\\output\\rpack.xml");
+			Settings.GenRpack.readXML(Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\genrpack.xml");
 			Pack.createRpack();
 		
 			break;
 		}
 		}
-
+		
 		Log.close();
 
 		System.out.println();

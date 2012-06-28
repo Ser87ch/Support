@@ -31,6 +31,9 @@ public class Settings{
 	public static String folder = "";
 	public static String fullfolder = "";
 
+	public static final String pervfolder = "perv"; 
+	
+	
 	public static void loadFromDB()
 	{
 		try {
@@ -152,7 +155,7 @@ public class Settings{
 
 						folder = XML.getTagString("folder", eElement);	
 						fullfolder = XML.getTagString("fullfolder", eElement);
-
+					
 					}
 				}
 			}
@@ -182,7 +185,7 @@ public class Settings{
 				doc.appendChild(rootElement);
 
 				rootElement.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-				rootElement.setAttribute("xsi:noNamespaceSchemaLocation", Settings.testProj + "XMLSchema\\settings\\gendoc.xsd");
+				rootElement.setAttribute("xsi:noNamespaceSchemaLocation", Settings.testProj + "XMLSchema\\settings\\" + Settings.pervfolder + "\\gendoc.xsd");
 
 				XML.createNode(doc, rootElement, "numbik", GenDoc.numBIK);	
 				XML.createNode(doc, rootElement, "numdoc", GenDoc.numDoc);	
@@ -192,14 +195,14 @@ public class Settings{
 				Transformer transformer = transformerFactory.newTransformer();
 				DOMSource source = new DOMSource(doc);
 
-				File xml = new File(Settings.fullfolder + "settings\\gendoc.xml");
+				File xml = new File(Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\gendoc.xml");
 				StreamResult result = new StreamResult(xml);
-				Log.msg("XML с настройками для генерации входящих документов " + Settings.fullfolder + "settings\\gendoc.xml создан.");
+				Log.msg("XML с настройками для генерации входящих документов " + Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\gendoc.xml создан.");
 				//StreamResult result = new StreamResult(System.out);
 
 				transformer.transform(source, result);
 
-				XML.validate(Settings.testProj + "XMLSchema\\settings\\gendoc.xsd",Settings.fullfolder + "settings\\gendoc.xml");
+				XML.validate(Settings.testProj + "XMLSchema\\settings\\" + Settings.pervfolder + "\\gendoc.xsd",Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\gendoc.xml");
 
 			} catch (ParserConfigurationException pce) {
 				pce.printStackTrace();
@@ -223,7 +226,7 @@ public class Settings{
 				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 				Document doc = dBuilder.parse(fXmlFile);
 				doc.getDocumentElement().normalize();
-				XML.validate(Settings.testProj + "XMLSchema\\settings\\gendoc.xsd",src);
+				XML.validate(Settings.testProj + "XMLSchema\\settings\\" + Settings.pervfolder + "\\gendoc.xsd",src);
 
 				//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 				NodeList nList = doc.getElementsByTagName("gendoc");
@@ -268,7 +271,7 @@ public class Settings{
 				doc.appendChild(rootElement);
 
 				rootElement.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-				rootElement.setAttribute("xsi:noNamespaceSchemaLocation", Settings.testProj + "XMLSchema\\settings\\pervvod.xsd");
+				rootElement.setAttribute("xsi:noNamespaceSchemaLocation", Settings.testProj + "XMLSchema\\settings\\" + Settings.pervfolder + "\\pervvod.xsd");
 
 				XML.createNode(doc, rootElement, "user", user);	
 				XML.createNode(doc, rootElement, "pwd", pwd);	
@@ -279,14 +282,14 @@ public class Settings{
 				Transformer transformer = transformerFactory.newTransformer();
 				DOMSource source = new DOMSource(doc);
 
-				File xml = new File(Settings.fullfolder + "settings\\pervvod.xml");
+				File xml = new File(Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\pervvod.xml");
 				StreamResult result = new StreamResult(xml);
-				Log.msg("XML с настройками для первичного ввода докуметов " + Settings.fullfolder + "settings\\pervvod.xml создан.");
+				Log.msg("XML с настройками для первичного ввода докуметов " + Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\pervvod.xml создан.");
 				//StreamResult result = new StreamResult(System.out);
 
 				transformer.transform(source, result);
 
-				XML.validate(Settings.testProj + "XMLSchema\\settings\\pervvod.xsd",Settings.fullfolder + "settings\\pervvod.xml");
+				XML.validate(Settings.testProj + "XMLSchema\\settings\\" + Settings.pervfolder + "\\pervvod.xsd",Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\pervvod.xml");
 
 			} catch (ParserConfigurationException pce) {
 				pce.printStackTrace();
@@ -310,7 +313,7 @@ public class Settings{
 				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 				Document doc = dBuilder.parse(fXmlFile);
 				doc.getDocumentElement().normalize();
-				XML.validate(Settings.testProj + "XMLSchema\\settings\\pervvod.xsd",src);
+				XML.validate(Settings.testProj + "XMLSchema\\settings\\" + Settings.pervfolder + "\\pervvod.xsd",src);
 
 				//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 				NodeList nList = doc.getElementsByTagName("pervvod");
@@ -357,7 +360,7 @@ public class Settings{
 				doc.appendChild(rootElement);
 
 				rootElement.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-				rootElement.setAttribute("xsi:noNamespaceSchemaLocation", Settings.testProj + "XMLSchema\\settings\\pervvod.xsd");
+				rootElement.setAttribute("xsi:noNamespaceSchemaLocation", Settings.testProj + "XMLSchema\\settings\\" + Settings.pervfolder + "\\pervvod.xsd");
 
 				XML.createNode(doc, rootElement, "user", user);	
 				XML.createNode(doc, rootElement, "pwd", pwd);	
@@ -368,14 +371,14 @@ public class Settings{
 				Transformer transformer = transformerFactory.newTransformer();
 				DOMSource source = new DOMSource(doc);
 
-				File xml = new File(Settings.fullfolder + "settings\\contrvvod.xml");
+				File xml = new File(Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\contrvvod.xml");
 				StreamResult result = new StreamResult(xml);
-				Log.msg("XML с настройками для контрольго ввода докуметов " + Settings.fullfolder + "settings\\pervvod.xml создан.");
+				Log.msg("XML с настройками для контрольго ввода докуметов " + Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\pervvod.xml создан.");
 				//StreamResult result = new StreamResult(System.out);
 
 				transformer.transform(source, result);
 
-				XML.validate(Settings.testProj + "XMLSchema\\settings\\contrvvod.xsd",Settings.fullfolder + "settings\\contrvvod.xml");
+				XML.validate(Settings.testProj + "XMLSchema\\settings\\" + Settings.pervfolder + "\\contrvvod.xsd",Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\contrvvod.xml");
 
 			} catch (ParserConfigurationException pce) {
 				pce.printStackTrace();
@@ -399,7 +402,7 @@ public class Settings{
 				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 				Document doc = dBuilder.parse(fXmlFile);
 				doc.getDocumentElement().normalize();
-				XML.validate(Settings.testProj + "XMLSchema\\settings\\contrvvod.xsd",src);
+				XML.validate(Settings.testProj + "XMLSchema\\settings\\" + Settings.pervfolder + "\\contrvvod.xsd",src);
 
 				//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 				NodeList nList = doc.getElementsByTagName("contrvvod");
@@ -446,7 +449,7 @@ public class Settings{
 				doc.appendChild(rootElement);
 
 				rootElement.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-				rootElement.setAttribute("xsi:noNamespaceSchemaLocation", Settings.testProj + "XMLSchema\\settings\\formes.xsd");
+				rootElement.setAttribute("xsi:noNamespaceSchemaLocation", Settings.testProj + "XMLSchema\\settings\\" + Settings.pervfolder + "\\formes.xsd");
 
 				XML.createNode(doc, rootElement, "user", user);	
 				XML.createNode(doc, rootElement, "pwd", pwd);	
@@ -457,14 +460,14 @@ public class Settings{
 				Transformer transformer = transformerFactory.newTransformer();
 				DOMSource source = new DOMSource(doc);
 
-				File xml = new File(Settings.fullfolder + "settings\\formes.xml");
+				File xml = new File(Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\formes.xml");
 				StreamResult result = new StreamResult(xml);
-				Log.msg("XML с настройками для формирования ЭС " + Settings.fullfolder + "settings\\formes.xml создан.");
+				Log.msg("XML с настройками для формирования ЭС " + Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\formes.xml создан.");
 				//StreamResult result = new StreamResult(System.out);
 
 				transformer.transform(source, result);
 
-				XML.validate(Settings.testProj + "XMLSchema\\settings\\formes.xsd",Settings.fullfolder + "settings\\formes.xml");
+				XML.validate(Settings.testProj + "XMLSchema\\settings\\" + Settings.pervfolder + "\\formes.xsd",Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\formes.xml");
 
 			} catch (ParserConfigurationException pce) {
 				pce.printStackTrace();
@@ -488,7 +491,7 @@ public class Settings{
 				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 				Document doc = dBuilder.parse(fXmlFile);
 				doc.getDocumentElement().normalize();
-				XML.validate(Settings.testProj + "XMLSchema\\settings\\formes.xsd",src);
+				XML.validate(Settings.testProj + "XMLSchema\\settings\\" + Settings.pervfolder + "\\formes.xsd",src);
 
 				//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 				NodeList nList = doc.getElementsByTagName("formes");
@@ -534,7 +537,7 @@ public class Settings{
 				doc.appendChild(rootElement);
 
 				rootElement.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-				rootElement.setAttribute("xsi:noNamespaceSchemaLocation", Settings.testProj + "XMLSchema\\settings\\contres.xsd");
+				rootElement.setAttribute("xsi:noNamespaceSchemaLocation", Settings.testProj + "XMLSchema\\settings\\" + Settings.pervfolder + "\\contres.xsd");
 
 				XML.createNode(doc, rootElement, "user", user);	
 				XML.createNode(doc, rootElement, "pwd", pwd);	
@@ -545,14 +548,14 @@ public class Settings{
 				Transformer transformer = transformerFactory.newTransformer();
 				DOMSource source = new DOMSource(doc);
 
-				File xml = new File(Settings.fullfolder + "settings\\contres.xml");
+				File xml = new File(Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\contres.xml");
 				StreamResult result = new StreamResult(xml);
-				Log.msg("XML с настройками для контроля ЭС " + Settings.fullfolder + "settings\\contres.xml создан.");
+				Log.msg("XML с настройками для контроля ЭС " + Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\contres.xml создан.");
 				//StreamResult result = new StreamResult(System.out);
 
 				transformer.transform(source, result);
 
-				XML.validate(Settings.testProj + "XMLSchema\\settings\\contres.xsd",Settings.fullfolder + "settings\\contres.xml");
+				XML.validate(Settings.testProj + "XMLSchema\\settings\\" + Settings.pervfolder + "\\contres.xsd",Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\contres.xml");
 
 			} catch (ParserConfigurationException pce) {
 				pce.printStackTrace();
@@ -576,7 +579,7 @@ public class Settings{
 				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 				Document doc = dBuilder.parse(fXmlFile);
 				doc.getDocumentElement().normalize();
-				XML.validate(Settings.testProj + "XMLSchema\\settings\\contres.xsd",src);
+				XML.validate(Settings.testProj + "XMLSchema\\settings\\" + Settings.pervfolder + "\\contres.xsd",src);
 
 				//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 				NodeList nList = doc.getElementsByTagName("contres");
@@ -622,25 +625,25 @@ public class Settings{
 				doc.appendChild(rootElement);
 
 				rootElement.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-				rootElement.setAttribute("xsi:noNamespaceSchemaLocation", Settings.testProj + "XMLSchema\\settings\\genrpack.xsd");
+				rootElement.setAttribute("xsi:noNamespaceSchemaLocation", Settings.testProj + "XMLSchema\\settings\\" + Settings.pervfolder + "\\genrpack.xsd");
 
 				XML.createNode(doc, rootElement, "signobr", signobr);	
 				XML.createNode(doc, rootElement, "keyobr", keyobr);	
 				XML.createNode(doc, rootElement, "signcontr", signcontr);	
-				XML.createNode(doc, rootElement, "keycont", keycontr);	
+				XML.createNode(doc, rootElement, "keycontr", keycontr);	
 
 				TransformerFactory transformerFactory = TransformerFactory.newInstance();
 				Transformer transformer = transformerFactory.newTransformer();
 				DOMSource source = new DOMSource(doc);
 
-				File xml = new File(Settings.fullfolder + "settings\\genrpack.xml");
+				File xml = new File(Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\genrpack.xml");
 				StreamResult result = new StreamResult(xml);
-				Log.msg("XML с настройками для генерации R-пакета " + Settings.fullfolder + "settings\\genrpack.xml создан.");
+				Log.msg("XML с настройками для генерации R-пакета " + Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\genrpack.xml создан.");
 				//StreamResult result = new StreamResult(System.out);
 
 				transformer.transform(source, result);
 
-				XML.validate(Settings.testProj + "XMLSchema\\settings\\genrpack.xsd",Settings.fullfolder + "settings\\genrpack.xml");
+				XML.validate(Settings.testProj + "XMLSchema\\settings\\" + Settings.pervfolder + "\\genrpack.xsd",Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\genrpack.xml");
 
 			} catch (ParserConfigurationException pce) {
 				pce.printStackTrace();
@@ -664,7 +667,7 @@ public class Settings{
 				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 				Document doc = dBuilder.parse(fXmlFile);
 				doc.getDocumentElement().normalize();
-				XML.validate(Settings.testProj + "XMLSchema\\settings\\genrpack.xsd",src);
+				XML.validate(Settings.testProj + "XMLSchema\\settings\\" + Settings.pervfolder + "\\genrpack.xsd",src);
 
 				//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 				NodeList nList = doc.getElementsByTagName("genrpack");

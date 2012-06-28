@@ -10,7 +10,7 @@
 					<xs:complexType>
 
 						<xs:sequence>
-							<xs:element name="row" maxOccurs="999">
+							<xs:element name="row" minOccurs="0" maxOccurs="999">
 								<xs:annotation>
 									<xs:documentation>Строка в таблице</xs:documentation>
 								</xs:annotation>
