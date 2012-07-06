@@ -32,6 +32,7 @@ public class Settings{
 	public static String fullfolder = "";
 
 	public static final String pervfolder = "perv"; 
+	public static final String obrfolder = "obr"; 
 	
 	
 	public static void loadFromDB()
@@ -187,9 +188,9 @@ public class Settings{
 				rootElement.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
 				rootElement.setAttribute("xsi:noNamespaceSchemaLocation", Settings.testProj + "XMLSchema\\settings\\" + Settings.pervfolder + "\\gendoc.xsd");
 
-				XML.createNode(doc, rootElement, "numbik", GenDoc.numBIK);	
-				XML.createNode(doc, rootElement, "numdoc", GenDoc.numDoc);	
-				XML.createNode(doc, rootElement, "firstdoc", GenDoc.firstDoc);	
+				XML.createNode(doc, rootElement, "numbik", numBIK);	
+				XML.createNode(doc, rootElement, "numdoc", numDoc);	
+				XML.createNode(doc, rootElement, "firstdoc", firstDoc);	
 
 				TransformerFactory transformerFactory = TransformerFactory.newInstance();
 				Transformer transformer = transformerFactory.newTransformer();
@@ -688,6 +689,104 @@ public class Settings{
 					}
 				}
 				Log.msg("XML с настройками для генерации R-пакета " + src + " загружен в программу.");
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.msg(e);
+			}
+		}
+	}
+	
+	public static class GenSpack{
+		
+		public static int numBIK = 0;
+		public static int numDoc = 0;
+		public static int firstDoc = 0;
+		public static String signobr = "";
+		public static String keyobr = "";
+		public static String signcontr = "";
+		public static String keycontr = "";
+		
+		public static void createXML()
+		{
+			try {
+
+				DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+
+				Document doc = docBuilder.newDocument();
+				Element rootElement = doc.createElement("genspack");
+				doc.appendChild(rootElement);
+
+				rootElement.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+				rootElement.setAttribute("xsi:noNamespaceSchemaLocation", Settings.testProj + "XMLSchema\\settings\\" + Settings.obrfolder + "\\genspack.xsd");
+
+				XML.createNode(doc, rootElement, "numbik", numBIK);	
+				XML.createNode(doc, rootElement, "numdoc", numDoc);	
+				XML.createNode(doc, rootElement, "firstdoc", firstDoc);
+				XML.createNode(doc, rootElement, "signobr", signobr);	
+				XML.createNode(doc, rootElement, "keyobr", keyobr);	
+				XML.createNode(doc, rootElement, "signcontr", signcontr);	
+				XML.createNode(doc, rootElement, "keycontr", keycontr);	
+
+				TransformerFactory transformerFactory = TransformerFactory.newInstance();
+				Transformer transformer = transformerFactory.newTransformer();
+				DOMSource source = new DOMSource(doc);
+
+				File xml = new File(Settings.fullfolder + "settings\\" + Settings.obrfolder + "\\genspack.xml");
+				StreamResult result = new StreamResult(xml);
+				Log.msg("XML с настройками для генерации S-пакета " + Settings.fullfolder + "settings\\" + Settings.obrfolder + "\\genspack.xml создан.");
+				//StreamResult result = new StreamResult(System.out);
+
+				transformer.transform(source, result);
+
+				XML.validate(Settings.testProj + "XMLSchema\\settings\\" + Settings.obrfolder + "\\genspack.xsd",Settings.fullfolder + "settings\\" + Settings.obrfolder + "\\genspack.xml");
+
+			} catch (ParserConfigurationException pce) {
+				pce.printStackTrace();
+				Log.msg(pce);
+			} catch (TransformerException tfe) {
+				tfe.printStackTrace();
+				Log.msg(tfe);
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.msg(e);
+			}
+
+		}
+
+		public static void readXML(String src)
+		{
+			try {
+
+				File fXmlFile = new File(src);
+				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+				Document doc = dBuilder.parse(fXmlFile);
+				doc.getDocumentElement().normalize();
+				XML.validate(Settings.testProj + "XMLSchema\\settings\\" + Settings.obrfolder + "\\genspack.xsd",src);
+
+				//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+				NodeList nList = doc.getElementsByTagName("genspack");
+
+
+				for (int temp = 0; temp < nList.getLength(); temp++) {
+
+					Node nNode = nList.item(temp);
+					if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+
+						Element eElement = (Element) nNode;
+						
+						numBIK = XML.getTagInt("numbik", eElement);	
+						numDoc = XML.getTagInt("numdoc", eElement);	
+						firstDoc = XML.getTagInt("firstdoc", eElement);
+						signobr = XML.getTagString("signobr", eElement);		
+						keyobr = XML.getTagString("keyobr", eElement);	
+						signcontr = XML.getTagString("signcontr", eElement);		
+						keycontr = XML.getTagString("keycontr", eElement);		
+
+					}
+				}
+				Log.msg("XML с настройками для генерации S-пакета " + src + " загружен в программу.");
 			} catch (Exception e) {
 				e.printStackTrace();
 				Log.msg(e);

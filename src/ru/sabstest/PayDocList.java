@@ -1,11 +1,14 @@
 package ru.sabstest;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Random;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.lang.Math;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -85,9 +88,75 @@ public class PayDocList {
 		}
 	}
 	
+	public void generateS()
+	{
+		try {
+			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
+			db.connect();
+
+			ResultSet rs = db.st.executeQuery("select top 1 NUM_ACC from dbo.Account where rest = (select min(rest) from dbo.Account where substring(NUM_ACC,1,1) = '4' and substring(NUM_ACC,1,5) <> '40101')");
+			rs.next();
+			String ls = rs.getString("NUM_ACC");
+
+			PayDoc.Client plat = new PayDoc.Client(Settings.bik, "", ls, "111111111111", "222222222", "ЗАО Пол");
+
+			pdl = new ArrayList<PayDoc>();
+
+			ResultSet rsbik = db.st.executeQuery("select top " + Settings.GenSpack.numBIK + " NEWNUM, isnull(KSNP,'') ksnp from dbo.BNKSEEK where substring(NEWNUM,1,4) = '" + Settings.bik.substring(0, 4) + "' and UER in ('2','3','4','5') and NEWNUM <> '" + Settings.bik + "'");
+			int i = 1;
+			while(rsbik.next()) {
+				String bikpol = rsbik.getString("NEWNUM");
+				String kspol = rsbik.getString("ksnp");
+				String lspol = "40702810000000000005";
+
+				PayDoc.Client pol = new PayDoc.Client(bikpol, kspol, lspol, "111111111111", "222222222", "ЗАО Тест");
+				pol.contrrazr();
+
+				for(int j = 0; j < Settings.GenSpack.numDoc; j++)
+				{
+					PayDoc pd = new PayDoc();
+					pd.num = Settings.GenSpack.firstDoc + j;
+					pd.date = Settings.operDate;
+					pd.vidop = "01";
+					pd.sum =  ((float) Math.round(new Random().nextFloat() * 10000))/ 100;				
+					pd.vidpl = VidPlat.EL;
+					pd.pol = plat;
+					pd.plat = pol;
+					pd.ocher = 6;
+					pd.status = "";
+					pd.naznach = "Оплата теста";
+					pd.datesp = Settings.operDate;
+					pd.datepost = Settings.operDate;
+
+					pdl.add(pd);
+					Log.msg("Документ №" + Integer.toString(i) + " сгенерирован.");
+					i++;
+				}
+
+			}
+			Log.msg("Генерация документов завершена.");
+			db.close();
+		} catch(Exception e) {
+			e.printStackTrace();
+			Log.msg(e);
+		}
+	}
+	
 	public int length()
 	{
 		return pdl.size();
+	}
+	
+	public float sumAll()
+	{
+		float sum = 0;
+		ListIterator <PayDoc> iter = pdl.listIterator();
+		while(iter.hasNext())
+		{
+			sum = sum + iter.next().sum;
+		}
+
+		return sum;
 	}
 	
 	public PayDoc get(int i)
@@ -269,7 +338,56 @@ public class PayDocList {
 		}
 	}
 	
-	
+	public void createSpack()
+	{
+		try {
+			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
+
+			db.connect();
+			ResultSet rs = db.st.executeQuery("select b.RKC rkc, b.NAMEP name, r.namep rname  from bnkseek b inner join bnkseek r on b.rkc = r.newnum where b.newnum = '" + Settings.bik + "'");
+			rs.next();
+			String rkcbik = rs.getString("RKC");
+			String rkcname = rs.getString("rname");
+			String bnkname = rs.getString("name");
+			
+			File sfile = new File(Settings.testProj + "tests\\" + Settings.folder + "\\input\\spack.txt");
+			FileOutputStream s = new FileOutputStream(sfile);
+			DataOutputStream sd = new DataOutputStream(s);
+			
+			String sf = rkcbik + String.format("%18s", "") + new SimpleDateFormat("ddMMyyyy").format(Settings.operDate) +
+			String.format("%3s", "") + Settings.bik + String.format("%10s", "") + String.format("%09d", this.length()) + 
+			String.format("%9s", "") + String.format("%018d", (int)(this.sumAll() * 100)) + String.format("%8s", "") + 
+			String.format("%-210s", "ЭЛЕКТРОННЫЕ ПЛАТЕЖИ") + String.format("%-80s", rkcname) +
+			String.format("%-80s", bnkname) + String.format("%259s", "");			
+			
+			byte[] b = new byte[730];
+			b = sf.getBytes("cp866"); 
+			sd.write(b);			
+			
+			int i = 1;
+			ListIterator <PayDoc> iter = pdl.listIterator();
+			while(iter.hasNext())
+			{
+				sd.writeBytes("\r\n");
+				PayDoc pd = iter.next();
+				
+				sf = String.format("%06d", this.length()) + new SimpleDateFormat("ddMMyyyy").format(pd.date) +
+				rkcbik.substring(2,8) + "000" + pd.plat.bik ;
+				
+				b = new byte[880];
+				b = sf.getBytes("cp866"); 
+				sd.write(b);
+				i++;
+			}
+			
+			s.close();
+			sd.close();
+			db.close();
+		} catch(Exception e) {
+			e.printStackTrace();
+			Log.msg(e);
+		}		
+	}
 }
 
 

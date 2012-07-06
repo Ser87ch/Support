@@ -37,11 +37,13 @@ public class Init {
 
 			(new File(Settings.fullfolder + "settings")).mkdir();
 			(new File(Settings.fullfolder + "settings\\" + Settings.pervfolder)).mkdir();
+			(new File(Settings.fullfolder + "settings\\" + Settings.obrfolder)).mkdir();
 			(new File(Settings.fullfolder + "input")).mkdir();
 			(new File(Settings.fullfolder + "output")).mkdir();
 
 			Log.msg("Папка настроек теста " +Settings.fullfolder + "settings создана.");
 			Log.msg("Папка настроек теста " +Settings.fullfolder + "settings\\" + Settings.pervfolder + " создана.");
+			Log.msg("Папка настроек теста " +Settings.fullfolder + "settings\\" + Settings.obrfolder + " создана.");
 			Log.msg("Папка входящих данных для теста " + Settings.fullfolder + "input создана.");
 			Log.msg("Папка исходящих данных для теста " + Settings.fullfolder + "output создана.");
 
@@ -54,16 +56,18 @@ public class Init {
 				Settings.FormES.readXML(Settings.testProj + "default\\" + Settings.pervfolder + "\\formes.xml");
 				Settings.ContrES.readXML(Settings.testProj + "default\\" + Settings.pervfolder + "\\contres.xml");
 				Settings.GenRpack.readXML(Settings.testProj + "default\\" + Settings.pervfolder + "\\genrpack.xml");
-				DeltaDB.readXMLSettings(Settings.testProj + "default\\" + Settings.pervfolder + "\\deltadb.xml");
+				Settings.GenRpack.readXML(Settings.testProj + "default\\" + Settings.obrfolder + "\\genspack.xml");
+				DeltaDB.readXMLSettings(Settings.testProj + "default\\deltadb.xml");
 
 			} else {			
-				Settings.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\gendoc.xml",true);							
-				Settings.GenDoc.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\gendoc.xml");	
-				Settings.PerVvod.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\pervvod.xml");
-				Settings.ContrVvod.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\contrvvod.xml");
-				Settings.FormES.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\formes.xml");
-				Settings.ContrES.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\contres.xml");
-				Settings.GenRpack.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\genrpack.xml");
+				Settings.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\" + Settings.pervfolder + "\\gendoc.xml",true);							
+				Settings.GenDoc.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\" + Settings.pervfolder + "\\gendoc.xml");	
+				Settings.PerVvod.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\" + Settings.pervfolder + "\\pervvod.xml");
+				Settings.ContrVvod.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\" + Settings.pervfolder + "\\contrvvod.xml");
+				Settings.FormES.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\" + Settings.pervfolder + "\\formes.xml");
+				Settings.ContrES.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\" + Settings.pervfolder + "\\contres.xml");
+				Settings.GenRpack.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\" + Settings.pervfolder + "\\genrpack.xml");
+				Settings.GenRpack.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\" + Settings.obrfolder + "\\genspack.xml");
 				DeltaDB.readXMLSettings(Settings.testProj + "tests\\" + copyfolder + "\\settings\\deltadb.xml");
 			}
 			

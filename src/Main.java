@@ -8,14 +8,13 @@ import ru.sabstest.*;
 
 
 public class Main {
-	enum Test {INIT, GEN, PERVVOD,DDB,RPACK}
+	enum Test {INIT, GEN, PERVVOD,DDB,RPACK,SPACK}
 
 	public static void main(String[] args)
 	{
 		Settings.testProj = "C:\\sabstest\\";
-
-
-		Test t = Test.RPACK;
+		
+		Test t = Test.SPACK;
 		switch(t)
 		{
 
@@ -54,7 +53,7 @@ public class Main {
 		{
 			Init.load();
 			Settings.readXML(Settings.fullfolder + "settings\\general.xml");
-			DeltaDB.readXMLSettings(Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\deltadb.xml");
+			DeltaDB.readXMLSettings(Settings.fullfolder + "settings\\deltadb.xml");
 			DeltaDB.createXML("vvod.xml");			
 			break;
 		}
@@ -62,12 +61,24 @@ public class Main {
 		{
 			Init.load();
 			Settings.readXML(Settings.fullfolder + "settings\\general.xml");
-			XML.validate("C:\\sabstest\\XMLschema\\output\\deltadb.xsd", "C:\\sabstest\\tests\\a000001\\output\\rpack.xml");
+			//XML.validate("C:\\sabstest\\XMLschema\\output\\deltadb.xsd", "C:\\sabstest\\tests\\a000001\\output\\rpack.xml");
 			Settings.GenRpack.readXML(Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\genrpack.xml");
 			Pack.createRpack();
 		
 			break;
 		}
+		case SPACK:
+		{
+			Init.load();
+			Settings.readXML(Settings.fullfolder + "settings\\general.xml");			
+			Settings.GenSpack.readXML(Settings.fullfolder + "settings\\" + Settings.obrfolder + "\\genspack.xml");
+			
+			PayDocList pl = new PayDocList();
+			pl.generateS();
+			pl.createSpack();
+		
+			break;
+		}		
 		}
 		
 		Log.close();

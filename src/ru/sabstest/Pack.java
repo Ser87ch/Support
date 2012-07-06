@@ -11,7 +11,11 @@ import java.io.LineNumberReader;
 import java.nio.channels.FileChannel;
 import java.sql.ResultSet;
 
+
 public class Pack {
+	
+	
+	
 	public static void createRpack()
 	{
 		try {
@@ -23,7 +27,7 @@ public class Pack {
 			String spack = rs.getString("packfile");
 			
 			File sfile = new File(spack);
-			File rfile = new File(Settings.testProj + "tests\\" + Settings.folder + "\\output\\rpack.txt");
+			File rfile = new File(Settings.testProj + "tests\\" + Settings.folder + "\\input\\rpack.txt");
 
 			FileInputStream s = new FileInputStream(sfile);
 			FileOutputStream r = new FileOutputStream(rfile);
@@ -100,7 +104,7 @@ public class Pack {
 				rd.writeBytes("\r\n");
 			}
 
-			Log.msg("Пакет ЭСИС-потверждений " + Settings.testProj + "tests\\" + Settings.folder + "\\output\\rpack.txt" + " создан.");
+			Log.msg("Пакет ЭСИС-потверждений " + Settings.testProj + "tests\\" + Settings.folder + "\\input\\rpack.txt" + " создан.");
 			s.close();
 			rd.close();
 			db.close();

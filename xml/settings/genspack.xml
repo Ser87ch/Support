@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genspack xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="genspack.xsd">
+	<numbik>2</numbik>
+	<numdoc>5</numdoc>
+	<firstdoc>1</firstdoc>
+	<signobr>OTVETPU</signobr>	
+	<keyobr>otvetpu.fdd</keyobr>	
+	<signcontr>CONTRPU</signcontr>	
+	<keycontr>contrpu.fdd</keycontr>	
+</genspack>

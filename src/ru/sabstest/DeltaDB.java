@@ -369,7 +369,7 @@ public class DeltaDB {
 			doc.appendChild(rootElement);
 
 			rootElement.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-			rootElement.setAttribute("xsi:noNamespaceSchemaLocation", Settings.testProj + "XMLSchema\\settings\\" + Settings.pervfolder + "\\deltadb.xsd");
+			rootElement.setAttribute("xsi:noNamespaceSchemaLocation", Settings.testProj + "XMLSchema\\settings\\deltadb.xsd");
 
 			ListIterator <String> iter = tables.listIterator();
 			while(iter.hasNext())
@@ -383,14 +383,14 @@ public class DeltaDB {
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
 
-			File xml = new File(Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\deltadb.xml");
+			File xml = new File(Settings.fullfolder + "settings\\deltadb.xml");
 			StreamResult result = new StreamResult(xml);
-			Log.msg("XML с настройками для подсчета изменений в БД " + Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\deltadb.xml создан.");
+			Log.msg("XML с настройками для подсчета изменений в БД " + Settings.fullfolder + "settings\\deltadb.xml создан.");
 			//StreamResult result = new StreamResult(System.out);
 
 			transformer.transform(source, result);
 
-			XML.validate(Settings.testProj + "XMLSchema\\settings\\" + Settings.pervfolder + "\\deltadb.xsd",Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\deltadb.xml");
+			XML.validate(Settings.testProj + "XMLSchema\\settings\\deltadb.xsd",Settings.fullfolder + "settings\\deltadb.xml");
 
 		} catch (ParserConfigurationException pce) {
 			pce.printStackTrace();
@@ -414,7 +414,7 @@ public class DeltaDB {
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(fXmlFile);
 			doc.getDocumentElement().normalize();
-			XML.validate(Settings.testProj + "XMLSchema\\settings\\" + Settings.pervfolder + "\\deltadb.xsd",src);
+			XML.validate(Settings.testProj + "XMLSchema\\settings\\deltadb.xsd",src);
 
 			//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 			NodeList nList = doc.getElementsByTagName("table");
