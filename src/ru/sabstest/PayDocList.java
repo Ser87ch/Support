@@ -98,7 +98,7 @@ public class PayDocList {
 			rs.next();
 			String ls = rs.getString("NUM_ACC");
 
-			PayDoc.Client plat = new PayDoc.Client(Settings.bik, "", ls, "111111111111", "222222222", "ЗАО Пол");
+			PayDoc.Client plat = new PayDoc.Client(Settings.bik, "", ls, "111111111111", "222222222", "ЗАО Получатель");
 
 			pdl = new ArrayList<PayDoc>();
 
@@ -109,7 +109,7 @@ public class PayDocList {
 				String kspol = rsbik.getString("ksnp");
 				String lspol = "40702810000000000005";
 
-				PayDoc.Client pol = new PayDoc.Client(bikpol, kspol, lspol, "111111111111", "222222222", "ЗАО Тест");
+				PayDoc.Client pol = new PayDoc.Client(bikpol, kspol, lspol, "222222222222", "111111111", "ЗАО Плательщик");
 				pol.contrrazr();
 
 				for(int j = 0; j < Settings.GenSpack.numDoc; j++)
@@ -129,12 +129,12 @@ public class PayDocList {
 					pd.datepost = Settings.operDate;
 
 					pdl.add(pd);
-					Log.msg("Документ №" + Integer.toString(i) + " сгенерирован.");
+					Log.msg("Документ №" + Integer.toString(i) + " для S пакета сгенерирован.");
 					i++;
 				}
 
 			}
-			Log.msg("Генерация документов завершена.");
+			Log.msg("Генерация документов для S пакета завершена.");
 			db.close();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -364,6 +364,8 @@ public class PayDocList {
 			b = sf.getBytes("cp866"); 
 			sd.write(b);			
 			
+			Log.msg("Служебная запись записана в S пакет.");
+			
 			int i = 1;
 			ListIterator <PayDoc> iter = pdl.listIterator();
 			while(iter.hasNext())
@@ -371,15 +373,30 @@ public class PayDocList {
 				sd.writeBytes("\r\n");
 				PayDoc pd = iter.next();
 				
-				sf = String.format("%06d", this.length()) + new SimpleDateFormat("ddMMyyyy").format(pd.date) +
-				rkcbik.substring(2,8) + "000" + pd.plat.bik ;
+				sf = String.format("%06d", i) + new SimpleDateFormat("ddMMyyyy").format(pd.date) +
+				rkcbik.substring(2,9) + "000" + pd.plat.bik + pd.plat.ls + String.format("%20s", pd.plat.ks) +
+				String.format("%03d", pd.num) + new SimpleDateFormat("ddMMyyyy").format(pd.date) + pd.vidop +
+				pd.pol.bik + pd.pol.ls + String.format("%20s", pd.pol.ks) +
+				String.format("%018d", (int)(pd.sum * 100)) + String.format("%01d", pd.ocher) + 
+				String.format("%12s", pd.plat.inn) + String.format("%9s", pd.plat.kpp) +
+				String.format("%-160s", pd.plat.name) + 	String.format("%12s", pd.pol.inn) + 
+				String.format("%9s", pd.pol.kpp) + String.format("%-160s", pd.pol.name) + 
+				String.format("%-210s", pd.naznach) + new SimpleDateFormat("ddMMyyyy").format(pd.datepost) + 
+				String.format("%8s", "") + new SimpleDateFormat("ddMMyyyy").format(pd.datesp) +
+				new SimpleDateFormat("ddMMyyyy").format(pd.date) + String.format("%2s", pd.status) + 
+				String.format("%20s", pd.kbk) + String.format("%11s", pd.okato) + String.format("%2s", pd.osn) +
+				String.format("%10s", pd.nalper) + String.format("%15s", pd.numdoc) + String.format("%10s", pd.datedoc) +
+				String.format("%2s", pd.typepl) + String.format("%50s", "");
 				
 				b = new byte[880];
 				b = sf.getBytes("cp866"); 
 				sd.write(b);
+				
+				Log.msg("Документ №" + i + " записан в S пакет.");
 				i++;
 			}
 			
+			Log.msg("S пакет создан.");
 			s.close();
 			sd.close();
 			db.close();
