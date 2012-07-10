@@ -149,14 +149,15 @@ public class PayDocList {
 	
 	public float sumAll()
 	{
-		float sum = 0;
+		int sum = 0;
 		ListIterator <PayDoc> iter = pdl.listIterator();
 		while(iter.hasNext())
 		{
-			sum = sum + iter.next().sum;
+			sum = sum + Math.round(iter.next().sum * 100);
+			
 		}
 
-		return sum;
+		return (float) sum / 100;
 	}
 	
 	public PayDoc get(int i)
@@ -374,7 +375,7 @@ public class PayDocList {
 				PayDoc pd = iter.next();
 				
 				sf = String.format("%06d", i) + new SimpleDateFormat("ddMMyyyy").format(pd.date) +
-				rkcbik.substring(2,9) + "000" + pd.plat.bik + pd.plat.ls + String.format("%20s", pd.plat.ks) +
+				pd.plat.bik.substring(2,9) + "000" + pd.plat.bik + pd.plat.ls + String.format("%20s", pd.plat.ks) +
 				String.format("%03d", pd.num) + new SimpleDateFormat("ddMMyyyy").format(pd.date) + pd.vidop +
 				pd.pol.bik + pd.pol.ls + String.format("%20s", pd.pol.ks) +
 				String.format("%018d", (int)(pd.sum * 100)) + String.format("%01d", pd.ocher) + 
