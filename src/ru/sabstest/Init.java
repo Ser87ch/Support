@@ -56,7 +56,7 @@ public class Init {
 				Settings.FormES.readXML(Settings.testProj + "default\\" + Settings.pervfolder + "\\formes.xml");
 				Settings.ContrES.readXML(Settings.testProj + "default\\" + Settings.pervfolder + "\\contres.xml");
 				Settings.GenRpack.readXML(Settings.testProj + "default\\" + Settings.pervfolder + "\\genrpack.xml");
-				Settings.GenRpack.readXML(Settings.testProj + "default\\" + Settings.obrfolder + "\\genspack.xml");
+				Settings.GenSpack.readXML(Settings.testProj + "default\\" + Settings.obrfolder + "\\genspack.xml");
 				DeltaDB.readXMLSettings(Settings.testProj + "default\\deltadb.xml");
 
 			} else {			
@@ -67,7 +67,7 @@ public class Init {
 				Settings.FormES.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\" + Settings.pervfolder + "\\formes.xml");
 				Settings.ContrES.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\" + Settings.pervfolder + "\\contres.xml");
 				Settings.GenRpack.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\" + Settings.pervfolder + "\\genrpack.xml");
-				Settings.GenRpack.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\" + Settings.obrfolder + "\\genspack.xml");
+				Settings.GenSpack.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\" + Settings.obrfolder + "\\genspack.xml");
 				DeltaDB.readXMLSettings(Settings.testProj + "tests\\" + copyfolder + "\\settings\\deltadb.xml");
 			}
 			
@@ -79,6 +79,7 @@ public class Init {
 			Settings.FormES.createXML();
 			Settings.ContrES.createXML();
 			Settings.GenRpack.createXML();
+			Settings.GenSpack.createXML();
 			DeltaDB.createXMLSettings();
 			
 		} catch(Exception e) {

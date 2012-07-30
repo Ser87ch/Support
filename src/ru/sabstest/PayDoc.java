@@ -27,7 +27,8 @@ public class PayDoc {
 	public String naznach;
 	public Date datesp;
 	public Date datepost;
-
+	public int elnum;
+	
 	PayDoc()
 	{	
 		this.num = 0;
@@ -46,7 +47,8 @@ public class PayDoc {
 		this.typepl = "";		
 		this.naznach = "Тест";
 		this.datesp = new Date(0);
-		this.datepost = new Date(0);		
+		this.datepost = new Date(0);	
+		this.elnum = 0;
 	}
 
 	@Override

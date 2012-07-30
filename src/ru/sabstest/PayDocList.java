@@ -94,6 +94,10 @@ public class PayDocList {
 			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
 			db.connect();
 
+			
+			DB db2 = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
+			db2.connect();
+			
 			ResultSet rs = db.st.executeQuery("select top 1 NUM_ACC from dbo.Account where rest = (select min(rest) from dbo.Account where substring(NUM_ACC,1,1) = '4' and substring(NUM_ACC,1,5) <> '40101')");
 			rs.next();
 			String ls = rs.getString("NUM_ACC");
@@ -108,7 +112,16 @@ public class PayDocList {
 				String bikpol = rsbik.getString("NEWNUM");
 				String kspol = rsbik.getString("ksnp");
 				String lspol = "40702810000000000005";
-
+				
+				
+				
+				String s = "select isnull(max(elnum),0) as el from dbo.DOCUMENT_BON where date_doc = '" + new SimpleDateFormat("yyyy-MM-dd").format(Settings.operDate) + "' and uic = '" + bikpol.substring(2,9) + "000" + "'";		
+				ResultSet rsel = db2.st.executeQuery(s);
+				int elnum = 0;
+				rsel.next();
+				elnum = rsel.getInt("el");
+				
+				
 				PayDoc.Client pol = new PayDoc.Client(bikpol, kspol, lspol, "222222222222", "111111111", "ЗАО Плательщик");
 				pol.contrrazr();
 
@@ -127,7 +140,7 @@ public class PayDocList {
 					pd.naznach = "Оплата теста";
 					pd.datesp = Settings.operDate;
 					pd.datepost = Settings.operDate;
-
+					pd.elnum = elnum + 1 + j;
 					pdl.add(pd);
 					Log.msg("Документ №" + Integer.toString(i) + " для S пакета сгенерирован.");
 					i++;
@@ -136,6 +149,7 @@ public class PayDocList {
 			}
 			Log.msg("Генерация документов для S пакета завершена.");
 			db.close();
+			db2.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 			Log.msg(e);
@@ -374,7 +388,7 @@ public class PayDocList {
 				sd.writeBytes("\r\n");
 				PayDoc pd = iter.next();
 				
-				sf = String.format("%06d", i) + new SimpleDateFormat("ddMMyyyy").format(pd.date) +
+				sf = String.format("%06d", pd.elnum) + new SimpleDateFormat("ddMMyyyy").format(pd.date) +
 				pd.plat.bik.substring(2,9) + "000" + pd.plat.bik + pd.plat.ls + String.format("%20s", pd.plat.ks) +
 				String.format("%03d", pd.num) + new SimpleDateFormat("ddMMyyyy").format(pd.date) + pd.vidop +
 				pd.pol.bik + pd.pol.ls + String.format("%20s", pd.pol.ks) +
