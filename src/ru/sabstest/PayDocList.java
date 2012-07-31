@@ -115,12 +115,12 @@ public class PayDocList {
 				
 				
 				
-				String s = "select isnull(max(elnum),0) as el from dbo.DOCUMENT_BON where date_doc = '" + new SimpleDateFormat("yyyy-MM-dd").format(Settings.operDate) + "' and uic = '" + bikpol.substring(2,9) + "000" + "'";		
+				String s = "select isnull(max(elnum),0) as el, isnull(max(n_doc),0) as ndoc from dbo.DOCUMENT_BON where date_doc = '" + new SimpleDateFormat("yyyy-MM-dd").format(Settings.operDate) + "' and uic = '" + bikpol.substring(2,9) + "000" + "'";		
 				ResultSet rsel = db2.st.executeQuery(s);
-				int elnum = 0;
+				int elnum = 0, ndoc = 0;
 				rsel.next();
 				elnum = rsel.getInt("el");
-				
+				ndoc = rsel.getInt("ndoc");
 				
 				PayDoc.Client pol = new PayDoc.Client(bikpol, kspol, lspol, "222222222222", "111111111", "«¿Œ œÎ‡ÚÂÎ¸˘ËÍ");
 				pol.contrrazr();
@@ -128,7 +128,7 @@ public class PayDocList {
 				for(int j = 0; j < Settings.GenSpack.numDoc; j++)
 				{
 					PayDoc pd = new PayDoc();
-					pd.num = Settings.GenSpack.firstDoc + j;
+					pd.num = ndoc + 1 + j;
 					pd.date = Settings.operDate;
 					pd.vidop = "01";
 					pd.sum =  ((float) Math.round(new Random().nextFloat() * 10000))/ 100;				
@@ -161,7 +161,7 @@ public class PayDocList {
 		return pdl.size();
 	}
 	
-	public float sumAll()
+	public int sumAll() //ÒÛÏÏ‡ ÛÏÌÓÊÂÌÌ‡ˇ Ì‡ 100
 	{
 		int sum = 0;
 		ListIterator <PayDoc> iter = pdl.listIterator();
@@ -171,7 +171,7 @@ public class PayDocList {
 			
 		}
 
-		return (float) sum / 100;
+		return sum;
 	}
 	
 	public PayDoc get(int i)
@@ -371,7 +371,7 @@ public class PayDocList {
 			
 			String sf = rkcbik + String.format("%18s", "") + new SimpleDateFormat("ddMMyyyy").format(Settings.operDate) +
 			String.format("%3s", "") + Settings.bik + String.format("%10s", "") + String.format("%09d", this.length()) + 
-			String.format("%9s", "") + String.format("%018d", (int)(this.sumAll() * 100)) + String.format("%8s", "") + 
+			String.format("%9s", "") + String.format("%018d", this.sumAll() ) + String.format("%8s", "") + 
 			String.format("%-210s", "›À≈ “–ŒÕÕ€≈ œÀ¿“≈∆»") + String.format("%-80s", rkcname) +
 			String.format("%-80s", bnkname) + String.format("%259s", "");			
 			

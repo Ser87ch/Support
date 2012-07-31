@@ -2,19 +2,21 @@
 
 
 import java.lang.System;
+import java.math.BigDecimal;
+
 import ru.sabstest.*;
 
 
 
 
 public class Main {
-	enum Test {INIT, GEN, PERVVOD,DDB,RPACK,SPACK}
+	enum Test {INIT, GEN, PERVVOD,DDB,RPACK,SPACK,O}
 
 	public static void main(String[] args)
 	{
 		Settings.testProj = "C:\\sabstest\\";
 		
-		Test t = Test.SPACK;
+		Test t = Test.O;
 		switch(t)
 		{
 
@@ -77,13 +79,31 @@ public class Main {
 			pl.generateS();
 			pl.createSpack();
 		
+			String s = Pack.getSPackName();
+			System.out.println(s);
 			break;
-		}		
+		}	
+		case O:
+			double a = 0.1d;
+			double s = 0.0d;
+			for(int i = 0; i < 10; i++)
+				s = s + a;
+			System.out.println(s);
+			
+			
+			BigDecimal step = new BigDecimal("0.1");
+			for (BigDecimal value = BigDecimal.ZERO;
+			     value.compareTo(BigDecimal.ONE) < 0;
+			     value = value.add(step)) {
+			    System.out.println(value);
+			}
+			
+			break;
 		}
 		
 		Log.close();
 
-		System.out.println();
+		
 
 	}
 

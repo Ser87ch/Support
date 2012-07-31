@@ -10,6 +10,7 @@ import java.io.LineNumberReader;
 
 import java.nio.channels.FileChannel;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 
 
 public class Pack {
@@ -150,6 +151,40 @@ public class Pack {
 			String spack = rs.getString("packfile"); //p$1s0302.82o
 			db.close();
 			return spack.substring(0,3) + "r" + spack.substring(4,11) + "i";
+		} catch(Exception e) {
+			e.printStackTrace();
+			Log.msg(e);
+			return "";
+		}
+	}
+	
+	
+	public static String getSPackName()
+	{
+		try {
+			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
+			db.connect();			
+			ResultSet rs = db.st.executeQuery("select top 1 isnull(SUBTYPE,'') packfile from dbo.document_bon_pack where substring(SUBTYPE, 4,1) = 's' and substring(SUBTYPE, 12,1) = 'i' and status = 0 and substring(subtype, 5, 4) = '" + new SimpleDateFormat("ddMM").format(Settings.operDate) + "' order by DATE_INSERT desc");
+			rs.next();
+			String spack = rs.getString("packfile"); //p$9s0302.82o
+			db.close();
+			String s;
+			
+			if(spack.equals(""))
+			{
+				s = "1";				
+			}
+			else if(spack.substring(2,3).equals("9"))
+			{
+				s = "A";
+			}
+			else
+			{
+				char a = (char)(spack.charAt(2) + 1); 
+				s = Character.toString(a);
+			}
+			
+			return "p$" + s + "s" + new SimpleDateFormat("ddMM").format(Settings.operDate) + "." + Settings.bik.substring(4,6) + "i";
 		} catch(Exception e) {
 			e.printStackTrace();
 			Log.msg(e);
