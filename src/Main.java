@@ -10,13 +10,13 @@ import ru.sabstest.*;
 
 
 public class Main {
-	enum Test {INIT, GEN, PERVVOD,DDB,RPACK,SPACK,O}
+	enum Test {INIT, GEN, PERVVOD,DDB,RPACK,SPACK,CMP,O}
 
 	public static void main(String[] args)
 	{
 		Settings.testProj = "C:\\sabstest\\";
 		
-		Test t = Test.O;
+		Test t = Test.CMP;
 		switch(t)
 		{
 
@@ -83,6 +83,13 @@ public class Main {
 			System.out.println(s);
 			break;
 		}	
+		case CMP:
+		{
+			Init.load();
+			Settings.readXML(Settings.fullfolder + "settings\\general.xml");
+			System.out.println(Pack.compareSPack("C:\\spacket.txt", "C:\\spack.txt"));
+			break;
+		}
 		case O:
 			double a = 0.1d;
 			double s = 0.0d;
