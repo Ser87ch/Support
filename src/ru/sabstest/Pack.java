@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 
 public class Pack {
@@ -228,7 +229,7 @@ public class Pack {
 			try {
 				LineNumberReader  lnr = new LineNumberReader(new FileReader(fl));
 				lnr.skip(Long.MAX_VALUE);
-				int cn = lnr.getLineNumber() - 2;
+				int cn = lnr.getLineNumber() - 1;
 				lnr.close();
 				return cn;
 			} catch(Exception e) {
@@ -300,8 +301,27 @@ public class Pack {
 		{
 			if(!this.head.equals(sp.head))			
 				return false;
+			
+			if(this.lines.size() != sp.lines.size())
+				return false;
 
-
+			ListIterator <String> iter = this.lines.listIterator();
+			while(iter.hasNext())
+			{
+				String s = iter.next();
+				
+				ListIterator <String> itersp = sp.lines.listIterator();
+				boolean lneq = false;
+				while(itersp.hasNext() && !lneq)
+				{
+					if(itersp.next().equals(s))
+						lneq = true;
+				}
+				
+				if(!lneq)
+					return false;
+			}
+			
 			return true;
 		}
 
