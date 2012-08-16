@@ -196,6 +196,24 @@ public class Pack {
 		}
 	}
 
+	public static void copySPack()
+	{
+		try{
+			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
+
+			db.connect();
+			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile from dbo.document_bon_pack where substring(subtype,12,1) = 'o' order by DATE_INSERT desc");
+			rs.next();
+			String spack = rs.getString("packfile");
+			
+			copyFile(spack,Settings.testProj + "\\tests\\" + Settings.folder + "\\output\\spack.txt");
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			Log.msg(e);
+		}
+	}
+
 	public static boolean compareSPack(String etal, String fl)
 	{
 		SPack.loadMask();
@@ -260,7 +278,7 @@ public class Pack {
 		void load()
 		{
 			try {
-				
+
 				int cn = countLine();
 				BufferedReader br;
 
@@ -301,7 +319,7 @@ public class Pack {
 		{
 			if(!this.head.equals(sp.head))			
 				return false;
-			
+
 			if(this.lines.size() != sp.lines.size())
 				return false;
 
@@ -309,7 +327,7 @@ public class Pack {
 			while(iter.hasNext())
 			{
 				String s = iter.next();
-				
+
 				ListIterator <String> itersp = sp.lines.listIterator();
 				boolean lneq = false;
 				while(itersp.hasNext() && !lneq)
@@ -317,11 +335,11 @@ public class Pack {
 					if(itersp.next().equals(s))
 						lneq = true;
 				}
-				
+
 				if(!lneq)
 					return false;
 			}
-			
+
 			return true;
 		}
 
