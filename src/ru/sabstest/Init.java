@@ -40,13 +40,16 @@ public class Init {
 			(new File(Settings.fullfolder + "settings\\" + Settings.obrfolder)).mkdir();
 			(new File(Settings.fullfolder + "input")).mkdir();
 			(new File(Settings.fullfolder + "output")).mkdir();
+			(new File(Settings.fullfolder + "etalon")).mkdir();
 
 			Log.msg("Папка настроек теста " +Settings.fullfolder + "settings создана.");
 			Log.msg("Папка настроек теста " +Settings.fullfolder + "settings\\" + Settings.pervfolder + " создана.");
 			Log.msg("Папка настроек теста " +Settings.fullfolder + "settings\\" + Settings.obrfolder + " создана.");
 			Log.msg("Папка входящих данных для теста " + Settings.fullfolder + "input создана.");
 			Log.msg("Папка исходящих данных для теста " + Settings.fullfolder + "output создана.");
+			Log.msg("Папка эталонных данных для теста " + Settings.fullfolder + "etalon создана.");
 
+			
 			if(isDefault)
 			{
 				Settings.readXML(Settings.testProj + "default\\general.xml",true);
@@ -57,6 +60,8 @@ public class Init {
 				Settings.ContrES.readXML(Settings.testProj + "default\\" + Settings.pervfolder + "\\contres.xml");
 				Settings.GenRpack.readXML(Settings.testProj + "default\\" + Settings.pervfolder + "\\genrpack.xml");
 				Settings.GenSpack.readXML(Settings.testProj + "default\\" + Settings.obrfolder + "\\genspack.xml");
+				Pack.copyFile(Settings.testProj + "default\\" + Settings.pervfolder + "\\spack.msk", Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\spack.msk");
+				Pack.copyFile(Settings.testProj + "default\\" + Settings.obrfolder + "\\rpack.msk", Settings.fullfolder + "settings\\" + Settings.obrfolder + "\\rpack.msk");
 				DeltaDB.readXMLSettings(Settings.testProj + "default\\deltadb.xml");
 
 			} else {			
@@ -68,7 +73,57 @@ public class Init {
 				Settings.ContrES.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\" + Settings.pervfolder + "\\contres.xml");
 				Settings.GenRpack.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\" + Settings.pervfolder + "\\genrpack.xml");
 				Settings.GenSpack.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\" + Settings.obrfolder + "\\genspack.xml");
+				Pack.copyFile(Settings.testProj + "tests\\" + copyfolder + Settings.pervfolder + "\\spack.msk", Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\spack.msk");
+				Pack.copyFile(Settings.testProj + "tests\\" + copyfolder + Settings.obrfolder + "\\rpack.msk", Settings.fullfolder + "settings\\" + Settings.obrfolder + "\\rpack.msk");
 				DeltaDB.readXMLSettings(Settings.testProj + "tests\\" + copyfolder + "\\settings\\deltadb.xml");
+				Pack.copyFile(Settings.testProj + "tests\\" + copyfolder + "\\input\\paydocs.xml", Settings.fullfolder + "input\\paydocs.xml");
+				Pack.copyPack(Settings.testProj + "tests\\" + copyfolder + "\\input\\spack.txt", Settings.fullfolder + "input\\spack.txt");
+				
+				if(new File(Settings.testProj + "tests\\" + copyfolder + "\\etalon\\spack.txt").exists())
+				{
+					Pack.copyFile(Settings.testProj + "tests\\" + copyfolder + "\\etalon\\spack.txt", Settings.fullfolder + "etalon\\spack.txt");
+				}
+				else if(new File(Settings.testProj + "tests\\" + copyfolder + "\\output\\spack.txt").exists())
+				{
+					Pack.copyFile(Settings.testProj + "tests\\" + copyfolder + "\\output\\spack.txt", Settings.fullfolder + "etalon\\spack.txt");
+				}
+				
+				if(new File(Settings.testProj + "tests\\" + copyfolder + "\\etalon\\rpack.txt").exists())
+				{
+					Pack.copyFile(Settings.testProj + "tests\\" + copyfolder + "\\etalon\\rpack.txt", Settings.fullfolder + "etalon\\rpack.txt");
+				}
+				else if(new File(Settings.testProj + "tests\\" + copyfolder + "\\output\\rpack.txt").exists())
+				{
+					Pack.copyFile(Settings.testProj + "tests\\" + copyfolder + "\\output\\rpack.txt", Settings.fullfolder + "etalon\\rpack.txt");
+				}
+				
+				if(new File(Settings.testProj + "tests\\" + copyfolder + "\\etalon\\spack.xml").exists())
+				{
+					Pack.copyFile(Settings.testProj + "tests\\" + copyfolder + "\\etalon\\spack.xml", Settings.fullfolder + "etalon\\spack.xml");
+				}
+				else if(new File(Settings.testProj + "tests\\" + copyfolder + "\\output\\spack.xml").exists())
+				{
+					Pack.copyFile(Settings.testProj + "tests\\" + copyfolder + "\\output\\spack.xml", Settings.fullfolder + "etalon\\spack.xml");
+				}
+				
+				if(new File(Settings.testProj + "tests\\" + copyfolder + "\\etalon\\rpack.xml").exists())
+				{
+					Pack.copyFile(Settings.testProj + "tests\\" + copyfolder + "\\etalon\\rpack.xml", Settings.fullfolder + "etalon\\rpack.xml");
+				}
+				else if(new File(Settings.testProj + "tests\\" + copyfolder + "\\output\\rpack.xml").exists())
+				{
+					Pack.copyFile(Settings.testProj + "tests\\" + copyfolder + "\\output\\rpack.xml", Settings.fullfolder + "etalon\\rpack.xml");
+				}
+				
+				if(new File(Settings.testProj + "tests\\" + copyfolder + "\\etalon\\vvod.xml").exists())
+				{
+					Pack.copyFile(Settings.testProj + "tests\\" + copyfolder + "\\etalon\\vvod.xml", Settings.fullfolder + "etalon\\vvod.xml");
+				}
+				else if(new File(Settings.testProj + "tests\\" + copyfolder + "\\output\\vvod.xml").exists())
+				{
+					Pack.copyFile(Settings.testProj + "tests\\" + copyfolder + "\\output\\vvod.xml", Settings.fullfolder + "etalon\\vvod.xml");
+				}
+				
 			}
 			
 			Settings.loadFromDB();

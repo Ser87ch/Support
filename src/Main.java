@@ -16,7 +16,7 @@ public class Main {
 	{
 		Settings.testProj = "C:\\sabstest\\";
 		
-		Test t = Test.CMP;
+		Test t = Test.O;
 		switch(t)
 		{
 
@@ -87,23 +87,13 @@ public class Main {
 		{
 			Init.load();
 			Settings.readXML(Settings.fullfolder + "settings\\general.xml");
-			System.out.println(Pack.compareSPack("C:\\spacket.txt", "C:\\spack.txt"));
+			System.out.println(Pack.compareRPack("C:\\rpack.txt", "C:\\rpack1.txt"));
 			break;
 		}
 		case O:
-			double a = 0.1d;
-			double s = 0.0d;
-			for(int i = 0; i < 10; i++)
-				s = s + a;
-			System.out.println(s);
-			
-			
-			BigDecimal step = new BigDecimal("0.1");
-			for (BigDecimal value = BigDecimal.ZERO;
-			     value.compareTo(BigDecimal.ONE) < 0;
-			     value = value.add(step)) {
-			    System.out.println(value);
-			}
+			Init.load();
+			Settings.readXML(Settings.fullfolder + "settings\\general.xml");
+			Pack.copyPack("C:\\spack.txt", "C:\\spack1.txt");
 			
 			break;
 		}

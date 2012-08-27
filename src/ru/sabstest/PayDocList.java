@@ -167,7 +167,8 @@ public class PayDocList {
 		ListIterator <PayDoc> iter = pdl.listIterator();
 		while(iter.hasNext())
 		{
-			sum = sum + Math.round(iter.next().sum * 100);
+			int i = (int) (iter.next().sum * 100);
+			sum = sum + i;
 			
 		}
 

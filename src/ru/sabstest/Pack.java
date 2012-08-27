@@ -1,11 +1,13 @@
 package ru.sabstest;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.LineNumberReader;
 
@@ -205,9 +207,27 @@ public class Pack {
 			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile from dbo.document_bon_pack where substring(subtype,12,1) = 'o' order by DATE_INSERT desc");
 			rs.next();
 			String spack = rs.getString("packfile");
-			
+
 			copyFile(spack,Settings.testProj + "\\tests\\" + Settings.folder + "\\output\\spack.txt");
-			
+
+		} catch(Exception e) {
+			e.printStackTrace();
+			Log.msg(e);
+		}
+	}
+
+	public static void copyRPack()
+	{
+		try{
+			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
+
+			db.connect();
+			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile from dbo.document_bon_pack where substring(subtype,12,1) = 'o' order by DATE_INSERT desc");
+			rs.next();
+			String spack = rs.getString("packfile");
+
+			copyFile(spack,Settings.testProj + "\\tests\\" + Settings.folder + "\\output\\rpack.txt");
+
 		} catch(Exception e) {
 			e.printStackTrace();
 			Log.msg(e);
@@ -227,7 +247,70 @@ public class Pack {
 
 		return et.equals(sp);
 	}
+	
+	public static boolean compareRPack(String etal, String fl)
+	{
+		SPack.loadMaskR();
 
+		SPack et = new SPack(etal);
+		et.load();
+
+		SPack sp = new SPack(fl);
+		sp.load();
+
+
+		return et.equals(sp);
+	}
+
+	public static void copyPack(String src, String dest)
+	{
+		try {
+			DB db2 = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
+			db2.connect();
+			
+			BufferedReader br;
+
+			br = new BufferedReader(new FileReader(src));
+			String tmp;
+			tmp = br.readLine();
+			
+			FileWriter fstream = new FileWriter(dest);
+			BufferedWriter out = new BufferedWriter(fstream);	
+			out.write(tmp);
+			out.flush();
+			
+			String uic = "", uicprev = "", otd = "";
+			int elnum = 0, ndoc = 0;
+			while((tmp = br.readLine()) != null)
+			{
+				out.newLine();
+				uicprev = uic;
+				uic = tmp.substring(14, 24);
+				otd = tmp.substring(10, 14) + "-" +  tmp.substring(8, 10) + "-" + tmp.substring(6, 8); 
+				elnum++;
+				ndoc++;
+				
+				if(!uic.equals(uicprev))
+				{
+					String s = "select isnull(max(elnum),0) as el, isnull(max(n_doc),0) as ndoc from dbo.DOCUMENT_BON where date_doc = '" + otd + "' and uic = '" + uic + "'";		
+					ResultSet rsel = db2.st.executeQuery(s);					
+					rsel.next();
+					elnum = rsel.getInt("el") + 1;
+					ndoc = rsel.getInt("ndoc") + 1;
+				}
+				
+				String s = String.format("%06d", elnum) + tmp.substring(6,73) + String.format("%03d", ndoc) + tmp.substring(76);	
+				out.write(s);
+				out.flush();
+			}
+			
+			db2.close();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			Log.msg(e);				
+		}			
+	}
 
 	static class SPack
 	{
@@ -262,7 +345,7 @@ public class Pack {
 			try {
 				BufferedReader br;
 
-				br = new BufferedReader(new FileReader(Settings.testProj + "default\\" + Settings.pervfolder + "\\spack.msk"));
+				br = new BufferedReader(new FileReader(Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\spack.msk"));
 
 				mskhd = br.readLine();
 				mskln = br.readLine();
@@ -273,6 +356,25 @@ public class Pack {
 				Log.msg(e);				
 			}
 		}
+
+		static void loadMaskR()
+		{
+			try {
+				BufferedReader br;
+
+				br = new BufferedReader(new FileReader(Settings.fullfolder + "settings\\" + Settings.obrfolder + "\\rpack.msk"));
+
+				mskhd = br.readLine();
+				mskln = br.readLine();
+
+				br.close();				
+			} catch(Exception e) {
+				e.printStackTrace();
+				Log.msg(e);				
+			}
+		}
+		
+		
 
 
 		void load()
