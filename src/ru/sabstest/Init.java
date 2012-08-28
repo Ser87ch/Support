@@ -5,8 +5,8 @@ import java.text.DecimalFormat;
 
 
 public class Init {
-	static boolean isDefault = true;
-	static String copyfolder = "";
+	public static boolean isDefault = true;
+	public static String copyfolder = "";
 
 	public static void mkfolder()
 	{
@@ -65,7 +65,7 @@ public class Init {
 				DeltaDB.readXMLSettings(Settings.testProj + "default\\deltadb.xml");
 
 			} else {			
-				Settings.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\" + Settings.pervfolder + "\\gendoc.xml",true);							
+				Settings.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\general.xml",true);							
 				Settings.GenDoc.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\" + Settings.pervfolder + "\\gendoc.xml");	
 				Settings.PerVvod.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\" + Settings.pervfolder + "\\pervvod.xml");
 				Settings.ContrVvod.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\" + Settings.pervfolder + "\\contrvvod.xml");
@@ -73,8 +73,8 @@ public class Init {
 				Settings.ContrES.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\" + Settings.pervfolder + "\\contres.xml");
 				Settings.GenRpack.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\" + Settings.pervfolder + "\\genrpack.xml");
 				Settings.GenSpack.readXML(Settings.testProj + "tests\\" + copyfolder + "\\settings\\" + Settings.obrfolder + "\\genspack.xml");
-				Pack.copyFile(Settings.testProj + "tests\\" + copyfolder + Settings.pervfolder + "\\spack.msk", Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\spack.msk");
-				Pack.copyFile(Settings.testProj + "tests\\" + copyfolder + Settings.obrfolder + "\\rpack.msk", Settings.fullfolder + "settings\\" + Settings.obrfolder + "\\rpack.msk");
+				Pack.copyFile(Settings.testProj + "tests\\" + copyfolder + "\\settings\\" + Settings.pervfolder + "\\spack.msk", Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\spack.msk");
+				Pack.copyFile(Settings.testProj + "tests\\" + copyfolder + "\\settings\\" + Settings.obrfolder + "\\rpack.msk", Settings.fullfolder + "settings\\" + Settings.obrfolder + "\\rpack.msk");
 				DeltaDB.readXMLSettings(Settings.testProj + "tests\\" + copyfolder + "\\settings\\deltadb.xml");
 				Pack.copyFile(Settings.testProj + "tests\\" + copyfolder + "\\input\\paydocs.xml", Settings.fullfolder + "input\\paydocs.xml");
 				Pack.copyPack(Settings.testProj + "tests\\" + copyfolder + "\\input\\spack.txt", Settings.fullfolder + "input\\spack.txt");
