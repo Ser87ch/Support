@@ -136,6 +136,7 @@ public class Pack {
 			source = new FileInputStream(sourceFile).getChannel();
 			destination = new FileOutputStream(destFile).getChannel();
 			destination.transferFrom(source, 0, source.size());
+			Log.msg("Файл " + sourcestr + "скопирован в " + deststr + " .");
 		} 
 		finally {
 			if(source != null) {
@@ -156,6 +157,7 @@ public class Pack {
 			rs.next();
 			String spack = rs.getString("packfile"); //p$1s0302.82o
 			db.close();
+			Log.msg("Имя файла R пакета " + spack.substring(0,3) + "r" + spack.substring(4,11) + "i .");
 			return spack.substring(0,3) + "r" + spack.substring(4,11) + "i";
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -190,6 +192,7 @@ public class Pack {
 				s = Character.toString(a);
 			}
 
+			Log.msg("Имя файла S пакета " + "p$" + s + "s" + new SimpleDateFormat("ddMM").format(Settings.operDate) + "." + Settings.bik.substring(4,6) + "i .");
 			return "p$" + s + "s" + new SimpleDateFormat("ddMM").format(Settings.operDate) + "." + Settings.bik.substring(4,6) + "i";
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -209,7 +212,7 @@ public class Pack {
 			String spack = rs.getString("packfile");
 
 			copyFile(spack,Settings.testProj + "\\tests\\" + Settings.folder + "\\output\\spack.txt");
-
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 			Log.msg(e);
@@ -244,7 +247,10 @@ public class Pack {
 		SPack sp = new SPack(fl);
 		sp.load();
 
-
+		if(et.equals(sp))
+			Log.msg("S пакет " + fl + " совпадает с эталонным S пакетом " + fl + " по маске spack.msk .");
+		else
+			Log.msg("S пакет " + fl + " не совпадает с эталонным S пакетом " + fl + " по маске spack.msk .");
 		return et.equals(sp);
 	}
 	
@@ -258,7 +264,10 @@ public class Pack {
 		SPack sp = new SPack(fl);
 		sp.load();
 
-
+		if(et.equals(sp))
+			Log.msg("R пакет " + fl + " совпадает с эталонным R пакетом " + fl + " по маске spack.msk .");
+		else
+			Log.msg("R пакет " + fl + " не совпадает с эталонным R пакетом " + fl + " по маске spack.msk .");
 		return et.equals(sp);
 	}
 
@@ -305,7 +314,7 @@ public class Pack {
 			}
 			
 			db2.close();
-			
+			Log.msg("S пакет " + src + " скопирован в " + dest + " с изменением номеров документа и электронных.");
 		} catch(Exception e) {
 			e.printStackTrace();
 			Log.msg(e);				
