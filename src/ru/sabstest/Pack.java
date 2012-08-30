@@ -9,7 +9,6 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.LineNumberReader;
 
 import java.nio.channels.FileChannel;
 import java.sql.ResultSet;
@@ -83,11 +82,17 @@ public class Pack {
 			rd.write(c);
 
 			rd.writeBytes("\r\n");
-
-			LineNumberReader  lnr = new LineNumberReader(new FileReader(sfile));
-			lnr.skip(Long.MAX_VALUE);
-			int cn = lnr.getLineNumber() - 2;
-
+			
+			//кол-во строк
+			byte[] arr = new byte[9];
+			for(int i = 0; i < 9; i++)
+			{
+				arr[i] = b[i + 57];
+			}
+		
+			String scn = new String(arr);
+			int cn = Integer.parseInt(scn);
+			
 			for(int i=0;i < cn;i++)
 			{
 				b = new byte[882];
@@ -337,10 +342,19 @@ public class Pack {
 		int countLine()
 		{
 			try {
-				LineNumberReader  lnr = new LineNumberReader(new FileReader(fl));
-				lnr.skip(Long.MAX_VALUE);
-				int cn = lnr.getLineNumber() - 1;
-				lnr.close();
+				
+				FileInputStream s = new FileInputStream(new File(fl));
+				byte[] b = new byte[732];	
+
+				s.read(b);	
+				byte[] arr = new byte[9];
+				for(int i = 0; i < 9; i++)
+				{
+					arr[i] = b[i + 57];
+				}
+			
+				String scn = new String(arr);
+				int cn = Integer.parseInt(scn);
 				return cn;
 			} catch(Exception e) {
 				e.printStackTrace();
