@@ -16,7 +16,7 @@ public class Main {
 	{
 		Settings.testProj = "C:\\sabstest\\";
 		
-		Test t = Test.RPACK;
+		Test t = Test.CMP;
 		switch(t)
 		{
 
@@ -87,7 +87,8 @@ public class Main {
 		{
 			Init.load();
 			Settings.readXML(Settings.fullfolder + "settings\\general.xml");
-			System.out.println(Pack.compareRPack("C:\\rpack.txt", "C:\\rpack1.txt"));
+			System.out.println(Pack.compareSPack(Settings.fullfolder + "etalon\\spack.txt", Settings.fullfolder + "output\\spack.txt"));
+			System.out.println(Pack.compareRPack(Settings.fullfolder + "etalon\\rpack.txt", Settings.fullfolder + "output\\rpack.txt"));
 			break;
 		}
 		case O:

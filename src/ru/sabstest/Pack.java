@@ -28,7 +28,7 @@ public class Pack {
 			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
 
 			db.connect();
-			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile from dbo.document_bon_pack where substring(subtype,12,1) = 'o' order by DATE_INSERT desc");
+			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile from dbo.document_bon_pack where substring(subtype,12,1) = 'o' and substring(subtype,4,1) = 's' order by DATE_INSERT desc");
 			rs.next();
 			String spack = rs.getString("packfile");
 
