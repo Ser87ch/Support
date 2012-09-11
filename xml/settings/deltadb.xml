@@ -1,7 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <deltadb xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="deltadb.xsd">
-	<table>DOCUMENT_BON</table>
-	<table>document_bon_pack</table>
-	<table>document_bon_pack_content</table>	
-	<table>epay_Document</table>
+	<table name="DOCUMENT_BON">
+		<column>TYPE_DOC1</column>
+		<column>ID_CURRENCY</column>
+		<column>TELEPOST</column>
+		<column>DATE_DOC</column>
+		<column>SUMMA</column>
+		<column>PAY_BIK</column>
+		<column>PAY_ACC</column>
+		<column>REC_BIK</column>
+		<column>REC_ACC</column>
+		<column>TURN</column>
+		<column>VO</column>
+		<column>ID_STATUS_DONE</column>
+		<column>ID_STATUS</column>
+		<column>ID_DOCUMENT_STATUS</column>
+		<column>UIC</column>		
+	</table>
+	<table name="document_bon_pack">
+		<column>TYPE_PACK</column>
+		<column>STATUS</column>
+		<column>INOUTMODE</column>
+		<column>DocSumma</column>
+		<column>DocCount</column>
+		<column>ErrCount</column>
+		<column>FatalCount</column>
+		<column>Status2</column>		
+	</table>
+	<table name="document_bon_pack_content">
+		<column>Info</column>
+		<column>ERROR_INFO</column>
+		<column>summa</column>
+	</table>	
+	<table name="epay_Document">
+		<column>e_DateDoc</column>
+		<column>e_cl_Code</column>
+		<column>Date_Doc</column>
+		<column>VO</column>
+		<column>SUMMA</column>
+		<column>PAY_BIK</column>
+		<column>PAY_KS</column>
+		<column>PAY_ACC</column>
+		<column>REC_BIK</column>
+		<column>REC_KS</column>
+		<column>REC_ACC</column>
+		<column>TYPE_DOC1</column>
+		<column>ID_STATUS</column>
+		<column>ID_DOCUMENT_STATUS</column>
+		<column>ID_Error</column>
+	</table>
 </deltadb>

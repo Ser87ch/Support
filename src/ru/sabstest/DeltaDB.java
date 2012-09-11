@@ -24,7 +24,7 @@ import org.w3c.dom.NodeList;
 
 
 public class DeltaDB {
-	static private List<String> tables;
+	static private List<Table> tables;
 
 	public static void createXML(String filename)
 	{
@@ -421,7 +421,7 @@ public class DeltaDB {
 
 
 
-			tables = new ArrayList<String>();
+		
 
 			for (int temp = 0; temp < nList.getLength(); temp++) {
 
@@ -434,6 +434,23 @@ public class DeltaDB {
 		} catch (Exception e) {
 			e.printStackTrace();
 			Log.msg(e);
+		}
+	}
+	
+	public static class Table
+	{
+		String name;
+		List<String> columns;
+		
+		Table(String tbl)
+		{
+			name = tbl;
+			columns = new ArrayList<String>();
+		}
+		
+		public void add(String col)
+		{
+			columns.add(col);
 		}
 	}
 }
