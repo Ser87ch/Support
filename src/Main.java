@@ -2,7 +2,7 @@
 
 
 import java.lang.System;
-import java.math.BigDecimal;
+
 
 import ru.sabstest.*;
 
@@ -16,7 +16,7 @@ public class Main {
 	{
 		Settings.testProj = "C:\\sabstest\\";
 		
-		Test t = Test.CMP;
+		Test t = Test.DDB;
 		switch(t)
 		{
 
@@ -56,7 +56,9 @@ public class Main {
 			Init.load();
 			Settings.readXML(Settings.fullfolder + "settings\\general.xml");
 			DeltaDB.readXMLSettings(Settings.fullfolder + "settings\\deltadb.xml");
-			DeltaDB.createXML("vvod.xml");			
+			DeltaDB.createDBLog();
+			//DeltaDB.createXML("vvod.xml");		
+			//DeltaDB.deleteDBLog();
 			break;
 		}
 		case RPACK:

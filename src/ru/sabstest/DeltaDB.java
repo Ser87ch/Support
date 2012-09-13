@@ -23,6 +23,8 @@ import org.w3c.dom.NodeList;
 
 
 
+
+
 public class DeltaDB {
 	static private List<Table> tables;
 
@@ -43,7 +45,7 @@ public class DeltaDB {
 
 			rootElement.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
 			rootElement.setAttribute("xsi:noNamespaceSchemaLocation", Settings.testProj + "XMLSchema\\output\\deltadb.xsd");
-			ListIterator <String> iter = tables.listIterator();
+			ListIterator <Table> iter = tables.listIterator();
 
 			Log.msg("Начало создания XML с изменениями в БД.");
 			while(iter.hasNext())
@@ -51,7 +53,7 @@ public class DeltaDB {
 
 				Element tbl = doc.createElement("table");
 				rootElement.appendChild(tbl);
-				String table = iter.next()+"_log";
+				String table = iter.next().name + "_log";
 				tbl.setAttribute("name", table);
 				ResultSet rs = db.st.executeQuery("select * from "+ table + " order by changedate,action");
 
@@ -108,181 +110,221 @@ public class DeltaDB {
 		}
 	}
 
+	private static boolean createTableLog(Table t)
+	{
+		try
+		{
+			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
+			db.connect();
+			String s = "select c.name cname, t.name tname, c.length, c.xprec, c.xscale  from dbo.syscolumns c \r\n" + 
+			"	inner join dbo.systypes t on c.xtype = t.xtype\r\n" + 
+			"	inner join dbo.sysobjects tb on tb.id = c.id and tb.xtype = 'u' and not (tb.name like '%_log')\r\n" + 
+			"	where tb.name = '" + t.name + "' and t.name <> 'NCIID'\r\n and c.name in("+ t.toStr() +")\r\n";
+
+			ResultSet rs = db.st.executeQuery(s);
+			if (rs.next()) 
+			{  
+				s = "if  exists (select * from dbo.sysobjects where id = object_id('" + t.name + "_log'))\r\n" + 
+				"drop table " + t.name + "_log\r\n" + 
+				"\r\n" + 
+				"create table dbo." + t.name + "_log(\r\n";
+				do 
+				{  
+					s = s + rs.getString("cname") + " " + rs.getString("tname");
+					if(rs.getString("tname") == "char" || rs.getString("tname") == "varchar" || rs.getString("tname") == "nchar" || rs.getString("tname") == "nvarchar")
+						s = s + "(" + rs.getString("length") + ")";					
+					else if(rs.getString("tname") == "decimal")
+						s = s + "(" + rs.getString("xprec") + ", " + rs.getString("xscale") + ")";
+					s = s + ",\r\n";
+
+
+				} while (rs.next());  
+			} else {  
+				return false;
+			}
+			s = s + "changedate datetime,\r\n" + 
+			"action varchar(2))\r\n";	
+			db.st.executeUpdate(s);
+			db.close();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			Log.msg(e);
+			return false;
+		}
+
+	}
+
+	private static boolean createTriggerIns(Table t)
+	{
+		try
+		{
+			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
+			db.connect();
+			String s = "select c.name cname, t.name tname, c.length, c.xprec, c.xscale  from dbo.syscolumns c \r\n" + 
+			"	inner join dbo.systypes t on c.xtype = t.xtype\r\n" + 
+			"	inner join dbo.sysobjects tb on tb.id = c.id and tb.xtype = 'u' and not (tb.name like '%_log')\r\n" + 
+			"	where tb.name = '" + t.name + "' and t.name <> 'NCIID'\r\n and c.name in("+ t.toStr() +")\r\n";
+			ResultSet rs = db.st.executeQuery(s);
+			if (rs.next()) 
+			{
+				String drop = "if  exists (select * from dbo.sysobjects where id = object_id('" + t.name + "_ins_trg'))\r\n drop trigger " + t.name +"_ins_trg\r\n";
+				
+				s = "create trigger dbo." + t.name + "_ins_trg on dbo." + t.name + "\r\n" + 
+				"for insert\r\n" + 
+				"as\r\n" + 
+				"begin\r\n insert into " + t.name + "_log\r\n" + 
+				"(\r\n";
+				
+				String a = "";
+				
+				do 
+				{
+					a = a + rs.getString("cname") + ", ";
+				} while (rs.next());  
+				s = s + a + "changedate, action\r\n" +
+				")\r\n" + 
+				"select " + a + "getdate(), 'i'\r\n" + 
+				"from Inserted\r\n" + 
+				"end\r\n";
+				db.st.executeUpdate(drop);
+				
+			} else {  
+				return false;
+			}
+			
+			db.st.executeUpdate(s);
+			db.close();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			Log.msg(e);
+			return false;
+		}
+	}
+	
+	private static boolean createTriggerDel(Table t)
+	{
+		try
+		{
+			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
+			db.connect();
+			String s = "select c.name cname, t.name tname, c.length, c.xprec, c.xscale  from dbo.syscolumns c \r\n" + 
+			"	inner join dbo.systypes t on c.xtype = t.xtype\r\n" + 
+			"	inner join dbo.sysobjects tb on tb.id = c.id and tb.xtype = 'u' and not (tb.name like '%_log')\r\n" + 
+			"	where tb.name = '" + t.name + "' and t.name <> 'NCIID'\r\n and c.name in("+ t.toStr() +")\r\n";
+			ResultSet rs = db.st.executeQuery(s);
+			if (rs.next()) 
+			{
+				String drop = "if  exists (select * from dbo.sysobjects where id = object_id('" + t.name + "_del_trg'))\r\n drop trigger " + t.name +"_del_trg\r\n";
+				
+				s = "create trigger dbo." + t.name + "_del_trg on dbo." + t.name + "\r\n" + 
+				"for delete\r\n" + 
+				"as\r\n" + 
+				"begin\r\n insert into " + t.name + "_log\r\n" + 
+				"(\r\n";
+				
+				String a = "";
+				
+				do 
+				{
+					a = a + rs.getString("cname") + ", ";
+				} while (rs.next());  
+				s = s + a + "changedate, action\r\n" +
+				")\r\n" + 
+				"select " + a + "getdate(), 'd'\r\n" + 
+				"from Deleted\r\n" + 
+				"end\r\n";
+				db.st.executeUpdate(drop);
+				
+			} else {  
+				return false;
+			}
+			
+			db.st.executeUpdate(s);
+			db.close();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			Log.msg(e);
+			return false;
+		}
+	}
+	
+	private static boolean createTriggerUpd(Table t)
+	{
+		try
+		{
+			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
+			db.connect();
+			String s = "select c.name cname, t.name tname, c.length, c.xprec, c.xscale  from dbo.syscolumns c \r\n" + 
+			"	inner join dbo.systypes t on c.xtype = t.xtype\r\n" + 
+			"	inner join dbo.sysobjects tb on tb.id = c.id and tb.xtype = 'u' and not (tb.name like '%_log')\r\n" + 
+			"	where tb.name = '" + t.name + "' and t.name <> 'NCIID'\r\n and c.name in("+ t.toStr() +")\r\n";
+			ResultSet rs = db.st.executeQuery(s);
+			if (rs.next()) 
+			{
+				String drop = "if  exists (select * from dbo.sysobjects where id = object_id('" + t.name + "_upd_trg'))\r\n drop trigger " + t.name +"_upd_trg\r\n";
+				
+				s = "create trigger dbo." + t.name + "_upd_trg on dbo." + t.name + "\r\n" + 
+				"for update\r\n" + 
+				"as\r\n" + 
+				"begin\r\n" ;
+				
+				String a = "";
+				String b = "";
+				
+				do 
+				{
+					a = a + rs.getString("cname") + ", ";
+					b = b + ((rs.getRow() == 1)?"":" OR ") +  "update(" + rs.getString("cname") + ")";
+				} while (rs.next());  
+				s = s + "if(" + b + ") begin\r\n" +
+				"insert into " + t.name + "_log\r\n" + 
+				"(\r\n" +
+				a + "changedate, action\r\n" +
+				")\r\n" + 
+				"select " + a + "getdate(), 'ud'\r\n" + 
+				"from Deleted\r\n" + 
+				"insert into " + t.name + "_log\r\n" + 
+				"(\r\n" + a + "changedate, action\r\n" +
+				")\r\n" + 
+				"select " + a + "getdate(), 'ui'\r\n" + 
+				"from Inserted\r\n" +
+				"end\r\nend\r\n";
+				db.st.executeUpdate(drop);
+				
+			} else {  
+				return false;
+			}
+			
+			db.st.executeUpdate(s);
+			db.close();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			Log.msg(e);
+			return false;
+		}
+	}
+
 	public static void createDBLog()
 	{
 		try 
 		{
-			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
-			db.connect();
-			String s = "declare cur cursor for  \r\n" + 
-			"select name,id from dbo.sysobjects where xtype = 'u' and not (name like '%_log') and name in("+ DeltaDB.toStr() +")\r\n" + 
-			"\r\n" + 
-			"declare @tblname varchar(128), @tblid int, @str varchar(8000)\r\n" + 
-			"\r\n" + 
-			" \r\n" + 
-			"\r\n" + 
-			"open cur\r\n" + 
-			"fetch next from cur into @tblname, @tblid  \r\n" + 
-			"\r\n" + 
-			"while @@fetch_status = 0   \r\n" + 
-			"begin   \r\n" + 
-			"	set @str = 'if  exists (select * from dbo.sysobjects where id = object_id(''' + @tblname + '_log''))\r\n" + 
-			"drop table ' + @tblname + '_log\r\n" + 
-			"\r\n" + 
-			"	create table dbo.' + @tblname + '_log(\r\n" + 
-			"'\r\n" + 
-			"	declare curcol cursor for  \r\n" + 
-			"	select c.name, t.name, c.length, c.xprec, c.xscale  from dbo.syscolumns c \r\n" + 
-			"	inner join dbo.systypes t on c.xtype = t.xtype\r\n" + 
-			"	where c.id = @tblid and t.name <> 'NCIID'\r\n" + 
-			"\r\n" + 
-			"	declare @col varchar(128), @type varchar(128), @len smallint, @prec tinyint, @scale tinyint\r\n" + 
-			"	\r\n" + 
-			"	open curcol\r\n" + 
-			"	fetch next from curcol into @col, @type, @len, @prec, @scale\r\n" + 
-			"	\r\n" + 
-			"	while @@fetch_status = 0   \r\n" + 
-			"	begin 	\r\n" + 
-			"		set @str = @str + @col + ' ' + @type\r\n" + 
-			"		\r\n" + 
-			"		if @type in ('char','varchar','nchar','nvarchar')\r\n" + 
-			"			set @str = @str + ' (' + convert(varchar,@len) + ')'\r\n" + 
-			"\r\n" + 
-			"		if @type = 'decimal'\r\n" + 
-			"			set @str = @str + ' (' + convert(varchar,@prec) + ',' +  convert(varchar,@scale) + ')'\r\n" + 
-			"\r\n" + 
-			"		\r\n" + 
-			"		set @str = @str + ',\r\n" + 
-			"'\r\n" + 
-			"		fetch next from curcol into @col, @type, @len, @prec, @scale \r\n" + 
-			"	end   \r\n" + 
-			"\r\n" + 
-			"	close curcol   \r\n" + 
-			"	deallocate curcol\r\n" + 
-			"	\r\n" + 
-			"	set @str = @str + 'changedate datetime,\r\n" + 
-			"action varchar(2)\r\n" + 
-			")'\r\n" + 
-			"	print @str\r\n" + 
-			"	exec(@str)\r\n" + 
-			"	fetch next from cur into @tblname, @tblid     \r\n" + 
-			"\r\n" + 
-			"end   \r\n" + 
-			"\r\n" + 
-			"close cur   \r\n" + 
-			"deallocate cur";
-			db.st.executeUpdate(s);
+			ListIterator <Table> iter = tables.listIterator();
+
+			while(iter.hasNext()) 
+			{
+				Table t = iter.next();
+				createTableLog(t);
+				createTriggerIns(t);
+				createTriggerDel(t);
+				createTriggerUpd(t);
+			}
 			Log.msg("Таблицы для записи лога для таблиц " + toStr() + " созданы.");
-			s = "declare cur cursor for  \r\n" + 
-			"select name,id from dbo.sysobjects where xtype = 'u' and not (name like '%_log')and name in("+ DeltaDB.toStr() +")\r\n" + 
-			"\r\n" + 
-			"declare @tblname varchar(128), @tblid int, @str varchar(8000)\r\n" + 
-			"\r\n" + 
-			" \r\n" + 
-			"\r\n" + 
-			"open cur\r\n" + 
-			"fetch next from cur into @tblname, @tblid  \r\n" + 
-			"\r\n" + 
-			"while @@fetch_status = 0   \r\n" + 
-			"begin   \r\n" + 
-			"	\r\n" + 
-			"	declare curcol cursor for  \r\n" + 
-			"	select c.name from dbo.syscolumns c 	\r\n" + 
-			" 	where c.id = @tblid\r\n" + 
-			"\r\n" + 
-			"	declare @col varchar(128), @strins varchar(8000), @strsel varchar(8000)\r\n" + 
-			"	set @strins = ''\r\n" + 
-			"	set @strsel = ''\r\n" + 
-			"\r\n" + 
-			"	open curcol\r\n" + 
-			"	fetch next from curcol into @col\r\n" + 
-			"	\r\n" + 
-			"	while @@fetch_status = 0   \r\n" + 
-			"	begin 	\r\n" + 
-			"		set @strins = @strins + @col + ',\r\n" + 
-			"'		\r\n" + 
-			"		set @strsel = @strsel + @col + ', '\r\n" + 
-			"		fetch next from curcol into @col\r\n" + 
-			"	end   \r\n" + 
-			"	set @strins = @strins + 'changedate,\r\n" + 
-			"action'\r\n" + 
-			"\r\n" + 
-			"	close curcol   \r\n" + 
-			"	deallocate curcol\r\n" + 
-			"\r\n" + 
-			"	set @str = 'if  exists (select * from dbo.sysobjects where id = object_id(''' + @tblname + '_ins_trg''))\r\n" + 
-			"drop trigger ' + @tblname + '_ins_trg'\r\n" + 
-			"	print @str\r\n" + 
-			"	exec(@str)\r\n" + 
-			"\r\n" + 
-			"	set @str = 'create trigger dbo.' + @tblname + '_ins_trg on dbo.' + @tblname + '\r\n" + 
-			"for insert\r\n" + 
-			"as\r\n" + 
-			"begin\r\n" + 
-			"insert into dbo.' + @tblname + '_log\r\n" + 
-			"(\r\n" + 
-			"' + @strins + '\r\n" + 
-			")\r\n" + 
-			"select ' + @strsel + ' getdate(), ''i''\r\n" + 
-			"from Inserted\r\n" + 
-			"end'\r\n" + 
-			"	print @str\r\n" + 
-			"	exec(@str)\r\n" + 
-			"\r\n" + 
-			"	set @str = 'if  exists (select * from dbo.sysobjects where id = object_id(''' + @tblname + '_upd_trg''))\r\n" + 
-			"drop trigger ' + @tblname + '_upd_trg'\r\n" + 
-			"	print @str\r\n" + 
-			"	exec(@str)\r\n" + 
-			"\r\n" + 
-			"	set @str = 'create trigger dbo.' + @tblname + '_upd_trg on dbo.' + @tblname + '\r\n" + 
-			"for update\r\n" + 
-			"as\r\n" + 
-			"begin\r\n" + 
-			"insert into dbo.' + @tblname + '_log\r\n" + 
-			"(\r\n" + 
-			"' + @strins + '\r\n" + 
-			")\r\n" + 
-			"select ' + @strsel + ' getdate(), ''ud''\r\n" + 
-			"from Deleted\r\n" + 
-			"\r\n" + 
-			"insert into dbo.' + @tblname + '_log\r\n" + 
-			"(\r\n" + 
-			"' + @strins + '\r\n" + 
-			")\r\n" + 
-			"select ' + @strsel + ' getdate(), ''ui''\r\n" + 
-			"from Inserted\r\n" + 
-			"end'\r\n" + 
-			"	print @str\r\n" + 
-			"	exec(@str)\r\n" + 
-			"\r\n" + 
-			"\r\n" + 
-			"	set @str = 'if  exists (select * from dbo.sysobjects where id = object_id(''' + @tblname + '_del_trg''))\r\n" + 
-			"drop trigger ' + @tblname + '_del_trg'\r\n" + 
-			"	print @str\r\n" + 
-			"	exec(@str)\r\n" + 
-			"\r\n" + 
-			"	set @str = 'create trigger dbo.' + @tblname + '_del_trg on dbo.' + @tblname + '\r\n" + 
-			"for delete\r\n" + 
-			"as\r\n" + 
-			"begin\r\n" + 
-			"insert into dbo.' + @tblname + '_log\r\n" + 
-			"(\r\n" + 
-			"' + @strins + '\r\n" + 
-			")\r\n" + 
-			"select ' + @strsel + ' getdate(), ''d''\r\n" + 
-			"from Deleted\r\n" + 
-			"end'\r\n" + 
-			"	print @str\r\n" + 
-			"	exec(@str)	\r\n" + 
-			"	\r\n" + 
-			"	fetch next from cur into @tblname, @tblid     \r\n" + 
-			"end   \r\n" + 
-			"\r\n" + 
-			"close cur   \r\n" + 
-			"deallocate cur";
-			db.st.executeUpdate(s);
 			Log.msg("Триггера для записи лога для таблиц " + toStr() + " созданы.");
-			db.close();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			Log.msg(e);
@@ -343,12 +385,12 @@ public class DeltaDB {
 
 	public static String toStr()
 	{
-		ListIterator <String> iter = tables.listIterator();
+		ListIterator <Table> iter = tables.listIterator();
 		String s = "";
 		int i = 0;
 		while(iter.hasNext()) 
 		{
-			s = s + ((i==0)?"":", ") + "'" + iter.next() + "'";
+			s = s + ((i==0)?"":", ") + "'" + iter.next().name + "'";
 			i++;
 		}
 
@@ -371,12 +413,18 @@ public class DeltaDB {
 			rootElement.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
 			rootElement.setAttribute("xsi:noNamespaceSchemaLocation", Settings.testProj + "XMLSchema\\settings\\deltadb.xsd");
 
-			ListIterator <String> iter = tables.listIterator();
+			ListIterator <Table> iter = tables.listIterator();
 			while(iter.hasNext())
 			{
-				String s = iter.next();
-				XML.createNode(doc, rootElement, "table", s);
-
+				Table t = iter.next();				
+				Element tbl = doc.createElement("table");
+				tbl.setAttribute("name", t.name);
+				rootElement.appendChild(tbl);				
+				ListIterator <String> sitr = t.columns.listIterator();
+				while(sitr.hasNext())
+				{
+					XML.createNode(doc, tbl, "column", sitr.next());
+				}
 			}		
 
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -417,18 +465,25 @@ public class DeltaDB {
 			XML.validate(Settings.testProj + "XMLSchema\\settings\\deltadb.xsd",src);
 
 			//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
-			NodeList nList = doc.getElementsByTagName("table");
+			NodeList nList = doc.getElementsByTagName("table");		
 
+			tables = new ArrayList<Table>();
 
-
-		
-
-			for (int temp = 0; temp < nList.getLength(); temp++) {
-
+			for (int temp = 0; temp < nList.getLength(); temp++)
+			{
 				Element NmElmnt = (Element) nList.item(temp);
-				NodeList Nm = NmElmnt.getChildNodes();   
-				String s = ((Node) Nm.item(0)).getNodeValue();						
-				tables.add(s);
+				String s = NmElmnt.getAttribute("name");			
+				Table t = new Table(s);
+
+				NodeList nlList = NmElmnt.getElementsByTagName("column");
+				for (int i = 0; i < nlList.getLength(); i++)
+				{
+					Element Elmnt = (Element) nlList.item(i);					
+					NodeList Nm = Elmnt.getChildNodes();   
+					s = ((Node) Nm.item(0)).getNodeValue();	
+					t.add(s);
+				}				
+				tables.add(t);
 			}
 			Log.msg("XML с настройками для подсчета изменений в БД " + src + " загружен в программу.");
 		} catch (Exception e) {
@@ -436,21 +491,37 @@ public class DeltaDB {
 			Log.msg(e);
 		}
 	}
-	
+
 	public static class Table
 	{
 		String name;
 		List<String> columns;
-		
+
 		Table(String tbl)
 		{
 			name = tbl;
 			columns = new ArrayList<String>();
 		}
-		
+
 		public void add(String col)
 		{
 			columns.add(col);
+		}
+
+		public String toStr()
+		{
+			ListIterator <String> iter = columns.listIterator();
+			String s = "";
+			int i = 0;
+			while(iter.hasNext()) 
+			{
+				s = s + ((i==0)?"":", ") + "'" + iter.next() + "'";
+				i++;
+			}
+
+
+			return s;
+
 		}
 	}
 }
