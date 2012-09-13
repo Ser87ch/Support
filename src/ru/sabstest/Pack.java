@@ -158,12 +158,28 @@ public class Pack {
 		try {
 			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
 			db.connect();			
-			ResultSet rs = db.st.executeQuery("select top 1 isnull(SUBTYPE,'') packfile from dbo.document_bon_pack order by DATE_INSERT desc");
+			ResultSet rs = db.st.executeQuery("select top 1 isnull(SUBTYPE,'') packfile from dbo.document_bon_pack where substring(SUBTYPE, 4,1) = 'r' and substring(SUBTYPE, 12,1) = 'i' and status = 0 and substring(subtype, 5, 4) = '" + new SimpleDateFormat("ddMM").format(Settings.operDate) + "' order by DATE_INSERT desc");
 			rs.next();
-			String spack = rs.getString("packfile"); //p$1s0302.82o
+			String spack = rs.getString("packfile"); //p$9s0302.82o
 			db.close();
-			Log.msg("Имя файла R пакета " + spack.substring(0,3) + "r" + spack.substring(4,11) + "i .");
-			return spack.substring(0,3) + "r" + spack.substring(4,11) + "i";
+			String s;
+
+			if(spack.equals(""))
+			{
+				s = "1";				
+			}
+			else if(spack.substring(2,3).equals("9"))
+			{
+				s = "A";
+			}
+			else
+			{
+				char a = (char)(spack.charAt(2) + 1); 
+				s = Character.toString(a);
+			}
+
+			Log.msg("Имя файла S пакета " + "p$" + s + "r" + new SimpleDateFormat("ddMM").format(Settings.operDate) + "." + Settings.bik.substring(4,6) + "i .");
+			return "p$" + s + "r" + new SimpleDateFormat("ddMM").format(Settings.operDate) + "." + Settings.bik.substring(4,6) + "i";
 		} catch(Exception e) {
 			e.printStackTrace();
 			Log.msg(e);
