@@ -131,9 +131,9 @@ public class DeltaDB {
 				do 
 				{  
 					s = s + rs.getString("cname") + " " + rs.getString("tname");
-					if(rs.getString("tname") == "char" || rs.getString("tname") == "varchar" || rs.getString("tname") == "nchar" || rs.getString("tname") == "nvarchar")
+					if(rs.getString("tname").equals("char")|| rs.getString("tname").equals("varchar") || rs.getString("tname").equals("nchar")  || rs.getString("tname").equals("nvarchar"))
 						s = s + "(" + rs.getString("length") + ")";					
-					else if(rs.getString("tname") == "decimal")
+					else if(rs.getString("tname").equals("decimal"))
 						s = s + "(" + rs.getString("xprec") + ", " + rs.getString("xscale") + ")";
 					s = s + ",\r\n";
 
@@ -169,15 +169,15 @@ public class DeltaDB {
 			if (rs.next()) 
 			{
 				String drop = "if  exists (select * from dbo.sysobjects where id = object_id('" + t.name + "_ins_trg'))\r\n drop trigger " + t.name +"_ins_trg\r\n";
-				
+
 				s = "create trigger dbo." + t.name + "_ins_trg on dbo." + t.name + "\r\n" + 
 				"for insert\r\n" + 
 				"as\r\n" + 
 				"begin\r\n insert into " + t.name + "_log\r\n" + 
 				"(\r\n";
-				
+
 				String a = "";
-				
+
 				do 
 				{
 					a = a + rs.getString("cname") + ", ";
@@ -188,11 +188,11 @@ public class DeltaDB {
 				"from Inserted\r\n" + 
 				"end\r\n";
 				db.st.executeUpdate(drop);
-				
+
 			} else {  
 				return false;
 			}
-			
+
 			db.st.executeUpdate(s);
 			db.close();
 			return true;
@@ -202,7 +202,7 @@ public class DeltaDB {
 			return false;
 		}
 	}
-	
+
 	private static boolean createTriggerDel(Table t)
 	{
 		try
@@ -217,15 +217,15 @@ public class DeltaDB {
 			if (rs.next()) 
 			{
 				String drop = "if  exists (select * from dbo.sysobjects where id = object_id('" + t.name + "_del_trg'))\r\n drop trigger " + t.name +"_del_trg\r\n";
-				
+
 				s = "create trigger dbo." + t.name + "_del_trg on dbo." + t.name + "\r\n" + 
 				"for delete\r\n" + 
 				"as\r\n" + 
 				"begin\r\n insert into " + t.name + "_log\r\n" + 
 				"(\r\n";
-				
+
 				String a = "";
-				
+
 				do 
 				{
 					a = a + rs.getString("cname") + ", ";
@@ -236,11 +236,11 @@ public class DeltaDB {
 				"from Deleted\r\n" + 
 				"end\r\n";
 				db.st.executeUpdate(drop);
-				
+
 			} else {  
 				return false;
 			}
-			
+
 			db.st.executeUpdate(s);
 			db.close();
 			return true;
@@ -250,7 +250,7 @@ public class DeltaDB {
 			return false;
 		}
 	}
-	
+
 	private static boolean createTriggerUpd(Table t)
 	{
 		try
@@ -265,15 +265,15 @@ public class DeltaDB {
 			if (rs.next()) 
 			{
 				String drop = "if  exists (select * from dbo.sysobjects where id = object_id('" + t.name + "_upd_trg'))\r\n drop trigger " + t.name +"_upd_trg\r\n";
-				
+
 				s = "create trigger dbo." + t.name + "_upd_trg on dbo." + t.name + "\r\n" + 
 				"for update\r\n" + 
 				"as\r\n" + 
 				"begin\r\n" ;
-				
+
 				String a = "";
 				String b = "";
-				
+
 				do 
 				{
 					a = a + rs.getString("cname") + ", ";
@@ -293,11 +293,11 @@ public class DeltaDB {
 				"from Inserted\r\n" +
 				"end\r\nend\r\n";
 				db.st.executeUpdate(drop);
-				
+
 			} else {  
 				return false;
 			}
-			
+
 			db.st.executeUpdate(s);
 			db.close();
 			return true;
