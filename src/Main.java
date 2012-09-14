@@ -16,7 +16,7 @@ public class Main {
 	{
 		Settings.testProj = "C:\\sabstest\\";
 		
-		Test t = Test.RPACK;
+		Test t = Test.DDB;
 		switch(t)
 		{
 
@@ -56,9 +56,9 @@ public class Main {
 			Init.load();
 			Settings.readXML(Settings.fullfolder + "settings\\general.xml");
 			DeltaDB.readXMLSettings(Settings.fullfolder + "settings\\deltadb.xml");
-			//DeltaDB.createDBLog();
+			DeltaDB.createDBLog();
 			//DeltaDB.createXML("vvod.xml");		
-			DeltaDB.deleteDBLog();
+			//DeltaDB.deleteDBLog();
 			break;
 		}
 		case RPACK:

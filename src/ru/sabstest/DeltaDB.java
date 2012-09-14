@@ -271,27 +271,44 @@ public class DeltaDB {
 				"as\r\n" + 
 				"begin\r\n" ;
 
-				String a = "";
-				String b = "";
+				String a = "", b = "";				
 
 				do 
 				{
 					a = a + rs.getString("cname") + ", ";
-					b = b + ((rs.getRow() == 1)?"":" OR ") +  "update(" + rs.getString("cname") + ")";
+					b = b + "i." + rs.getString("cname") + " = d." + rs.getString("cname") + " and ";
 				} while (rs.next());  
-				s = s + "if(" + b + ") begin\r\n" +
-				"insert into " + t.name + "_log\r\n" + 
+
+
+				String prkeysql = "Select o2.name As TableName, o.name As PrimaryKeyName, tc.name As ColumnName\r\n" + 
+				"From sysconstraints c\r\n" + 
+				"Inner Join sysobjects o On c.constid = o.id\r\n" + 
+				"Inner Join sysindexes i On o.name = i.name And o.parent_obj = i.id\r\n" + 
+				"Inner Join sysindexkeys ik On i.id = ik.id And i.indid = ik.indid\r\n" + 
+				"Inner Join syscolumns tc On ik.id = tc.id And ik.colid = tc.colid\r\n" + 
+				"Inner Join sysobjects o2 On ik.id = o2.id\r\n" + 
+				"Where o.xtype = 'PK' And o2.xtype = 'U' and o2.name = '" + t.name + "'\r\n";
+				
+				rs = db.st.executeQuery(prkeysql);
+				rs.next();
+				String prkey = rs.getString("ColumnName");
+				b = b + "i." + prkey + " = d." + prkey;
+				
+				s = s + "insert into " + t.name + "_log\r\n" + 
 				"(\r\n" +
 				a + "changedate, action\r\n" +
 				")\r\n" + 
 				"select " + a + "getdate(), 'ud'\r\n" + 
-				"from Deleted\r\n" + 
+				"from Deleted d\r\n" + 
+				"where not exists(select 1 from Inserted i where " + b + ")\r\n" + 
 				"insert into " + t.name + "_log\r\n" + 
 				"(\r\n" + a + "changedate, action\r\n" +
 				")\r\n" + 
 				"select " + a + "getdate(), 'ui'\r\n" + 
-				"from Inserted\r\n" +
-				"end\r\nend\r\n";
+				"from Inserted i\r\n" +		
+				"where not exists(select 1 from Deleted d where " + b + ")\r\n" + 
+				"end\r\n";
+
 				db.st.executeUpdate(drop);
 
 			} else {  
