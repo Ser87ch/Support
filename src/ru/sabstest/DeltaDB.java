@@ -26,7 +26,7 @@ import org.w3c.dom.NodeList;
 
 
 public class DeltaDB {
-	static private List<Table> tables;
+	static private List<TableMeta> tables;
 
 	public static void createXML(String filename)
 	{
@@ -45,7 +45,7 @@ public class DeltaDB {
 
 			rootElement.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
 			rootElement.setAttribute("xsi:noNamespaceSchemaLocation", Settings.testProj + "XMLSchema\\output\\deltadb.xsd");
-			ListIterator <Table> iter = tables.listIterator();
+			ListIterator <TableMeta> iter = tables.listIterator();
 
 			Log.msg("Начало создания XML с изменениями в БД.");
 			while(iter.hasNext())
@@ -70,7 +70,7 @@ public class DeltaDB {
 					int numberOfColumns = rsMetaData.getColumnCount();
 					for(int i = 1; i <= numberOfColumns; i++)
 					{	
-						if(rsMetaData.getColumnName(i) != "action" && rsMetaData.getColumnName(i) != "changedate")
+						if(!(rsMetaData.getColumnName(i).equals("action")) && !(rsMetaData.getColumnName(i).equals("changedate")))
 						{
 							Element col = doc.createElement("column");
 							col.setAttribute("name", rsMetaData.getColumnName(i));
@@ -110,7 +110,7 @@ public class DeltaDB {
 		}
 	}
 
-	private static boolean createTableLog(Table t)
+	private static boolean createTableLog(TableMeta t)
 	{
 		try
 		{
@@ -155,7 +155,7 @@ public class DeltaDB {
 
 	}
 
-	private static boolean createTriggerIns(Table t)
+	private static boolean createTriggerIns(TableMeta t)
 	{
 		try
 		{
@@ -203,7 +203,7 @@ public class DeltaDB {
 		}
 	}
 
-	private static boolean createTriggerDel(Table t)
+	private static boolean createTriggerDel(TableMeta t)
 	{
 		try
 		{
@@ -251,7 +251,7 @@ public class DeltaDB {
 		}
 	}
 
-	private static boolean createTriggerUpd(Table t)
+	private static boolean createTriggerUpd(TableMeta t)
 	{
 		try
 		{
@@ -288,12 +288,12 @@ public class DeltaDB {
 				"Inner Join syscolumns tc On ik.id = tc.id And ik.colid = tc.colid\r\n" + 
 				"Inner Join sysobjects o2 On ik.id = o2.id\r\n" + 
 				"Where o.xtype = 'PK' And o2.xtype = 'U' and o2.name = '" + t.name + "'\r\n";
-				
+
 				rs = db.st.executeQuery(prkeysql);
 				rs.next();
 				String prkey = rs.getString("ColumnName");
 				b = b + "i." + prkey + " = d." + prkey;
-				
+
 				s = s + "insert into " + t.name + "_log\r\n" + 
 				"(\r\n" +
 				a + "changedate, action\r\n" +
@@ -329,11 +329,11 @@ public class DeltaDB {
 	{
 		try 
 		{
-			ListIterator <Table> iter = tables.listIterator();
+			ListIterator <TableMeta> iter = tables.listIterator();
 
 			while(iter.hasNext()) 
 			{
-				Table t = iter.next();
+				TableMeta t = iter.next();
 				createTableLog(t);
 				createTriggerIns(t);
 				createTriggerDel(t);
@@ -402,7 +402,7 @@ public class DeltaDB {
 
 	public static String toStr()
 	{
-		ListIterator <Table> iter = tables.listIterator();
+		ListIterator <TableMeta> iter = tables.listIterator();
 		String s = "";
 		int i = 0;
 		while(iter.hasNext()) 
@@ -430,10 +430,10 @@ public class DeltaDB {
 			rootElement.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
 			rootElement.setAttribute("xsi:noNamespaceSchemaLocation", Settings.testProj + "XMLSchema\\settings\\deltadb.xsd");
 
-			ListIterator <Table> iter = tables.listIterator();
+			ListIterator <TableMeta> iter = tables.listIterator();
 			while(iter.hasNext())
 			{
-				Table t = iter.next();				
+				TableMeta t = iter.next();				
 				Element tbl = doc.createElement("table");
 				tbl.setAttribute("name", t.name);
 				rootElement.appendChild(tbl);				
@@ -484,13 +484,13 @@ public class DeltaDB {
 			//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 			NodeList nList = doc.getElementsByTagName("table");		
 
-			tables = new ArrayList<Table>();
+			tables = new ArrayList<TableMeta>();
 
 			for (int temp = 0; temp < nList.getLength(); temp++)
 			{
 				Element NmElmnt = (Element) nList.item(temp);
 				String s = NmElmnt.getAttribute("name");			
-				Table t = new Table(s);
+				TableMeta t = new TableMeta(s);
 
 				NodeList nlList = NmElmnt.getElementsByTagName("column");
 				for (int i = 0; i < nlList.getLength(); i++)
@@ -509,23 +509,143 @@ public class DeltaDB {
 		}
 	}
 
-	public static class Table
+	public static boolean cmpDeltaDB(String et, String src)
+	{
+		Delta etd = new Delta();
+		Delta srcd = new Delta();
+		etd.readXML(et);
+		srcd.readXML(src);
+		return srcd.equals(etd);	
+
+	}
+
+
+	private static class Delta
+	{
+		List<Table> tables;
+
+		private Delta()
+		{
+			tables = new ArrayList<Table>();
+		}
+
+		private void readXML(String src)
+		{
+			String qwe = "";
+			try {
+				File fXmlFile = new File(src);
+				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+				Document doc = dBuilder.parse(fXmlFile);
+				doc.getDocumentElement().normalize();
+				XML.validate(Settings.testProj + "XMLSchema\\output\\deltadb.xsd",src);
+
+				NodeList nList = doc.getElementsByTagName("table");
+
+				for (int temp = 0; temp < nList.getLength(); temp++) 
+				{
+
+					//Node nNode = nList.item(temp);
+					Element NmElmnt = (Element) nList.item(temp);
+					String s = NmElmnt.getAttribute("name");	
+
+					Table t = new Table(s);
+
+					NodeList nlList = NmElmnt.getElementsByTagName("row");
+					for (int i = 0; i < nlList.getLength(); i++)
+					{
+						Element Elmnt = (Element) nlList.item(i);	
+						Line l = new Line(Integer.parseInt(Elmnt.getAttribute("id")), Elmnt.getAttribute("action"));
+						qwe = s + " " + Elmnt.getAttribute("id");
+						NodeList Nm = Elmnt.getElementsByTagName("column");   
+						for (int j = 0; j < Nm.getLength(); j++)
+						{
+							Element El = (Element) Nm.item(j);	
+							NodeList N = El.getChildNodes();   
+							if(((Node) N.item(0)) == null)
+								s = "";
+							else
+								s = ((Node) N.item(0)).getNodeValue();	
+
+							if(!El.getAttribute("name").equals("changedate") && !El.getAttribute("name").equals("action"))
+							{
+								l.addCol(s);
+								if(i == 0)
+									t.tm.add(El.getAttribute("name"));
+							}
+						}				
+
+						t.lines.add(l);
+					}				
+
+					tables.add(t);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				Log.msg(e);
+				System.out.println(qwe);
+			}
+		}
+
+		private boolean equals(Delta et)
+		{
+			if(tables.size() != et.tables.size())
+			{
+				Log.msg("Количество таблиц в файлах не совпадает.");
+				return false;
+			}
+
+			ListIterator <Table> iterTbl = et.tables.listIterator();
+
+			while(iterTbl.hasNext())
+			{
+				if(!contains(iterTbl.next()))
+					return false;
+			}
+			return true;
+		}
+
+		private boolean contains(Table t)
+		{
+			
+			ListIterator <Table> iterTbl = tables.listIterator();
+			while(iterTbl.hasNext())
+			{
+				Table tbl = iterTbl.next();
+				if(tbl.tm.equals(t.tm) && tbl.lines.size() == t.lines.size())
+				{
+					ListIterator <Line> iterLn = tbl.lines.listIterator();
+					while(iterLn.hasNext())
+					{
+						if(!t.contains(iterLn.next()))
+								return false;
+					}
+					return true;
+				}				
+			}			
+			return false;
+		}
+	}
+
+
+	private static class TableMeta
 	{
 		String name;
 		List<String> columns;
 
-		Table(String tbl)
+
+		TableMeta(String tbl)
 		{
 			name = tbl;
 			columns = new ArrayList<String>();
 		}
 
-		public void add(String col)
+		private void add(String col)
 		{
 			columns.add(col);
 		}
 
-		public String toStr()
+		private String toStr()
 		{
 			ListIterator <String> iter = columns.listIterator();
 			String s = "";
@@ -535,10 +655,85 @@ public class DeltaDB {
 				s = s + ((i==0)?"":", ") + "'" + iter.next() + "'";
 				i++;
 			}
-
-
 			return s;
+		}	
 
+		private boolean equals(TableMeta tm)
+		{
+			boolean a = true;
+
+			if(name.equals(tm.name) && (columns.size() == tm.columns.size()))
+			{
+				ListIterator<String> iter =  columns.listIterator();
+				while(iter.hasNext() && a) 
+				{
+					a = tm.columns.contains(iter.next());
+				}				
+			}	
+			else
+			{				
+				return false;
+			}
+			return a;
+		}
+
+	}
+
+	private static class Table
+	{
+		private TableMeta tm;
+		private List<Line> lines;
+		private Table(String TableName)
+		{
+			tm = new TableMeta(TableName);
+			lines = new ArrayList<Line>();
+		}
+
+		private boolean contains(Line ln)
+		{
+			
+			ListIterator <Line> iterLn = lines.listIterator();
+			while(iterLn.hasNext()) 
+			{
+				if(iterLn.next().equals(ln))
+					return true;
+			}
+			return false;
+		}
+	}
+
+	private static class Line
+	{
+		private List<String> columns;
+		private int i;
+		private String action;
+		private Line(int i, String action)
+		{
+			columns = new ArrayList<String>();
+			this.i = i;
+			this.action = action;
+		}
+		private void addCol(String value)
+		{
+			columns.add(value);
+		}
+		private boolean equals(Line ln)
+		{
+			boolean a = true;
+
+			if(columns.size() == ln.columns.size() && action.equals(ln.action))
+			{
+				ListIterator<String> iter =  columns.listIterator();
+				while(iter.hasNext() && a) 
+				{
+					a = ln.columns.contains(iter.next());
+				}				
+			}	
+			else
+			{				
+				return false;
+			}
+			return a;
 		}
 	}
 }
