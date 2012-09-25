@@ -613,6 +613,7 @@ public class Settings{
 		public static String keyobr = "";
 		public static String signcontr = "";
 		public static String keycontr = "";
+		public static boolean isGenBpack = false;
 		
 		public static void createXML()
 		{
@@ -632,7 +633,8 @@ public class Settings{
 				XML.createNode(doc, rootElement, "keyobr", keyobr);	
 				XML.createNode(doc, rootElement, "signcontr", signcontr);	
 				XML.createNode(doc, rootElement, "keycontr", keycontr);	
-
+				XML.createNode(doc, rootElement, "isgenbpack", Boolean.toString(isGenBpack));
+				
 				TransformerFactory transformerFactory = TransformerFactory.newInstance();
 				Transformer transformer = transformerFactory.newTransformer();
 				DOMSource source = new DOMSource(doc);
@@ -685,7 +687,7 @@ public class Settings{
 						keyobr = XML.getTagString("keyobr", eElement);	
 						signcontr = XML.getTagString("signcontr", eElement);		
 						keycontr = XML.getTagString("keycontr", eElement);		
-
+						isGenBpack = Boolean.parseBoolean(XML.getTagString("keycontr", eElement));
 					}
 				}
 				Log.msg("XML с настройками для генерации R-пакета " + src + " загружен в программу.");

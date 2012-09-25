@@ -126,6 +126,69 @@ public class Pack {
 		}
 	}
 
+	
+	public static void createBpack()
+	{
+		try {
+			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
+
+			db.connect();
+			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile from dbo.document_bon_pack where substring(subtype,12,1) = 'o' and substring(subtype,4,1) = 's' order by DATE_INSERT desc");
+			rs.next();
+			String spack = rs.getString("packfile");
+
+			File sfile = new File(spack);
+			File bfile = new File(Settings.testProj + "tests\\" + Settings.folder + "\\input\\bpack.txt");
+
+			FileInputStream s = new FileInputStream(sfile);
+			FileOutputStream r = new FileOutputStream(bfile);
+			DataOutputStream rd = new DataOutputStream(r);
+			
+			
+			byte[] b = new byte[732];
+			byte[] c = new byte[730];
+
+			s.read(b);	
+			for(int i = 0; i < 101; i++)
+			{
+				c[i] = b[i];
+			}
+			
+			byte[] f = new byte[16];
+			f = "ÂÎÇÂÐÀÒ ÏËÀÒÅÆÅÉ".getBytes("cp866"); //ÝËÅÊÒÐÎÍÍÎÅ ÏÎÄÒÂÅÐÆÄÅÍÈÅ
+
+			for(int j = 0; j < 16; j++)
+			{
+				c[j + 101] = f[j];
+			}
+
+			char e;
+			e = " ".toCharArray()[0];
+			for(int j = 0; j < 196; j++)
+			{
+				c[j + 117] = (byte) e;
+			}
+			
+			for(int i = 0; i < 419; i++)
+			{
+				c[i + 311] = b[i + 311];
+			}
+			
+			rd.write(c);
+
+			rd.writeBytes("\r\n");
+			
+			
+			Log.msg("Ïàêåò ÝÏÑ ïî âîçâðàòó ïëàòåæåé " + Settings.testProj + "tests\\" + Settings.folder + "\\input\\bpack.txt" + " ñîçäàí.");
+			s.close();
+			rd.close();
+			db.close();
+		} catch(Exception e) {
+			e.printStackTrace();
+			Log.msg(e);
+		}
+	}
+	
 	public static void copyFile(String sourcestr, String deststr)throws IOException {
 		File sourceFile = new File(sourcestr);
 		File destFile = new File(deststr);

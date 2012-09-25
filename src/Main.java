@@ -16,7 +16,7 @@ public class Main {
 	{
 		Settings.testProj = "C:\\sabstest\\";
 		
-		Test t = Test.CMPDELTA;
+		Test t = Test.RPACK;
 		switch(t)
 		{
 
@@ -68,7 +68,7 @@ public class Main {
 			//XML.validate("C:\\sabstest\\XMLschema\\output\\deltadb.xsd", "C:\\sabstest\\tests\\a000001\\output\\rpack.xml");
 			Settings.GenRpack.readXML(Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\genrpack.xml");
 			
-			Pack.createRpack();
+			Pack.createBpack();
 		
 			break;
 		}
@@ -98,7 +98,7 @@ public class Main {
 		{
 			Init.load();
 			Settings.readXML(Settings.fullfolder + "settings\\general.xml");
-			System.out.println(DeltaDB.cmpDeltaDB("C:\\sabstest\\tests\\a000015\\etalon\\spack.xml", "C:\\sabstest\\tests\\a000015\\output\\spack.xml"));
+			System.out.println(DeltaDB.cmpDeltaDB("C:\\sabstest\\tests\\a000018\\etalon\\rpack.xml", "C:\\sabstest\\tests\\a000018\\output\\rpack.xml"));
 			break;
 		}				
 		case O:
