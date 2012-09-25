@@ -51,6 +51,22 @@ public class Log {
 			}
 		}
 	}
+	
+	public static void msgCMP(String str)
+	{
+		if (out != null)
+		{
+			try {
+				out.write("[" + new SimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS").format(new Date())+ "] CMP: " + str);
+				out.newLine();
+				out.flush();
+			} catch(Exception e) {
+				e.printStackTrace();
+				msg(e);
+			}
+		}
+	}
+	
 	public static void msg(Exception e)
 	{
 		if (out != null)

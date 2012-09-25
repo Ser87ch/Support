@@ -591,7 +591,7 @@ public class DeltaDB {
 		{
 			if(tables.size() != et.tables.size())
 			{
-				Log.msg("Количество таблиц в файлах не совпадает.");
+				Log.msgCMP("Количество таблиц в файлах изменений не совпадает.");
 				return false;
 			}
 
@@ -614,15 +614,16 @@ public class DeltaDB {
 				Table tbl = iterTbl.next();
 				if(tbl.tm.equals(t.tm) && tbl.lines.size() == t.lines.size())
 				{
-					ListIterator <Line> iterLn = tbl.lines.listIterator();
+					ListIterator <Line> iterLn = t.lines.listIterator();
 					while(iterLn.hasNext())
 					{
-						if(!t.contains(iterLn.next()))
+						if(!tbl.contains(iterLn.next()))
 								return false;
 					}
 					return true;
 				}				
-			}			
+			}		
+			Log.msgCMP("Таблица из эталона " + t.tm.name + " не найдена в изменениях БД.");
 			return false;
 		}
 	}
@@ -660,21 +661,22 @@ public class DeltaDB {
 
 		private boolean equals(TableMeta tm)
 		{
-			boolean a = true;
+			
 
 			if(name.equals(tm.name) && (columns.size() == tm.columns.size()))
 			{
 				ListIterator<String> iter =  columns.listIterator();
-				while(iter.hasNext() && a) 
+				while(iter.hasNext()) 
 				{
-					a = tm.columns.contains(iter.next());
+					if(!tm.columns.contains(iter.next()))
+						return false;
 				}				
 			}	
 			else
 			{				
 				return false;
 			}
-			return a;
+			return true;
 		}
 
 	}
@@ -698,6 +700,7 @@ public class DeltaDB {
 				if(iterLn.next().equals(ln))
 					return true;
 			}
+			Log.msgCMP("Строка с id " + Integer.toString(ln.i) + " из эталона не найдена в таблице " + tm.name + " ."); 
 			return false;
 		}
 	}
@@ -719,21 +722,22 @@ public class DeltaDB {
 		}
 		private boolean equals(Line ln)
 		{
-			boolean a = true;
+			
 
 			if(columns.size() == ln.columns.size() && action.equals(ln.action))
 			{
-				ListIterator<String> iter =  columns.listIterator();
-				while(iter.hasNext() && a) 
+				ListIterator<String> iterCol =  columns.listIterator();
+				while(iterCol.hasNext()) 
 				{
-					a = ln.columns.contains(iter.next());
+					if(!ln.columns.contains(iterCol.next()))
+						return false;
 				}				
 			}	
 			else
 			{				
 				return false;
 			}
-			return a;
+			return true;
 		}
 	}
 }

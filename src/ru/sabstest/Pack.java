@@ -269,9 +269,9 @@ public class Pack {
 		sp.load();
 
 		if(et.equals(sp))
-			Log.msg("S пакет " + fl + " совпадает с эталонным S пакетом " + fl + " по маске spack.msk .");
+			Log.msgCMP("S пакет " + fl + " совпадает с эталонным S пакетом " + fl + " по маске spack.msk .");
 		else
-			Log.msg("S пакет " + fl + " не совпадает с эталонным S пакетом " + fl + " по маске spack.msk .");
+			Log.msgCMP("S пакет " + fl + " не совпадает с эталонным S пакетом " + fl + " по маске spack.msk .");
 		return et.equals(sp);
 	}
 	
@@ -286,9 +286,9 @@ public class Pack {
 		sp.load();
 
 		if(et.equals(sp))
-			Log.msg("R пакет " + fl + " совпадает с эталонным R пакетом " + fl + " по маске spack.msk .");
+			Log.msgCMP("R пакет " + fl + " совпадает с эталонным R пакетом " + fl + " по маске spack.msk .");
 		else
-			Log.msg("R пакет " + fl + " не совпадает с эталонным R пакетом " + fl + " по маске spack.msk .");
+			Log.msgCMP("R пакет " + fl + " не совпадает с эталонным R пакетом " + fl + " по маске spack.msk .");
 		return et.equals(sp);
 	}
 
