@@ -16,21 +16,6 @@
 		<column>ID_STATUS</column>
 		<column>ID_DOCUMENT_STATUS</column>
 		<column>UIC</column>		
-	</table>
-	<table name="document_bon_pack">
-		<column>TYPE_PACK</column>
-		<column>STATUS</column>
-		<column>INOUTMODE</column>
-		<column>DocSumma</column>
-		<column>DocCount</column>
-		<column>ErrCount</column>
-		<column>FatalCount</column>
-		<column>Status2</column>		
-	</table>
-	<table name="document_bon_pack_content">
-		<column>Info</column>
-		<column>ERROR_INFO</column>
-		<column>summa</column>
 	</table>	
 	<table name="epay_Document">
 		<column>e_DateDoc</column>

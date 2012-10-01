@@ -89,7 +89,7 @@ public class PayDoc {
 		public String kpp;
 		public String name;
 
-		Client(String bik, String ls) {
+		public Client(String bik, String ls) {
 			this.bik = bik;	
 			this.ks = "";
 			this.ls = ls;
@@ -98,7 +98,7 @@ public class PayDoc {
 			this.name = "";
 
 		}
-		Client(String bik, String ks , String ls) {
+		public Client(String bik, String ks , String ls) {
 			this.bik = bik;
 			this.ks = ks;
 			this.ls = ls;	
@@ -106,7 +106,7 @@ public class PayDoc {
 			this.kpp = "";
 			this.name = "";
 		}
-		Client(String bik, String ks , String ls, String inn, String kpp, String name) {
+		public Client(String bik, String ks , String ls, String inn, String kpp, String name) {
 			this.bik = bik;
 			this.ks = ks;
 			this.ls = ls;

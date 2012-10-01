@@ -82,17 +82,17 @@ public class Pack {
 			rd.write(c);
 
 			rd.writeBytes("\r\n");
-			
+
 			//кол-во строк
 			byte[] arr = new byte[9];
 			for(int i = 0; i < 9; i++)
 			{
 				arr[i] = b[i + 57];
 			}
-		
+
 			String scn = new String(arr);
 			int cn = Integer.parseInt(scn);
-			
+
 			for(int i=0;i < cn;i++)
 			{
 				b = new byte[882];
@@ -126,8 +126,120 @@ public class Pack {
 		}
 	}
 
-	
-	public static void createBpack()
+	public static void createRpackError49()
+	{
+		try {
+			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
+
+			db.connect();
+			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile from dbo.document_bon_pack where substring(subtype,12,1) = 'o' and substring(subtype,4,1) = 's' order by DATE_INSERT desc");
+			rs.next();
+			String spack = rs.getString("packfile");
+
+			File sfile = new File(spack);
+			File rfile = new File(Settings.testProj + "tests\\" + Settings.folder + "\\input\\rpack.txt");
+
+			FileInputStream s = new FileInputStream(sfile);
+			FileOutputStream r = new FileOutputStream(rfile);
+			DataOutputStream rd = new DataOutputStream(r);
+
+
+			byte[] b = new byte[732];
+			byte[] c = new byte[205];
+
+			s.read(b);	
+			for(int i = 0; i < 9; i++)
+			{
+				c[i] = b[i];
+			}
+
+			for(int i = 0; i < 29; i++)
+			{
+				c[i + 9] = b[i + 9];
+			}
+
+			for(int i = 0; i < 9; i++)
+			{
+				c[i + 38] = b[i + 38];
+			}
+
+
+			for(int i = 0; i < 46; i++)
+			{
+				c[i + 47] = b[i + 47];
+			}
+
+			char e;
+			e = " ".toCharArray()[0];
+			for(int j = 0; j < 87; j++)
+			{
+				c[j + 93] = (byte) e;
+			}			
+			byte[] f = new byte[25];
+			f = "ЭЛЕКТРОННОЕ ПОДТВЕРЖДЕНИЕ".getBytes("cp866"); //ЭЛЕКТРОННОЕ ПОДТВЕРЖДЕНИЕ
+
+			for(int j = 0; j < 25; j++)
+			{
+				c[j + 180] = f[j];
+			}
+
+			rd.write(c);
+
+			rd.writeBytes("\r\n");
+
+			//кол-во строк
+			byte[] arr = new byte[9];
+			for(int i = 0; i < 9; i++)
+			{
+				arr[i] = b[i + 57];
+			}
+
+			String scn = new String(arr);
+			int cn = Integer.parseInt(scn);
+
+			for(int i=0;i < cn;i++)
+			{
+				b = new byte[882];
+				c = new byte[215];
+				s.read(b);
+
+				for(int j = 0; j < 153; j++)
+				{
+					c[j] = b[j];
+				}
+				char d = "4".toCharArray()[0];
+				c[153] = (byte) d;
+				d = "9".toCharArray()[0];
+				c[154] = (byte) d;
+
+
+				f = new byte[53];
+				f = "Несуществующий лицевой счет получателя в ГРКЦ или РКЦ".getBytes("cp866"); //ЭЛЕКТРОННОЕ ПОДТВЕРЖДЕНИЕ
+				for(int j = 0; j < 53; j++)
+				{
+					c[j + 155] = f[j];
+				}
+				d = " ".toCharArray()[0];
+				for(int j = 208; j < 215; j++)
+				{
+					c[j] = (byte) d;
+				}
+				rd.write(c);
+				rd.writeBytes("\r\n");
+			}
+
+			Log.msg("Пакет ЭСИС-потверждений " + Settings.testProj + "tests\\" + Settings.folder + "\\input\\rpack.txt" + " создан.");
+			s.close();
+			rd.close();
+			db.close();
+		} catch(Exception e) {
+			e.printStackTrace();
+			Log.msg(e);
+		}
+	}
+
+
+	public static void createBpackError49()
 	{
 		try {
 			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
@@ -143,17 +255,66 @@ public class Pack {
 			FileInputStream s = new FileInputStream(sfile);
 			FileOutputStream r = new FileOutputStream(bfile);
 			DataOutputStream rd = new DataOutputStream(r);
-			
-			
+
+
 			byte[] b = new byte[732];
 			byte[] c = new byte[730];
 
 			s.read(b);	
-			for(int i = 0; i < 101; i++)
+			for(int i = 0; i < 9; i++)
 			{
-				c[i] = b[i];
+				c[i] = b[i + 38];
 			}
+
+			//УИС
+			byte[] uic = new byte[10];
+			for(int i = 0; i < 7; i++)
+			{
+				uic[i] = b[i + 40];
+			}
+			char g = "0".toCharArray()[0];                      
+			for(int i = 0; i < 3; i++)
+			{
+				uic[i + 7] = (byte) g;
+			}
+			String uicstr = new String(uic);
 			
+			//БИК РКЦ			
+			byte[] bik = new byte[9];
+			for(int i = 0; i < 9; i++)
+			{
+				bik[i] = b[i + 38];
+			}
+
+
+
+			String bikrkc = new String(bik);
+			//счет 30811
+			PayDoc.Client vozvr = new PayDoc.Client(bikrkc,"30811810500000000010");
+			vozvr.contrrazr();
+			byte[] schvozvr = new byte[20];
+			schvozvr = vozvr.ls.getBytes("cp866");
+
+
+			for(int i = 0; i < 29; i++)
+			{
+				c[i + 9] = b[i + 9];
+			}
+
+			for(int i = 0; i < 9; i++)
+			{
+				c[i + 38] = b[i];
+			}
+
+
+			for(int i = 0; i < 54; i++)
+			{
+				c[i + 47] = b[i + 47];
+			}
+
+
+
+
 			byte[] f = new byte[16];
 			f = "ВОЗВРАТ ПЛАТЕЖЕЙ".getBytes("cp866"); //ЭЛЕКТРОННОЕ ПОДТВЕРЖДЕНИЕ
 
@@ -162,23 +323,162 @@ public class Pack {
 				c[j + 101] = f[j];
 			}
 
-			char e;
-			e = " ".toCharArray()[0];
+
+			char e = " ".toCharArray()[0];
 			for(int j = 0; j < 196; j++)
 			{
 				c[j + 117] = (byte) e;
 			}
-			
-			for(int i = 0; i < 419; i++)
+
+			for(int i = 0; i < 80; i++)
 			{
-				c[i + 311] = b[i + 311];
+				c[i + 311] = b[i + 391];
 			}
-			
+
+			//наименование РКЦ
+			byte[] rkcname = new byte[160];
+			for(int i = 0; i < 80; i++)
+			{
+				rkcname[i] = b[i + 391];
+			}
+			for(int j = 0; j < 80; j++)
+			{
+				rkcname[j + 80] = (byte) e;
+			}
+
+
+			for(int i = 0; i < 80; i++)
+			{
+				c[i + 391] = b[i + 311];
+			}
+
+			for(int i = 0; i < 259; i++)
+			{
+				c[i + 471] = b[i + 471];
+			}
+
 			rd.write(c);
 
 			rd.writeBytes("\r\n");
-			
-			
+
+
+			//кол-во строк
+			byte[] arr = new byte[9];
+			for(int i = 0; i < 9; i++)
+			{
+				arr[i] = b[i + 57];
+			}
+
+			String scn = new String(arr);
+			int cn = Integer.parseInt(scn);
+
+
+			for(int i = 0; i < cn; i++)
+			{
+				b = new byte[882];
+				c = new byte[880];
+				s.read(b);
+				
+				for(int j = 0; j < 14; j++)
+				{
+					c[j] = b[j];
+				}
+
+				for(int j = 0; j < 10; j++)
+				{
+					c[j + 14] = uic[j];
+				}
+
+				for(int j = 0; j < 9; j++)
+				{
+					c[j + 24] = bik[j];
+				}
+				for(int j = 0; j < 20; j++)
+				{
+					c[j + 33] = schvozvr[j];
+				}
+				char d = " ".toCharArray()[0];
+				for(int j = 0; j < 20; j++)
+				{
+					c[j + 53] = (byte) d;
+				}
+
+				for(int j = 0; j < 13; j++)
+				{
+					c[j + 73] = b[j + 73];
+				}
+
+				for(int j = 0; j < 49; j++)
+				{
+					c[j + 86] = b[j + 24];
+				}
+
+				for(int j = 0; j < 19; j++)
+				{
+					c[j + 135] = b[j + 135];
+				}
+
+				for(int j = 0; j < 21; j++)
+				{
+					c[j + 154] = (byte) d;
+				}
+
+				for(int j = 0; j < 160; j++)
+				{
+					c[j + 175] = rkcname[j];
+				}
+
+				for(int j = 0; j < 181; j++)
+				{
+					c[j + 335] = b[j + 154];
+				}					
+
+				for(int j = 0; j < 181; j++)
+				{
+					c[j + 335] = b[j + 154];
+				}
+
+				
+				byte[] str = new byte[6];
+				for(int j = 0; j < 6; j++)
+					str[j] = b[j];
+				
+				String num = new String(str);
+				
+				str = new byte[16];
+				for(int j = 0; j < 16; j++)
+					str[j] = b[j + 135];
+				String sumi = new String(str);
+				
+				str = new byte[2];
+				for(int j = 0; j < 2; j++)
+					str[j] = b[j + 151];
+				String sumf = new String(str);
+
+				byte[] naznb = new byte[151];
+				naznb = ("Возврат ошибочного электронного платежного документа " + num + " с датой составления "
+						+ new SimpleDateFormat("dd/MM/yyyy").format(Settings.operDate) +", УИС " 
+						+ uicstr + " на сумму " + sumi + "." + sumf + " код возврата 49").getBytes("cp866");
+				for(int j = 0; j < 151; j++)
+				{
+					c[j + 516] = naznb[j];
+				}
+
+				for(int j = 0; j < 59; j++)
+				{
+					c[j + 667] = (byte) d;
+				}
+
+				for(int j = 0; j < 154; j++)
+				{
+					c[j + 726] = b[j + 726];
+				}
+
+				rd.write(c);
+				rd.writeBytes("\r\n");
+				rd.write(b);
+			}
+
 			Log.msg("Пакет ЭПС по возврату платежей " + Settings.testProj + "tests\\" + Settings.folder + "\\input\\bpack.txt" + " создан.");
 			s.close();
 			rd.close();
@@ -188,7 +488,7 @@ public class Pack {
 			Log.msg(e);
 		}
 	}
-	
+
 	public static void copyFile(String sourcestr, String deststr)throws IOException {
 		File sourceFile = new File(sourcestr);
 		File destFile = new File(deststr);
@@ -222,8 +522,13 @@ public class Pack {
 			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
 			db.connect();			
 			ResultSet rs = db.st.executeQuery("select top 1 isnull(SUBTYPE,'') packfile from dbo.document_bon_pack where substring(SUBTYPE, 4,1) = 'r' and substring(SUBTYPE, 12,1) = 'i' and status = 0 and substring(subtype, 5, 4) = '" + new SimpleDateFormat("ddMM").format(Settings.operDate) + "' order by DATE_INSERT desc");
-			rs.next();
-			String spack = rs.getString("packfile"); //p$9s0302.82o
+
+			String spack;
+			if(rs.next())
+				spack = rs.getString("packfile"); //p$9s0302.82o			
+			else
+				spack = "";
+
 			db.close();
 			String s;
 
@@ -250,15 +555,17 @@ public class Pack {
 		}
 	}
 
-
-	public static String getSPackName()
+	public static String getBPackName()
 	{
 		try {
 			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
 			db.connect();			
-			ResultSet rs = db.st.executeQuery("select top 1 isnull(SUBTYPE,'') packfile from dbo.document_bon_pack where substring(SUBTYPE, 4,1) = 's' and substring(SUBTYPE, 12,1) = 'i' and status = 0 and substring(subtype, 5, 4) = '" + new SimpleDateFormat("ddMM").format(Settings.operDate) + "' order by DATE_INSERT desc");
-			rs.next();
-			String spack = rs.getString("packfile"); //p$9s0302.82o
+			ResultSet rs = db.st.executeQuery("select top 1 isnull(SUBTYPE,'') packfile from dbo.document_bon_pack where substring(SUBTYPE, 4,1) = 'b' and substring(SUBTYPE, 12,1) = 'i' and status = 0 and substring(subtype, 5, 4) = '" + new SimpleDateFormat("ddMM").format(Settings.operDate) + "' order by DATE_INSERT desc");
+			String spack;
+			if(rs.next())
+				spack = rs.getString("packfile"); //p$9s0302.82o			
+			else
+				spack = "";
 			db.close();
 			String s;
 
@@ -276,8 +583,50 @@ public class Pack {
 				s = Character.toString(a);
 			}
 
-			Log.msg("Имя файла S пакета " + "p$" + s + "s" + new SimpleDateFormat("ddMM").format(Settings.operDate) + "." + Settings.bik.substring(4,6) + "i .");
-			return "p$" + s + "s" + new SimpleDateFormat("ddMM").format(Settings.operDate) + "." + Settings.bik.substring(4,6) + "i";
+			Log.msg("Имя файла S пакета " + "p$" + s + "b" + new SimpleDateFormat("ddMM").format(Settings.operDate) + "." + Settings.bik.substring(4,6) + "i .");
+			return "p$" + s + "b" + new SimpleDateFormat("ddMM").format(Settings.operDate) + "." + Settings.bik.substring(4,6) + "i";
+		} catch(Exception e) {
+			e.printStackTrace();
+			Log.msg(e);
+			return "";
+		}
+	}
+
+	public static String getSPackName()
+	{
+		try {
+			if(Settings.GenSpack.error == "00")
+			{
+				DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
+				db.connect();			
+				ResultSet rs = db.st.executeQuery("select top 1 isnull(SUBTYPE,'') packfile from dbo.document_bon_pack where substring(SUBTYPE, 4,1) = 's' and substring(SUBTYPE, 12,1) = 'i' and status = 0 and substring(subtype, 5, 4) = '" + new SimpleDateFormat("ddMM").format(Settings.operDate) + "' order by DATE_INSERT desc");
+
+				String spack;
+				if(rs.next())
+					spack = rs.getString("packfile"); //p$9s0302.82o			
+				else
+					spack = "";
+				db.close();
+				String s;
+
+				if(spack.equals(""))
+				{
+					s = "1";				
+				}
+				else if(spack.substring(2,3).equals("9"))
+				{
+					s = "A";
+				}
+				else
+				{
+					char a = (char)(spack.charAt(2) + 1); 
+					s = Character.toString(a);
+				}
+
+				Log.msg("Имя файла S пакета " + "p$" + s + "s" + new SimpleDateFormat("ddMM").format(Settings.operDate) + "." + Settings.bik.substring(4,6) + "i .");
+				return "p$" + s + "s" + new SimpleDateFormat("ddMM").format(Settings.operDate) + "." + Settings.bik.substring(4,6) + "i";
+			}
+			return "";
 		} catch(Exception e) {
 			e.printStackTrace();
 			Log.msg(e);
@@ -296,7 +645,7 @@ public class Pack {
 			String spack = rs.getString("packfile");
 
 			copyFile(spack,Settings.testProj + "\\tests\\" + Settings.folder + "\\output\\spack.txt");
-			
+
 		} catch(Exception e) {
 			e.printStackTrace();
 			Log.msg(e);
@@ -337,7 +686,7 @@ public class Pack {
 			Log.msgCMP("S пакет " + fl + " не совпадает с эталонным S пакетом " + fl + " по маске spack.msk .");
 		return et.equals(sp);
 	}
-	
+
 	public static boolean compareRPack(String etal, String fl)
 	{
 		SPack.loadMaskR();
@@ -360,18 +709,18 @@ public class Pack {
 		try {
 			DB db2 = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
 			db2.connect();
-			
+
 			BufferedReader br;
 
 			br = new BufferedReader(new FileReader(src));
 			String tmp;
 			tmp = br.readLine();
-			
+
 			FileWriter fstream = new FileWriter(dest);
 			BufferedWriter out = new BufferedWriter(fstream);	
 			out.write(tmp);
 			out.flush();
-			
+
 			String uic = "", uicprev = "", otd = "";
 			int elnum = 0, ndoc = 0;
 			while((tmp = br.readLine()) != null)
@@ -382,7 +731,7 @@ public class Pack {
 				otd = tmp.substring(10, 14) + "-" +  tmp.substring(8, 10) + "-" + tmp.substring(6, 8); 
 				elnum++;
 				ndoc++;
-				
+
 				if(!uic.equals(uicprev))
 				{
 					String s = "select isnull(max(elnum),0) as el, isnull(max(n_doc),0) as ndoc from dbo.DOCUMENT_BON where date_doc = '" + otd + "' and uic = '" + uic + "'";		
@@ -391,12 +740,12 @@ public class Pack {
 					elnum = rsel.getInt("el") + 1;
 					ndoc = rsel.getInt("ndoc") + 1;
 				}
-				
+
 				String s = String.format("%06d", elnum) + tmp.substring(6,73) + String.format("%03d", ndoc) + tmp.substring(76);	
 				out.write(s);
 				out.flush();
 			}
-			
+
 			db2.close();
 			Log.msg("S пакет " + src + " скопирован в " + dest + " с изменением номеров документа и электронных.");
 		} catch(Exception e) {
@@ -421,7 +770,7 @@ public class Pack {
 		int countLine()
 		{
 			try {
-				
+
 				FileInputStream s = new FileInputStream(new File(fl));
 				byte[] b = new byte[732];	
 
@@ -431,7 +780,7 @@ public class Pack {
 				{
 					arr[i] = b[i + 57];
 				}
-			
+
 				String scn = new String(arr);
 				int cn = Integer.parseInt(scn);
 				return cn;
@@ -475,8 +824,8 @@ public class Pack {
 				Log.msg(e);				
 			}
 		}
-		
-		
+
+
 
 
 		void load()

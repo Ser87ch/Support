@@ -60,7 +60,12 @@
 					<xs:annotation>
 						<xs:documentation>Ключ сигнатуры</xs:documentation>
 					</xs:annotation>
-				</xs:element>			
+				</xs:element>	
+				<xs:element name="error" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Номер ошибки, заложенной в S пакет</xs:documentation>
+					</xs:annotation>
+				</xs:element>		
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>

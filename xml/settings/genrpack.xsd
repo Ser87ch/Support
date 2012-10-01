@@ -26,6 +26,11 @@
 					<xs:annotation>
 						<xs:documentation>Ключ сигнатуры</xs:documentation>
 					</xs:annotation>
+				</xs:element>	
+				<xs:element name="isgenbpack" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Нужно ли генирировать B пакет</xs:documentation>
+					</xs:annotation>
 				</xs:element>			
 			</xs:sequence>
 		</xs:complexType>

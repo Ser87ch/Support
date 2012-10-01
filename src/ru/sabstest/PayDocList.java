@@ -47,8 +47,12 @@ public class PayDocList {
 			PayDoc.Client plat = new PayDoc.Client(Settings.bik, ls);
 
 			pdl = new ArrayList<PayDoc>();
-
-			ResultSet rsbik = db.st.executeQuery("select top " + Settings.GenDoc.numBIK + " NEWNUM, isnull(KSNP,'') ksnp from dbo.BNKSEEK where substring(NEWNUM,1,4) = '" + Settings.bik.substring(0, 4) + "' and UER in ('2','3','4','5') and NEWNUM <> '" + Settings.bik + "'");
+			ResultSet rsbik = null;
+			Settings.GenRpack.readXML(Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\genrpack.xml");
+			if(!Settings.GenRpack.isGenBpack)
+				rsbik = db.st.executeQuery("select top " + Settings.GenDoc.numBIK + " NEWNUM, isnull(KSNP,'') ksnp from dbo.BNKSEEK where substring(NEWNUM,1,4) = '" + Settings.bik.substring(0, 4) + "' and UER in ('2','3','4','5') and NEWNUM <> '" + Settings.bik + "'");
+			else
+				rsbik = db.st.executeQuery("select RKC NEWNUM, '' ksnp from dbo.BNKSEEK where NEWNUM = '" + Settings.bik + "'");
 			int i = 1;
 			while(rsbik.next()) {
 				String bikpol = rsbik.getString("NEWNUM");

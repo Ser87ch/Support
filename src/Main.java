@@ -15,8 +15,8 @@ public class Main {
 	public static void main(String[] args)
 	{
 		Settings.testProj = "C:\\sabstest\\";
-		
-		Test t = Test.RPACK;
+
+		Test t = Test.O;
 		switch(t)
 		{
 
@@ -24,7 +24,7 @@ public class Main {
 		case INIT:
 		{
 			Init.mkfolder();	
-			
+
 			break;
 		}
 		case GEN:
@@ -56,8 +56,8 @@ public class Main {
 			Init.load();
 			Settings.readXML(Settings.fullfolder + "settings\\general.xml");
 			DeltaDB.readXMLSettings(Settings.fullfolder + "settings\\deltadb.xml");
-//			DeltaDB.createDBLog();
-//			DeltaDB.createXML("vvod.xml");		
+			//			DeltaDB.createDBLog();
+			//			DeltaDB.createXML("vvod.xml");		
 			DeltaDB.deleteDBLog();
 			break;
 		}
@@ -67,9 +67,9 @@ public class Main {
 			Settings.readXML(Settings.fullfolder + "settings\\general.xml");
 			//XML.validate("C:\\sabstest\\XMLschema\\output\\deltadb.xsd", "C:\\sabstest\\tests\\a000001\\output\\rpack.xml");
 			Settings.GenRpack.readXML(Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\genrpack.xml");
-			
-			Pack.createBpack();
-		
+			//Pack.createRpackError49();
+			//Pack.createBpackError49();
+			String s = Pack.getRPackName();
 			break;
 		}
 		case SPACK:
@@ -77,11 +77,11 @@ public class Main {
 			Init.load();
 			Settings.readXML(Settings.fullfolder + "settings\\general.xml");			
 			Settings.GenSpack.readXML(Settings.fullfolder + "settings\\" + Settings.obrfolder + "\\genspack.xml");
-			
+
 			PayDocList pl = new PayDocList();
 			pl.generateS();
 			pl.createSpack();
-		
+
 			String s = Pack.getSPackName();
 			System.out.println(s);
 			break;
@@ -104,14 +104,15 @@ public class Main {
 		case O:
 			Init.load();
 			Settings.readXML(Settings.fullfolder + "settings\\general.xml");
-			Pack.copyPack("C:\\spack.txt", "C:\\spack1.txt");
-			
+			PayDoc.Client cl = new PayDoc.Client("044525000","40702810000000000005");
+			cl.contrrazr();
+			System.out.println(cl.ls);
 			break;
 		}
-		
+
 		Log.close();
 
-		
+
 
 	}
 

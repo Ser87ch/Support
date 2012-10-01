@@ -3,5 +3,6 @@
 	<signobr>OTVETPU</signobr>	
 	<keyobr>otvetpu.fdd</keyobr>	
 	<signcontr>CONTRPU</signcontr>	
-	<keycontr>contrpu.fdd</keycontr>	
+	<keycontr>contrpu.fdd</keycontr>
+	<isgenbpack>false</isgenbpack>	
 </genrpack>

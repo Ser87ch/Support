@@ -687,7 +687,7 @@ public class Settings{
 						keyobr = XML.getTagString("keyobr", eElement);	
 						signcontr = XML.getTagString("signcontr", eElement);		
 						keycontr = XML.getTagString("keycontr", eElement);		
-						isGenBpack = Boolean.parseBoolean(XML.getTagString("keycontr", eElement));
+						isGenBpack = Boolean.parseBoolean(XML.getTagString("isgenbpack", eElement));
 					}
 				}
 				Log.msg("XML с настройками для генерации R-пакета " + src + " загружен в программу.");
@@ -707,6 +707,7 @@ public class Settings{
 		public static String keyobr = "";
 		public static String signcontr = "";
 		public static String keycontr = "";
+		public static String error = "";
 		
 		public static void createXML()
 		{
@@ -729,6 +730,7 @@ public class Settings{
 				XML.createNode(doc, rootElement, "keyobr", keyobr);	
 				XML.createNode(doc, rootElement, "signcontr", signcontr);	
 				XML.createNode(doc, rootElement, "keycontr", keycontr);	
+				XML.createNode(doc, rootElement, "error", error);	
 
 				TransformerFactory transformerFactory = TransformerFactory.newInstance();
 				Transformer transformer = transformerFactory.newTransformer();
@@ -784,7 +786,8 @@ public class Settings{
 						signobr = XML.getTagString("signobr", eElement);		
 						keyobr = XML.getTagString("keyobr", eElement);	
 						signcontr = XML.getTagString("signcontr", eElement);		
-						keycontr = XML.getTagString("keycontr", eElement);		
+						keycontr = XML.getTagString("keycontr", eElement);	
+						error = XML.getTagString("error", eElement);
 
 					}
 				}
