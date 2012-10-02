@@ -278,7 +278,7 @@ public class Pack {
 				uic[i + 7] = (byte) g;
 			}
 			String uicstr = new String(uic);
-			
+
 			//БИК РКЦ			
 			byte[] bik = new byte[9];
 			for(int i = 0; i < 9; i++)
@@ -378,7 +378,7 @@ public class Pack {
 				b = new byte[882];
 				c = new byte[880];
 				s.read(b);
-				
+
 				for(int j = 0; j < 14; j++)
 				{
 					c[j] = b[j];
@@ -438,18 +438,18 @@ public class Pack {
 					c[j + 335] = b[j + 154];
 				}
 
-				
+
 				byte[] str = new byte[6];
 				for(int j = 0; j < 6; j++)
 					str[j] = b[j];
-				
+
 				String num = new String(str);
-				
+
 				str = new byte[16];
 				for(int j = 0; j < 16; j++)
 					str[j] = b[j + 135];
 				String sumi = new String(str);
-				
+
 				str = new byte[2];
 				for(int j = 0; j < 2; j++)
 					str[j] = b[j + 151];
@@ -595,11 +595,12 @@ public class Pack {
 	public static String getSPackName()
 	{
 		try {
-			if(Settings.GenSpack.error == "00")
+			if(Settings.GenSpack.error.equals("00") || Settings.GenSpack.error.equals("23") || Settings.GenSpack.error.equals("24") 
+					|| Settings.GenSpack.error.equals("25") || Settings.GenSpack.error.equals("26") || Settings.GenSpack.error.equals("27"))
 			{
 				DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
 				db.connect();			
-				ResultSet rs = db.st.executeQuery("select top 1 isnull(SUBTYPE,'') packfile from dbo.document_bon_pack where substring(SUBTYPE, 4,1) = 's' and substring(SUBTYPE, 12,1) = 'i' and status = 0 and substring(subtype, 5, 4) = '" + new SimpleDateFormat("ddMM").format(Settings.operDate) + "' order by DATE_INSERT desc");
+				ResultSet rs = db.st.executeQuery("select top 1 isnull(SUBTYPE,'') packfile from dbo.document_bon_pack where substring(SUBTYPE, 4,1) = 's' and substring(SUBTYPE, 10,3) = '" + Settings.bik.substring(4, 6) + "i' and status = 0 and substring(subtype, 5, 4) = '" + new SimpleDateFormat("ddMM").format(Settings.operDate) + "' order by DATE_INSERT desc");
 
 				String spack;
 				if(rs.next())
@@ -626,6 +627,43 @@ public class Pack {
 				Log.msg("Имя файла S пакета " + "p$" + s + "s" + new SimpleDateFormat("ddMM").format(Settings.operDate) + "." + Settings.bik.substring(4,6) + "i .");
 				return "p$" + s + "s" + new SimpleDateFormat("ddMM").format(Settings.operDate) + "." + Settings.bik.substring(4,6) + "i";
 			}
+			else if(Settings.GenSpack.error.equals("11"))
+			{
+				Log.msg("Имя файла S пакета P$2s0302.a2i с кодом ошибки 11.");
+				return "P$2s0302.a2i";
+			}
+			else if(Settings.GenSpack.error.equals("12"))
+			{
+				Log.msg("Имя файла S пакета P$2saa02.82i с кодом ошибки 12.");
+				return "P$2saa02.82i";
+			}
+			else if(Settings.GenSpack.error.equals("13"))
+			{
+				Log.msg("Имя файла S пакета P$2s0302.99i с кодом ошибки 13.");
+				return "P$2s0302.99i";
+			}
+			else if(Settings.GenSpack.error.equals("14"))
+			{
+				Log.msg("Имя файла S пакета P$*s0302.82i с кодом ошибки 14.");
+				return "P$*s0302.82i";
+			}
+			else if(Settings.GenSpack.error.equals("15"))
+			{
+				DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
+				db.connect();			
+				ResultSet rs = db.st.executeQuery("select top 1 isnull(SUBTYPE,'') packfile from dbo.document_bon_pack where substring(SUBTYPE, 4,1) = 's' and substring(SUBTYPE, 12,1) = 'i' and status = 0 and substring(subtype, 5, 4) = '" + new SimpleDateFormat("ddMM").format(Settings.operDate) + "' order by DATE_INSERT desc");
+
+				String spack;
+				if(rs.next())
+					spack = rs.getString("packfile"); //p$9s0302.82o			
+				else
+					spack = "";
+				db.close();
+				Log.msg("Имя файла S пакета " + spack + " с кодом ошибки 14.");
+				return spack;
+			}
+			
+			
 			return "";
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -669,6 +707,49 @@ public class Pack {
 			Log.msg(e);
 		}
 	}
+
+	public static void copyEPack()
+	{
+		try{
+			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
+
+			db.connect();
+			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile from dbo.document_bon_pack where substring(subtype,12,1) = 'o' order by DATE_INSERT desc");
+			rs.next();
+			String spack = rs.getString("packfile");
+
+			copyFile(spack,Settings.testProj + "\\tests\\" + Settings.folder + "\\output\\epack.txt");
+
+		} catch(Exception e) {
+			e.printStackTrace();
+			Log.msg(e);
+		}
+	}
+
+	public static boolean compareEPack(String fl)
+	{
+		try {
+			BufferedReader br;
+
+			br = new BufferedReader(new FileReader(fl));
+
+			String er = br.readLine().substring(12,14);
+			System.out.println(er);
+			if(er.equals(Settings.GenSpack.error))			
+				Log.msgCMP("E пакет " + fl + " имеет правильный номер ошибки.");
+			else
+				Log.msgCMP("E пакет " + fl + " имеет неправильный номер ошибки.");	
+
+			return er.equals(Settings.GenSpack.error);
+
+		} catch (IOException e) {
+			Log.msg(e);
+			e.printStackTrace();
+			return false;
+		}
+
+	}
+
 
 	public static boolean compareSPack(String etal, String fl)
 	{

@@ -104,9 +104,13 @@ public class Main {
 		case O:
 			Init.load();
 			Settings.readXML(Settings.fullfolder + "settings\\general.xml");
+			Settings.GenSpack.readXML(Settings.fullfolder + "settings\\" + Settings.obrfolder + "\\genspack.xml");
 			PayDoc.Client cl = new PayDoc.Client("044525000","40702810000000000005");
 			cl.contrrazr();
 			System.out.println(cl.ls);
+			Pack.compareEPack(Settings.fullfolder + "output\\epack.txt");
+			String s = Pack.getSPackName();
+			System.out.println(s);
 			break;
 		}
 
