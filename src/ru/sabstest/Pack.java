@@ -629,7 +629,7 @@ public class Pack {
 			}
 			else if(Settings.GenSpack.error.equals("11"))
 			{
-				Log.msg("Имя файла S пакета P$2s0302.a2i с кодом ошибки 11.");
+				Log.msg("Имя файла S пакета P$2s" + new SimpleDateFormat("ddMM").format(Settings.operDate) + ".a2i с кодом ошибки 11.");
 				return "P$2s0302.a2i";
 			}
 			else if(Settings.GenSpack.error.equals("12"))
@@ -639,12 +639,12 @@ public class Pack {
 			}
 			else if(Settings.GenSpack.error.equals("13"))
 			{
-				Log.msg("Имя файла S пакета P$2s0302.99i с кодом ошибки 13.");
+				Log.msg("Имя файла S пакета P$2s" + new SimpleDateFormat("ddMM").format(Settings.operDate) + ".99i с кодом ошибки 13.");
 				return "P$2s0302.99i";
 			}
 			else if(Settings.GenSpack.error.equals("14"))
 			{
-				Log.msg("Имя файла S пакета P$*s0302.82i с кодом ошибки 14.");
+				Log.msg("Имя файла S пакета P$*s"  + new SimpleDateFormat("ddMM").format(Settings.operDate) + ".82i с кодом ошибки 14.");
 				return "P$*s0302.82i";
 			}
 			else if(Settings.GenSpack.error.equals("15"))
