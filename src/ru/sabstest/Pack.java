@@ -277,7 +277,7 @@ public class Pack {
 			{
 				uic[i + 7] = (byte) g;
 			}
-			String uicstr = new String(uic);
+			String uicstr = Settings.bik.substring(2) + "000";
 
 			//¡»  – ÷			
 			byte[] bik = new byte[9];
