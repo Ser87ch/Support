@@ -30,6 +30,7 @@ public class Settings{
 	public static String testProj= "";
 	public static String folder = "";
 	public static String fullfolder = "";
+	public static String datafolder = ""; 
 
 	public static final String pervfolder = "perv"; 
 	public static final String obrfolder = "obr"; 
@@ -58,6 +59,13 @@ public class Settings{
 			Settings.operDate = rs.getDate("dt");
 			Log.msg("Опер. день " + new SimpleDateFormat("dd.MM.yyyy").format(Settings.operDate));		
 
+			File dir = new File(Settings.testProj + "data\\");
+			
+			String[] children = dir.list();
+			String filename = children[children.length - 1];
+			Settings.datafolder = Settings.testProj + "data\\" + filename + "\\";
+			Log.msg("Данные для теста находятся в " + Settings.testProj + "data\\" + filename + "\\");
+			
 			db.close();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -90,7 +98,7 @@ public class Settings{
 			XML.createNode(doc, rootElement, "testproj", Settings.testProj);
 			XML.createNode(doc, rootElement, "folder", Settings.folder);
 			XML.createNode(doc, rootElement, "fullfolder", Settings.fullfolder);
-
+			XML.createNode(doc, rootElement, "datafolder", Settings.datafolder);
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
@@ -156,7 +164,7 @@ public class Settings{
 
 						folder = XML.getTagString("folder", eElement);	
 						fullfolder = XML.getTagString("fullfolder", eElement);
-					
+						datafolder = XML.getTagString("datafolder", eElement);
 					}
 				}
 			}
@@ -203,7 +211,7 @@ public class Settings{
 
 				transformer.transform(source, result);
 
-				XML.validate(Settings.testProj + "XMLSchema\\settings\\" + Settings.pervfolder + "\\gendoc.xsd",Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\gendoc.xml");
+				XML.validate(Settings.testProj + "XMLSchema\\settings\\gen\\gendoc.xsd",Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\gendoc.xml");
 
 			} catch (ParserConfigurationException pce) {
 				pce.printStackTrace();
@@ -227,7 +235,7 @@ public class Settings{
 				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 				Document doc = dBuilder.parse(fXmlFile);
 				doc.getDocumentElement().normalize();
-				XML.validate(Settings.testProj + "XMLSchema\\settings\\" + Settings.pervfolder + "\\gendoc.xsd",src);
+				XML.validate(Settings.testProj + "XMLSchema\\settings\\gen\\gendoc.xsd",src);
 
 				//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 				NodeList nList = doc.getElementsByTagName("gendoc");
@@ -743,7 +751,7 @@ public class Settings{
 
 				transformer.transform(source, result);
 
-				XML.validate(Settings.testProj + "XMLSchema\\settings\\" + Settings.obrfolder + "\\genspack.xsd",Settings.fullfolder + "settings\\" + Settings.obrfolder + "\\genspack.xml");
+				XML.validate(Settings.testProj + "XMLSchema\\settings\\gen\\genspack.xsd",Settings.fullfolder + "settings\\" + Settings.obrfolder + "\\genspack.xml");
 
 			} catch (ParserConfigurationException pce) {
 				pce.printStackTrace();
@@ -767,7 +775,7 @@ public class Settings{
 				DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 				Document doc = dBuilder.parse(fXmlFile);
 				doc.getDocumentElement().normalize();
-				XML.validate(Settings.testProj + "XMLSchema\\settings\\" + Settings.obrfolder + "\\genspack.xsd",src);
+				XML.validate(Settings.testProj + "XMLSchema\\settings\\gen\\genspack.xsd",src);
 
 				//System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 				NodeList nList = doc.getElementsByTagName("genspack");

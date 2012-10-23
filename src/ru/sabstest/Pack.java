@@ -504,7 +504,7 @@ public class Pack {
 			source = new FileInputStream(sourceFile).getChannel();
 			destination = new FileOutputStream(destFile).getChannel();
 			destination.transferFrom(source, 0, source.size());
-			Log.msg("Файл " + sourcestr + "скопирован в " + deststr + " .");
+			Log.msg("Файл " + sourcestr + " скопирован в " + deststr + " .");
 		} 
 		finally {
 			if(source != null) {
@@ -672,24 +672,45 @@ public class Pack {
 		}
 	}
 
-	public static void copySPack()
+	public static String getPackNameFolder(String folder, String type)
+	{
+		String pack = "";
+		File[] files = new File(folder).listFiles();
+	    if(files!=null) 
+	    { 
+	        for(File f: files) 
+	        {
+	        	if(f.getName().startsWith("p$") && f.getName().substring(3, 4).toLowerCase().equals(type.toLowerCase()))
+	        	{
+	        		pack = f.getName();
+	        		break;
+	        	}
+	        }
+	    }
+		return pack;
+	}
+	
+	public static String copySPack(String testnum)
 	{
 		try{
 			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
 
 			db.connect();
-			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile from dbo.document_bon_pack where substring(subtype,12,1) = 'o' order by DATE_INSERT desc");
+			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile, isnull(subtype,'') subtype from dbo.document_bon_pack where substring(subtype,12,1) = 'o' order by DATE_INSERT desc");
 			rs.next();
 			String spack = rs.getString("packfile");
-
-			copyFile(spack,Settings.testProj + "\\tests\\" + Settings.folder + "\\output\\spack.txt");
-
+			String fl = rs.getString("subtype");
+			copyFile(spack,Settings.testProj + "\\tests\\" + Settings.folder + "\\output\\" + testnum + "\\" + fl);
+			return fl;
 		} catch(Exception e) {
 			e.printStackTrace();
 			Log.msg(e);
+			return "";
 		}
 	}
 
+	
+	
 	public static void copyRPack()
 	{
 		try{
@@ -753,6 +774,12 @@ public class Pack {
 
 	public static boolean compareSPack(String etal, String fl)
 	{
+		if(!new File(etal).getName().equals(new File(fl).getName()))
+		{
+			Log.msgCMP("Имена S пакетов не совпадают.");
+			return false;
+		}
+		
 		SPack.loadMask();
 
 		SPack et = new SPack(etal);
@@ -835,6 +862,24 @@ public class Pack {
 		}			
 	}
 
+	
+	public static void clearFolder(File fld)
+	{
+		File[] files = fld.listFiles();
+	    if(files!=null) 
+	    { 
+	        for(File f: files) 
+	        {
+	            if(f.isDirectory())
+	            {
+	                clearFolder(f);
+	            } else {
+	                f.delete();
+	            }
+	        }
+	    }
+	}
+	
 	static class SPack
 	{
 		String fl;

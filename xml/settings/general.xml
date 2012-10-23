@@ -7,7 +7,8 @@
 	<path>D:\aspu\sabs_zapd2000</path>
 	<bik>044582002</bik>
 	<operdate>2011-09-07</operdate>
-	<testproj>G:\sabstest\</testproj>
+	<testproj>C:\sabstest\</testproj>
 	<folder>a000001</folder>
-	<fullfolder>G:\sabstest\tests\a000001\</fullfolder>
+	<fullfolder>C:\sabstest\tests\a000001\</fullfolder>
+	<datafolder>C:\sabstest\data\a000001\</datafolder>
 </general>

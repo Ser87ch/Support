@@ -62,6 +62,11 @@
 						<xs:documentation>Полный путь к папке текущего теста</xs:documentation>
 					</xs:annotation>
 				</xs:element>
+				<xs:element name="datafolder" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Полный путь к папке текущих данных</xs:documentation>
+					</xs:annotation>
+				</xs:element>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>

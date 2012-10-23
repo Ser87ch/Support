@@ -1,6 +1,7 @@
 package ru.sabstest;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,6 +15,22 @@ public class Log {
 			FileWriter fstream = new FileWriter(Settings.testProj + "tests\\" + Settings.folder + "\\log.txt",true);
 			out = new BufferedWriter(fstream);	
 			msg("Файл лога " + Settings.testProj + "tests\\" + Settings.folder + "\\log.txt" + " открыт.");
+		} catch(Exception e) {
+			e.printStackTrace();
+			msg(e);
+		}
+	}	
+	
+	public static void createGen()
+	{
+		File dir = new File(Settings.testProj + "data\\");
+		
+		String[] children = dir.list();
+		String fld = children[children.length - 1];
+		try {
+			FileWriter fstream = new FileWriter(Settings.testProj + "data\\" + fld + "\\log.txt",true);
+			out = new BufferedWriter(fstream);	
+			msg("Файл лога генерации" + Settings.testProj + "data\\" + fld + "\\log.txt" + " открыт.");
 		} catch(Exception e) {
 			e.printStackTrace();
 			msg(e);

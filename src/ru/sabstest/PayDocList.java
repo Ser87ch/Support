@@ -48,11 +48,64 @@ public class PayDocList {
 
 			pdl = new ArrayList<PayDoc>();
 			ResultSet rsbik = null;
-			Settings.GenRpack.readXML(Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\genrpack.xml");
-			if(!Settings.GenRpack.isGenBpack)
-				rsbik = db.st.executeQuery("select top " + Settings.GenDoc.numBIK + " NEWNUM, isnull(KSNP,'') ksnp from dbo.BNKSEEK where substring(NEWNUM,1,4) = '" + Settings.bik.substring(0, 4) + "' and UER in ('2','3','4','5') and NEWNUM <> '" + Settings.bik + "'");
-			else
-				rsbik = db.st.executeQuery("select RKC NEWNUM, '' ksnp from dbo.BNKSEEK where NEWNUM = '" + Settings.bik + "'");
+			
+			rsbik = db.st.executeQuery("select top " + Settings.GenDoc.numBIK + " NEWNUM, isnull(KSNP,'') ksnp from dbo.BNKSEEK where substring(NEWNUM,1,4) = '" + Settings.bik.substring(0, 4) + "' and UER in ('2','3','4','5') and NEWNUM <> '" + Settings.bik + "'");
+			
+			int i = 1;
+			while(rsbik.next()) {
+				String bikpol = rsbik.getString("NEWNUM");
+				String kspol = rsbik.getString("ksnp");
+				String lspol = "40702810000000000005";
+
+				PayDoc.Client pol = new PayDoc.Client(bikpol, kspol, lspol, "111111111111", "222222222", "ЗАО Тест");
+				pol.contrrazr();
+
+				for(int j = 0; j < Settings.GenDoc.numDoc; j++)
+				{
+					PayDoc pd = new PayDoc();
+					pd.num = Settings.GenDoc.firstDoc + j;
+					pd.date = Settings.operDate;
+					pd.vidop = "01";
+					pd.sum =  ((float) Math.round(new Random().nextFloat() * 10000))/ 100;				
+					pd.vidpl = VidPlat.EL;
+					pd.plat = plat;
+					pd.pol = pol;
+					pd.ocher = 6;
+					pd.status = "";
+					pd.naznach = "Оплата теста";
+					pd.datesp = Settings.operDate;
+					pd.datepost = Settings.operDate;
+
+					pdl.add(pd);
+					Log.msg("Документ №" + Integer.toString(i) + " сгенерирован.");
+					i++;
+				}
+
+			}
+			Log.msg("Генерация документов завершена.");
+			db.close();
+		} catch(Exception e) {
+			e.printStackTrace();
+			Log.msg(e);
+		}
+	}
+	
+	public void generateB()
+	{
+		try {
+			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
+			db.connect();
+
+			ResultSet rs = db.st.executeQuery("select top 1 NUM_ACC from dbo.Account where rest = (select min(rest) from dbo.Account where substring(NUM_ACC,1,1) = '4' and substring(NUM_ACC,1,5) <> '40101')");
+			rs.next();
+			String ls = rs.getString("NUM_ACC");
+
+			PayDoc.Client plat = new PayDoc.Client(Settings.bik, ls);
+
+			pdl = new ArrayList<PayDoc>();
+			ResultSet rsbik = null;
+			
+			rsbik = db.st.executeQuery("select RKC NEWNUM, '' ksnp from dbo.BNKSEEK where NEWNUM = '" + Settings.bik + "'");
 			int i = 1;
 			while(rsbik.next()) {
 				String bikpol = rsbik.getString("NEWNUM");
@@ -197,7 +250,7 @@ public class PayDocList {
 		return str;
 	}
 
-	public void createXML()
+	public void createXML(String fl)
 	{
 		try {
 
@@ -276,12 +329,12 @@ public class PayDocList {
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
 			DOMSource source = new DOMSource(doc);
-			StreamResult result = new StreamResult(new File(Settings.testProj + "\\tests\\" + Settings.folder + "\\input\\paydocs.xml"));
+			StreamResult result = new StreamResult(new File(fl));
 
 			transformer.transform(source, result);
-			Log.msg("XML с входящими документами " + Settings.testProj + "\\tests\\" + Settings.folder + "\\input\\paydocs.xml создан.");			
+			Log.msg("XML с входящими документами " + fl + " создан.");			
 
-			XML.validate(Settings.testProj + "XMLSchema\\input\\paydocs.xsd",Settings.testProj + "\\tests\\" +  Settings.folder + "\\input\\paydocs.xml");			
+			XML.validate(Settings.testProj + "XMLSchema\\input\\paydocs.xsd", fl);			
 
 		} catch (ParserConfigurationException pce) {
 			pce.printStackTrace();
@@ -292,6 +345,11 @@ public class PayDocList {
 		}
 	}
 
+	public void createXML()
+	{
+		createXML(Settings.testProj + "\\tests\\" + Settings.folder + "\\input\\paydocs.xml");
+	}
+	
 	public void readXML(String src)
 	{
 		try {
@@ -358,7 +416,7 @@ public class PayDocList {
 		}
 	}
 	
-	public void createSpack()
+	public void createSpack(String fl)
 	{
 		try {
 			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
@@ -370,7 +428,7 @@ public class PayDocList {
 			String rkcname = rs.getString("rname");
 			String bnkname = rs.getString("name");
 			
-			File sfile = new File(Settings.testProj + "tests\\" + Settings.folder + "\\input\\spack.txt");
+			File sfile = new File(fl);
 			FileOutputStream s = new FileOutputStream(sfile);
 			DataOutputStream sd = new DataOutputStream(s);
 			
@@ -416,7 +474,7 @@ public class PayDocList {
 				i++;
 			}
 			
-			Log.msg("S пакет создан.");
+			Log.msg("S пакет " + fl + " создан.");
 			s.close();
 			sd.close();
 			db.close();
@@ -424,6 +482,10 @@ public class PayDocList {
 			e.printStackTrace();
 			Log.msg(e);
 		}		
+	}
+	public void createSpack()
+	{
+		createSpack(Settings.testProj + "tests\\" + Settings.folder + "\\input\\spack.txt");
 	}
 }
 
