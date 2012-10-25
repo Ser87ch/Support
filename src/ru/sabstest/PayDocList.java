@@ -213,6 +213,106 @@ public class PayDocList {
 		}
 	}
 	
+	public void generateSwB(int numd)
+	{
+		try {
+			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
+			db.connect();
+
+			
+			DB db2 = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
+			db2.connect();
+			
+			ResultSet rs = db.st.executeQuery("select top 1 NUM_ACC from dbo.Account where rest = (select min(rest) from dbo.Account where substring(NUM_ACC,1,1) = '4' and substring(NUM_ACC,1,5) <> '40101')");
+			rs.next();
+			String ls = rs.getString("NUM_ACC");
+
+			PayDoc.Client plat = new PayDoc.Client(Settings.bik, "", ls, "111111111111", "222222222", "ЗАО Получатель");
+
+			pdl = new ArrayList<PayDoc>();
+
+			ResultSet rsbik = db.st.executeQuery("select top 1 NEWNUM, isnull(KSNP,'') ksnp from dbo.BNKSEEK where substring(NEWNUM,1,4) = '" + Settings.bik.substring(0, 4) + "' and UER in ('2','3','4','5') and NEWNUM <> '" + Settings.bik + "'");
+			int i = 1;
+			while(rsbik.next()) {
+				String bikpol = rsbik.getString("NEWNUM");
+				String kspol = rsbik.getString("ksnp");
+				String lspol = "40702810000000000005";
+				
+				
+				
+				String s = "select isnull(max(elnum),0) as el, isnull(max(n_doc),0) as ndoc from dbo.DOCUMENT_BON where date_doc = '" + new SimpleDateFormat("yyyy-MM-dd").format(Settings.operDate) + "' and uic = '" + bikpol.substring(2,9) + "000" + "'";		
+				ResultSet rsel = db2.st.executeQuery(s);
+				int elnum = 0, ndoc = 0;
+				rsel.next();
+				elnum = rsel.getInt("el");
+				ndoc = rsel.getInt("ndoc");
+				
+				PayDoc.Client pol = new PayDoc.Client(bikpol, kspol, lspol, "222222222222", "111111111", "ЗАО Плательщик");
+				pol.contrrazr();
+
+				for(int j = 0; j < numd; j++)
+				{
+					PayDoc pd = new PayDoc();
+					pd.num = ndoc + 1 + j;
+					pd.date = Settings.operDate;
+					pd.vidop = "01";
+					pd.sum =  ((float) Math.round(new Random().nextFloat() * 10000))/ 100;				
+					pd.vidpl = VidPlat.EL;
+					pd.pol = plat;
+					if(j == 0) //49 несуществующий счет получателя
+					{
+						PayDoc.Client poler = new PayDoc.Client(Settings.bik, "", "40116810499999999999", "111111111111", "222222222", "ЗАО Получатель");
+						pol.contrrazr();
+						pd.pol = poler;
+					}
+					
+//					if(j == 1) //40 несуществующий корсчет ко получателя
+//					{
+//						PayDoc.Client poler = new PayDoc.Client("044525159", "30101810000000000159", "40116810600000000037", "111111111111", "222222222", "ЗАО Получатель");
+//						poler.contrrazr();
+//						pd.pol = poler;
+//					}
+					
+//					if(j == 2) //39 у ко получотозвана лицензия
+//					{
+//						PayDoc.Client poler = new PayDoc.Client("044552989", "30101810000000000989", "40116810300000000037", "111111111111", "222222222", "ЗАО Получатель");
+//						poler.contrrazr();
+//						pd.pol = poler;
+//					}
+					
+					pd.plat = pol;
+					if(j == 3) //43 недопустимый номер бс второ порядка лиц счета плат
+					{
+						PayDoc.Client plater = new PayDoc.Client(bikpol, kspol, "55555810200000000005", "111111111111", "222222222", "ЗАО Получатель");
+						plater.contrrazr();
+						pd.plat = plater;
+					}
+					
+					pd.ocher = 6;
+					pd.status = "";
+					pd.naznach = "Оплата теста";
+					pd.datesp = Settings.operDate;
+					pd.datepost = Settings.operDate;
+					pd.elnum = elnum + 1 + j;
+					pdl.add(pd);
+					Log.msg("Документ №" + Integer.toString(i) + " для S пакета сгенерирован.");
+					i++;
+				}
+
+			}
+			Log.msg("Генерация документов для S пакета завершена.");
+			db.close();
+			db2.close();
+		} catch(Exception e) {
+			e.printStackTrace();
+			Log.msg(e);
+		}
+	}
+	public void generateSerr()
+	{
+		generateSwB(4);
+	}
+	
 	public int length()
 	{
 		return pdl.size();

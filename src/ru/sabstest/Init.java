@@ -5,9 +5,7 @@ import java.text.DecimalFormat;
 
 
 public class Init {
-	public static boolean isDefault = true;
-	public static String copyfolder = "";
-
+	
 	public static void mkfolder()
 	{
 		try {		
@@ -65,6 +63,7 @@ public class Init {
 			//				Settings.GenSpack.readXML(Settings.testProj + "default\\" + Settings.obrfolder + "\\genspack.xml");
 			Pack.copyFile(Settings.testProj + "default\\" + Settings.pervfolder + "\\spack.msk", Settings.fullfolder + "settings\\" + Settings.pervfolder + "\\spack.msk");
 			Pack.copyFile(Settings.testProj + "default\\" + Settings.obrfolder + "\\rpack.msk", Settings.fullfolder + "settings\\" + Settings.obrfolder + "\\rpack.msk");
+			Pack.copyFile(Settings.testProj + "default\\" + Settings.obrfolder + "\\bpack.msk", Settings.fullfolder + "settings\\" + Settings.obrfolder + "\\bpack.msk");
 			DeltaDB.readXMLSettings(Settings.testProj + "default\\deltadb.xml");
 
 

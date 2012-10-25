@@ -33,7 +33,7 @@ public class Pack {
 			String spack = rs.getString("packfile");
 
 			File sfile = new File(spack);
-			File rfile = new File(Settings.testProj + "tests\\" + Settings.folder + "\\input\\rpack.txt");
+			File rfile = new File(Settings.testProj + "tests\\" + Settings.folder + "\\input\\001\\rpack.txt");
 
 			FileInputStream s = new FileInputStream(sfile);
 			FileOutputStream r = new FileOutputStream(rfile);
@@ -116,7 +116,7 @@ public class Pack {
 				rd.writeBytes("\r\n");
 			}
 
-			Log.msg("ѕакет Ё—»—-потверждений " + Settings.testProj + "tests\\" + Settings.folder + "\\input\\rpack.txt" + " создан.");
+			Log.msg("ѕакет Ё—»—-потверждений " + Settings.testProj + "tests\\" + Settings.folder + "\\001\\input\\rpack.txt" + " создан.");
 			s.close();
 			rd.close();
 			db.close();
@@ -137,7 +137,7 @@ public class Pack {
 			String spack = rs.getString("packfile");
 
 			File sfile = new File(spack);
-			File rfile = new File(Settings.testProj + "tests\\" + Settings.folder + "\\input\\rpack.txt");
+			File rfile = new File(Settings.testProj + "tests\\" + Settings.folder + "\\input\\002\\rpack.txt");
 
 			FileInputStream s = new FileInputStream(sfile);
 			FileOutputStream r = new FileOutputStream(rfile);
@@ -228,7 +228,7 @@ public class Pack {
 				rd.writeBytes("\r\n");
 			}
 
-			Log.msg("ѕакет Ё—»—-потверждений " + Settings.testProj + "tests\\" + Settings.folder + "\\input\\rpack.txt" + " создан.");
+			Log.msg("ѕакет Ё—»—-потверждений " + Settings.testProj + "tests\\" + Settings.folder + "\\input\\002\\rpack.txt" + " создан.");
 			s.close();
 			rd.close();
 			db.close();
@@ -250,7 +250,7 @@ public class Pack {
 			String spack = rs.getString("packfile");
 
 			File sfile = new File(spack);
-			File bfile = new File(Settings.testProj + "tests\\" + Settings.folder + "\\input\\bpack.txt");
+			File bfile = new File(Settings.testProj + "tests\\" + Settings.folder + "\\input\\002\\bpack.txt");
 
 			FileInputStream s = new FileInputStream(sfile);
 			FileOutputStream r = new FileOutputStream(bfile);
@@ -479,7 +479,7 @@ public class Pack {
 				rd.write(b);
 			}
 
-			Log.msg("ѕакет Ёѕ— по возврату платежей " + Settings.testProj + "tests\\" + Settings.folder + "\\input\\bpack.txt" + " создан.");
+			Log.msg("ѕакет Ёѕ— по возврату платежей " + Settings.testProj + "tests\\" + Settings.folder + "\\input\\002\\bpack.txt" + " создан.");
 			s.close();
 			rd.close();
 			db.close();
@@ -696,7 +696,7 @@ public class Pack {
 			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
 
 			db.connect();
-			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile, isnull(subtype,'') subtype from dbo.document_bon_pack where substring(subtype,12,1) = 'o' order by DATE_INSERT desc");
+			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile, isnull(subtype,'') subtype from dbo.document_bon_pack where substring(SUBTYPE, 4,1) = 's' and substring(subtype,12,1) = 'o' order by DATE_INSERT desc");
 			rs.next();
 			String spack = rs.getString("packfile");
 			String fl = rs.getString("subtype");
@@ -711,66 +711,44 @@ public class Pack {
 
 	
 	
-	public static void copyRPack()
+	public static String copyRPack(String testnum)
 	{
 		try{
 			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
 
 			db.connect();
-			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile from dbo.document_bon_pack where substring(subtype,12,1) = 'o' order by DATE_INSERT desc");
+			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile, isnull(subtype,'') subtype from dbo.document_bon_pack where substring(SUBTYPE, 4,1) = 'r' and substring(subtype,12,1) = 'o' order by DATE_INSERT desc");
 			rs.next();
 			String spack = rs.getString("packfile");
-
-			copyFile(spack,Settings.testProj + "\\tests\\" + Settings.folder + "\\output\\rpack.txt");
-
+			String fl = rs.getString("subtype");
+			copyFile(spack,Settings.testProj + "\\tests\\" + Settings.folder + "\\output\\" + testnum + "\\" + fl);
+			return fl;
 		} catch(Exception e) {
 			e.printStackTrace();
 			Log.msg(e);
+			return "";
 		}
 	}
 
-	public static void copyEPack()
+	
+	public static String copyBPack(String testnum)
 	{
 		try{
 			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
 
 			db.connect();
-			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile from dbo.document_bon_pack where substring(subtype,12,1) = 'o' order by DATE_INSERT desc");
+			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile, isnull(subtype,'') subtype from dbo.document_bon_pack where substring(SUBTYPE, 4,1) = 'b' and substring(subtype,12,1) = 'o' order by DATE_INSERT desc");
 			rs.next();
 			String spack = rs.getString("packfile");
-
-			copyFile(spack,Settings.testProj + "\\tests\\" + Settings.folder + "\\output\\epack.txt");
-
+			String fl = rs.getString("subtype");
+			copyFile(spack,Settings.testProj + "\\tests\\" + Settings.folder + "\\output\\" + testnum + "\\" + fl);
+			return fl;
 		} catch(Exception e) {
 			e.printStackTrace();
 			Log.msg(e);
+			return "";
 		}
 	}
-
-	public static boolean compareEPack(String fl)
-	{
-		try {
-			BufferedReader br;
-
-			br = new BufferedReader(new FileReader(fl));
-
-			String er = br.readLine().substring(12,14);
-			System.out.println(er);
-			if(er.equals(Settings.GenSpack.error))			
-				Log.msgCMP("E пакет " + fl + " имеет правильный номер ошибки.");
-			else
-				Log.msgCMP("E пакет " + fl + " имеет неправильный номер ошибки.");	
-
-			return er.equals(Settings.GenSpack.error);
-
-		} catch (IOException e) {
-			Log.msg(e);
-			e.printStackTrace();
-			return false;
-		}
-
-	}
-
 
 	public static boolean compareSPack(String etal, String fl)
 	{
@@ -797,6 +775,12 @@ public class Pack {
 
 	public static boolean compareRPack(String etal, String fl)
 	{
+		
+		if(!new File(etal).getName().equals(new File(fl).getName()))
+		{
+			Log.msgCMP("»мена R пакетов не совпадают.");
+			return false;
+		}
 		SPack.loadMaskR();
 
 		SPack et = new SPack(etal);
@@ -806,9 +790,32 @@ public class Pack {
 		sp.load();
 
 		if(et.equals(sp))
-			Log.msgCMP("R пакет " + fl + " совпадает с эталонным R пакетом " + fl + " по маске spack.msk .");
+			Log.msgCMP("R пакет " + fl + " совпадает с эталонным R пакетом " + fl + " по маске rpack.msk .");
 		else
-			Log.msgCMP("R пакет " + fl + " не совпадает с эталонным R пакетом " + fl + " по маске spack.msk .");
+			Log.msgCMP("R пакет " + fl + " не совпадает с эталонным R пакетом " + fl + " по маске rpack.msk .");
+		return et.equals(sp);
+	}
+	
+	public static boolean compareBPack(String etal, String fl)
+	{
+		
+		if(!new File(etal).getName().equals(new File(fl).getName()))
+		{
+			Log.msgCMP("»мена B пакетов не совпадают.");
+			return false;
+		}
+		SPack.loadMaskB();
+
+		SPack et = new SPack(etal);
+		et.loadB();
+
+		SPack sp = new SPack(fl);
+		sp.loadB();
+
+		if(et.equals(sp))
+			Log.msgCMP("B пакет " + fl + " совпадает с эталонным B пакетом " + fl + " по маске bpack.msk .");
+		else
+			Log.msgCMP("B пакет " + fl + " не совпадает с эталонным B пакетом " + fl + " по маске bpack.msk .");
 		return et.equals(sp);
 	}
 
@@ -951,7 +958,22 @@ public class Pack {
 			}
 		}
 
+		static void loadMaskB()
+		{
+			try {
+				BufferedReader br;
 
+				br = new BufferedReader(new FileReader(Settings.fullfolder + "settings\\" + Settings.obrfolder + "\\bpack.msk"));
+
+				mskhd = br.readLine();
+				mskln = br.readLine();
+
+				br.close();				
+			} catch(Exception e) {
+				e.printStackTrace();
+				Log.msg(e);				
+			}
+		}
 
 
 		void load()
@@ -959,6 +981,46 @@ public class Pack {
 			try {
 
 				int cn = countLine();
+				BufferedReader br;
+
+				br = new BufferedReader(new FileReader(fl));
+				String tmp;
+				tmp = br.readLine();
+				head = "";
+				for(int i = 0; i < mskhd.length(); i++)
+				{
+					if(mskhd.substring(i,i + 1).equals("1"))
+						head = head + tmp.substring(i, i + 1);
+				}
+
+				lines = new ArrayList<String>();
+
+				for(int i = 0; i < cn; i++)
+				{	
+					tmp = br.readLine();
+					String s = "";
+
+					for(int j = 0; j < mskln.length(); j++)
+					{
+						if(mskln.substring(j,j + 1).equals("1"))
+							s = s + tmp.substring(j, j + 1);
+					}
+					lines.add(s);
+				}
+
+				br.close();
+
+			} catch(Exception e) {
+				e.printStackTrace();
+				Log.msg(e);				
+			}
+		}
+		
+		void loadB()
+		{
+			try {
+
+				int cn = 2 * countLine();
 				BufferedReader br;
 
 				br = new BufferedReader(new FileReader(fl));
