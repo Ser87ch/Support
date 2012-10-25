@@ -108,7 +108,7 @@ public class Main {
 			PayDoc.Client cl = new PayDoc.Client("044552989","40116810100000000037");
 			cl.contrrazr();
 			System.out.println(cl.ls);
-			Pack.copyBPack("004");
+			
 		
 			break;
 		}
