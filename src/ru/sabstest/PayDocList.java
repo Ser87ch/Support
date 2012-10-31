@@ -266,22 +266,22 @@ public class PayDocList {
 						pd.pol = poler;
 					}
 					
-//					if(j == 1) //40 несуществующий корсчет ко получателя
+//					if(j == 3) //40 несуществующий корсчет ко получателя 40116810600000000037
 //					{
 //						PayDoc.Client poler = new PayDoc.Client("044525159", "30101810000000000159", "40116810600000000037", "111111111111", "222222222", "ЗАО Получатель");
-//						poler.contrrazr();
+//						//poler.contrrazr();
 //						pd.pol = poler;
 //					}
 					
-//					if(j == 2) //39 у ко получотозвана лицензия
-//					{
-//						PayDoc.Client poler = new PayDoc.Client("044552989", "30101810000000000989", "40116810300000000037", "111111111111", "222222222", "ЗАО Получатель");
-//						poler.contrrazr();
-//						pd.pol = poler;
-//					}
+					if(j == 1) //39 у ко получотозвана лицензия
+					{
+						PayDoc.Client poler = new PayDoc.Client("044552989", "30101810000000000989", "40116810300000000037", "111111111111", "222222222", "ЗАО Получатель");
+						poler.contrrazr();
+						pd.pol = poler;
+					}
 					
 					pd.plat = pol;
-					if(j == 3) //43 недопустимый номер бс второ порядка лиц счета плат
+					if(j == 2) //43 недопустимый номер бс второ порядка лиц счета плат
 					{
 						PayDoc.Client plater = new PayDoc.Client(bikpol, kspol, "55555810200000000005", "111111111111", "222222222", "ЗАО Получатель");
 						plater.contrrazr();
@@ -310,7 +310,7 @@ public class PayDocList {
 	}
 	public void generateSerr()
 	{
-		generateSwB(4);
+		generateSwB(3);
 	}
 	
 	public int length()
@@ -552,9 +552,9 @@ public class PayDocList {
 				PayDoc pd = iter.next();
 				
 				sf = String.format("%06d", pd.elnum) + new SimpleDateFormat("ddMMyyyy").format(pd.date) +
-				pd.plat.bik.substring(2,9) + "000" + pd.plat.bik + pd.plat.ls + String.format("%20s", pd.plat.ks) +
+				pd.plat.bik.substring(2,9) + "000" + pd.plat.bik + String.format("%20s", pd.plat.ls) + String.format("%20s", pd.plat.ks) +
 				String.format("%03d", pd.num) + new SimpleDateFormat("ddMMyyyy").format(pd.date) + pd.vidop +
-				pd.pol.bik + pd.pol.ls + String.format("%20s", pd.pol.ks) +
+				pd.pol.bik + String.format("%20s", pd.pol.ls) + String.format("%20s", pd.pol.ks) +
 				String.format("%018d", (int)(pd.sum * 100)) + String.format("%01d", pd.ocher) + 
 				String.format("%12s", pd.plat.inn) + String.format("%9s", pd.plat.kpp) +
 				String.format("%-160s", pd.plat.name) + 	String.format("%12s", pd.pol.inn) + 
