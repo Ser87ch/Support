@@ -28,7 +28,7 @@ public class Pack {
 			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
 
 			db.connect();
-			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile from dbo.document_bon_pack where substring(subtype,12,1) = 'o' and substring(subtype,4,1) = 's' order by DATE_INSERT desc");
+			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile from dbo.document_bon_pack where substring(subtype,12,1) = 'o' and substring(subtype,4,1) = 's' order by ID_PACK desc");
 			rs.next();
 			String spack = rs.getString("packfile");
 
@@ -132,7 +132,7 @@ public class Pack {
 			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
 
 			db.connect();
-			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile from dbo.document_bon_pack where substring(subtype,12,1) = 'o' and substring(subtype,4,1) = 's' order by DATE_INSERT desc");
+			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile from dbo.document_bon_pack where substring(subtype,12,1) = 'o' and substring(subtype,4,1) = 's' order by ID_PACK desc");
 			rs.next();
 			String spack = rs.getString("packfile");
 
@@ -245,7 +245,7 @@ public class Pack {
 			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
 
 			db.connect();
-			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile from dbo.document_bon_pack where substring(subtype,12,1) = 'o' and substring(subtype,4,1) = 's' order by DATE_INSERT desc");
+			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile from dbo.document_bon_pack where substring(subtype,12,1) = 'o' and substring(subtype,4,1) = 's' order by ID_PACK desc");
 			rs.next();
 			String spack = rs.getString("packfile");
 
@@ -521,7 +521,7 @@ public class Pack {
 		try {
 			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
 			db.connect();			
-			ResultSet rs = db.st.executeQuery("select top 1 isnull(SUBTYPE,'') packfile from dbo.document_bon_pack where substring(SUBTYPE, 4,1) = 'r' and substring(SUBTYPE, 12,1) = 'i' and status = 0 and substring(subtype, 5, 4) = '" + new SimpleDateFormat("ddMM").format(Settings.operDate) + "' order by DATE_INSERT desc");
+			ResultSet rs = db.st.executeQuery("select top 1 isnull(SUBTYPE,'') packfile from dbo.document_bon_pack where substring(SUBTYPE, 4,1) = 'r' and substring(SUBTYPE, 12,1) = 'i' and status = 0 and substring(subtype, 5, 4) = '" + new SimpleDateFormat("ddMM").format(Settings.operDate) + "' order by ID_PACK desc");
 
 			String spack;
 			if(rs.next())
@@ -560,7 +560,7 @@ public class Pack {
 		try {
 			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
 			db.connect();			
-			ResultSet rs = db.st.executeQuery("select top 1 isnull(SUBTYPE,'') packfile from dbo.document_bon_pack where substring(SUBTYPE, 4,1) = 'b' and substring(SUBTYPE, 12,1) = 'i' and status = 0 and substring(subtype, 5, 4) = '" + new SimpleDateFormat("ddMM").format(Settings.operDate) + "' order by DATE_INSERT desc");
+			ResultSet rs = db.st.executeQuery("select top 1 isnull(SUBTYPE,'') packfile from dbo.document_bon_pack where substring(SUBTYPE, 4,1) = 'b' and substring(SUBTYPE, 12,1) = 'i' and status = 0 and substring(subtype, 5, 4) = '" + new SimpleDateFormat("ddMM").format(Settings.operDate) + "' order by ID_PACK desc");
 			String spack;
 			if(rs.next())
 				spack = rs.getString("packfile"); //p$9s0302.82o			
@@ -600,7 +600,7 @@ public class Pack {
 			{
 				DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
 				db.connect();			
-				ResultSet rs = db.st.executeQuery("select top 1 isnull(SUBTYPE,'') packfile from dbo.document_bon_pack where substring(SUBTYPE, 4,1) = 's' and substring(SUBTYPE, 10,3) = '" + Settings.bik.substring(4, 6) + "i' and status = 0 and substring(subtype, 5, 4) = '" + new SimpleDateFormat("ddMM").format(Settings.operDate) + "' order by DATE_INSERT desc");
+				ResultSet rs = db.st.executeQuery("select top 1 isnull(SUBTYPE,'') packfile from dbo.document_bon_pack where substring(SUBTYPE, 4,1) = 's' and substring(SUBTYPE, 10,3) = '" + Settings.bik.substring(4, 6) + "i' and status = 0 and substring(subtype, 5, 4) = '" + new SimpleDateFormat("ddMM").format(Settings.operDate) + "' order by ID_PACK desc");
 
 				String spack;
 				if(rs.next())
@@ -651,7 +651,7 @@ public class Pack {
 			{
 				DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
 				db.connect();			
-				ResultSet rs = db.st.executeQuery("select top 1 isnull(SUBTYPE,'') packfile from dbo.document_bon_pack where substring(SUBTYPE, 4,1) = 's' and substring(SUBTYPE, 12,1) = 'i' and status = 0 and substring(subtype, 5, 4) = '" + new SimpleDateFormat("ddMM").format(Settings.operDate) + "' order by DATE_INSERT desc");
+				ResultSet rs = db.st.executeQuery("select top 1 isnull(SUBTYPE,'') packfile from dbo.document_bon_pack where substring(SUBTYPE, 4,1) = 's' and substring(SUBTYPE, 12,1) = 'i' and status = 0 and substring(subtype, 5, 4) = '" + new SimpleDateFormat("ddMM").format(Settings.operDate) + "' order by ID_PACK desc");
 
 				String spack;
 				if(rs.next())
@@ -696,7 +696,7 @@ public class Pack {
 			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
 
 			db.connect();
-			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile, isnull(subtype,'') subtype from dbo.document_bon_pack where substring(SUBTYPE, 4,1) = 's' and substring(subtype,12,1) = 'o' order by DATE_INSERT desc");
+			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile, isnull(subtype,'') subtype from dbo.document_bon_pack where substring(SUBTYPE, 4,1) = 's' and substring(subtype,12,1) = 'o' order by ID_PACK desc");
 			rs.next();
 			String spack = rs.getString("packfile");
 			String fl = rs.getString("subtype");
@@ -717,7 +717,7 @@ public class Pack {
 			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
 
 			db.connect();
-			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile, isnull(subtype,'') subtype from dbo.document_bon_pack where substring(SUBTYPE, 4,1) = 'r' and substring(subtype,12,1) = 'o' order by DATE_INSERT desc");
+			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile, isnull(subtype,'') subtype from dbo.document_bon_pack where substring(SUBTYPE, 4,1) = 'r' and substring(subtype,12,1) = 'o' order by ID_PACK desc");
 			rs.next();
 			String spack = rs.getString("packfile");
 			String fl = rs.getString("subtype");
@@ -737,7 +737,7 @@ public class Pack {
 			DB db = new DB(Settings.server, Settings.db, Settings.user, Settings.pwd);
 
 			db.connect();
-			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile, isnull(subtype,'') subtype from dbo.document_bon_pack where substring(SUBTYPE, 4,1) = 'b' and substring(subtype,12,1) = 'o' order by DATE_INSERT desc");
+			ResultSet rs = db.st.executeQuery("select top 1 isnull(PackFile,'') packfile, isnull(subtype,'') subtype from dbo.document_bon_pack where substring(SUBTYPE, 4,1) = 'b' and substring(subtype,12,1) = 'o' order by ID_PACK desc");
 			rs.next();
 			String spack = rs.getString("packfile");
 			String fl = rs.getString("subtype");
